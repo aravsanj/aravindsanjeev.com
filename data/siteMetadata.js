@@ -2,17 +2,17 @@
 
 /** @type {import("pliny/config").PlinyConfig } */
 const siteMetadata = {
-  title: 'Aravind\'s blog - Sharing my perspective, one post at a time',
+  title: 'Unfiltered | By Aravind Sanjeev',
   author: 'Aravind Sanjeev',
-  headerTitle: 'Aravind Sanjeev',
+  headerTitle: 'Unfiltered',
   description: 'Sharing my perspective, one post at a time',
   language: 'en-us',
   theme: 'dark', // system, dark or light
-  siteUrl: 'aravindsanjeev.com',
+  siteUrl: 'https://aravindsanjeev.com/',
   siteRepo: 'https://github.com/aravsanj/aravindsanjeev.com',
   siteLogo: '/static/images/logo.png',
   image: '/static/images/avatar.png',
-  socialBanner: '/static/images/twitter-card.png',
+  socialBanner: '/static/images/banner.png',
   email: 'saravind436@gmail.com',
   github: 'https://github.com/aravsanj',
   twitter: 'https://twitter.com/aravsanj',
