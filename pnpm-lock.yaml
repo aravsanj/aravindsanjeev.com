@@ -35,6 +35,9 @@ dependencies:
   postcss:
     specifier: ^8.4.35
     version: 8.4.35
+  prettier:
+    specifier: ^3.3.3
+    version: 3.3.3
   react:
     specifier: 18.2.0
     version: 18.2.0
@@ -1309,6 +1312,12 @@ packages:
       nanoid: 3.3.7
       picocolors: 1.0.0
       source-map-js: 1.0.2
+    dev: false
+
+  /prettier@3.3.3:
+    resolution: {integrity: sha512-i2tDNA0O5IrMO757lfrdQZCc2jPNDVntV0m/+4whiDfWaTKfMNgR7Qz0NAeGz/nRqF4m5/6CLzbP4/liHt12Ew==}
+    engines: {node: '>=14'}
+    hasBin: true
     dev: false
 
   /property-information@6.4.1:
