@@ -1,5 +1,14 @@
-import { BlogPosts } from "app/components/posts";
-import Notification from "./components/notification";
+import { BlogPosts } from "src/app/components/posts";
+import Project from "./components/project";
+
+const projects = [
+  {
+    title: "Project 1",
+    description: "This is a project I worked on.",
+    imageUrl: "/assets/spotify.gif",
+    tags: ["React", "TailwindCSS"],
+  },
+];
 
 export default function Page() {
   return (
@@ -26,6 +35,11 @@ export default function Page() {
           </a>{" "}
           or through my social media.
         </p>
+      </section>
+      <section id="projects" className="my-8">
+        {projects.map((project) => {
+          return <Project {...project} />;
+        })}
       </section>
 
       <section id="blog" className="my-8">
