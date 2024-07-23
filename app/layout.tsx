@@ -7,6 +7,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import Footer from "./components/footer";
 import { baseUrl } from "./sitemap";
+import Side from "./components/side";
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
@@ -47,19 +48,20 @@ export default function RootLayout({
     <html
       lang="en"
       className={cx(
-        "text-white bg-black",
+        "text-slate-400 bg-slate-900",
         GeistSans.variable,
-        GeistMono.variable
+        GeistMono.variable,
       )}
     >
-      <body className="antialiased max-w-xl mx-4 mt-8 lg:mx-auto">
-        <main className="flex-auto min-w-0 mt-6 flex flex-col px-2 md:px-0">
-          <Navbar />
-          {children}
-          <Footer />
-          <Analytics />
-          <SpeedInsights />
-        </main>
+      <body className="bg-slate-900 leading-relaxed text-slate-400 antialiased selection:bg-teal-300 selection:text-teal-900">
+        <div className="mx-auto min-h-screen max-w-[1280px] px-6 py-12 font-sans md:px-12 md:py-20 lg:px-24 lg:py-0">
+          <div className="lg:flex lg:justify-between lg:gap-4">
+            <Side />
+            <main className="pt-24 lg:w-1/2 lg:py-24 min-h-screen">
+              {children}
+            </main>
+          </div>
+        </div>
       </body>
     </html>
   );

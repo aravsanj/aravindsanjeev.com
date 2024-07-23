@@ -1,5 +1,4 @@
 import React from "react";
-import { IconType } from "react-icons";
 import {
   FaEnvelope,
   FaLinkedinIn,
@@ -13,14 +12,14 @@ const SocialLink = ({ icon, url }) => (
     href={url}
     target="_blank"
     rel="noreferrer"
-    className="inline-flex items-center p-2 text-gray-700 hover:text-gray-500"
+    className="inline-flex items-center p-2 hover:text-gray-500"
   >
     <span className={`text-xl`}>{icon}</span>
   </a>
 );
 
 const SocialLinks = ({ email, linkedIn, instagram, twitter, whatsapp }) => (
-  <div className="flex space-x-1">
+  <div className="flex">
     <SocialLink icon={<FaEnvelope />} url={`mailto:${email}`} />
     <SocialLink
       icon={<FaLinkedinIn />}
