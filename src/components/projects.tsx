@@ -67,7 +67,7 @@ export default function Projects() {
       </div>
       <div className="flex flex-col gap-y-10">
         {projects.map((project) => {
-          return <Project {...project} />;
+          return <Project key={project.title} {...project} />;
         })}
       </div>
     </section>
