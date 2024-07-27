@@ -5,7 +5,7 @@ export function BlogPosts() {
   const allBlogs = getBlogPosts();
 
   return (
-    <div>
+    <section id="blog" className="my-8">
       {allBlogs
         .sort((a, b) => {
           if (
@@ -31,6 +31,6 @@ export function BlogPosts() {
             </div>
           </Link>
         ))}
-    </div>
+    </section>
   );
 }

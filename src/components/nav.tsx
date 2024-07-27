@@ -6,6 +6,10 @@ const navItems = {
   "#about": {
     name: "about",
   },
+
+  "#skills": {
+    name: "skills",
+  },
   "#projects": {
     name: "projects",
   },
