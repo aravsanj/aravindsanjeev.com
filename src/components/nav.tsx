@@ -28,7 +28,7 @@ export function Navbar() {
 
   return (
     <aside className="tracking-tight mt-10">
-      <div className="">
+      <div className="hidden lg:block">
         <nav
           className="flex flex-row items-start relative px-0 pb-0 fade md:overflow-auto scroll-pr-6 md:relative"
           id="nav"
