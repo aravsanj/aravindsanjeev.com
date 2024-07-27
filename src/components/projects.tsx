@@ -59,7 +59,7 @@ const projects = [
 ];
 export default function Projects() {
   return (
-    <section id="projects" className="my-20">
+    <section id="projects" className="mt-40">
       <div className="flex flex-col gap-y-10">
         {projects.map((project) => {
           return <Project {...project} />;

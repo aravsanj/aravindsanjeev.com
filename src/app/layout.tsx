@@ -48,7 +48,7 @@ export default function RootLayout({
     <html
       lang="en"
       className={cx(
-        "text-slate-400 bg-slate-900",
+        "text-slate-400 bg-slate-900 scroll-smooth",
         GeistSans.variable,
         GeistMono.variable,
       )}

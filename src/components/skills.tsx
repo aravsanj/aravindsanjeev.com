@@ -51,7 +51,7 @@ const skills = [
 
 export default function Skills() {
   return (
-    <section id="skills" className="mt-8">
+    <section id="skills" className="mt-40">
       <div className="w-full flex flex-col gap-2">
         {skills.map((skill) => (
           <div key={skill.title} className="flex flex-col gap-2">

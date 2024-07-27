@@ -5,7 +5,7 @@ export function BlogPosts() {
   const allBlogs = getBlogPosts();
 
   return (
-    <section id="blog" className="my-8">
+    <section id="blog" className="mt-40">
       {allBlogs
         .sort((a, b) => {
           if (
