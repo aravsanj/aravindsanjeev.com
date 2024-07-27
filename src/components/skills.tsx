@@ -41,7 +41,7 @@ const skills = [
   },
   {
     title: "Concepts",
-    skills: ["Clean", "MVC", "SOLID,", "Serverless", "Microservices"],
+    skills: ["Clean", "MVC", "SOLID", "Serverless", "Microservices"],
   },
   {
     title: "Other",

@@ -12,14 +12,14 @@ const SocialLink = ({ icon, url }) => (
     href={url}
     target="_blank"
     rel="noreferrer"
-    className="inline-flex items-center p-2 hover:text-gray-500"
+    className="inline-flex items-center hover:text-gray-500"
   >
     <span className={`text-xl`}>{icon}</span>
   </a>
 );
 
 const SocialLinks = ({ email, linkedIn, instagram, twitter, whatsapp }) => (
-  <div className="flex">
+  <div className="flex gap-2">
     <SocialLink icon={<FaEnvelope />} url={`mailto:${email}`} />
     <SocialLink
       icon={<FaLinkedinIn />}
