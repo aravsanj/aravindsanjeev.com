@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
-import { CustomMDX } from "app/components/mdx";
-import { formatDate, getBlogPosts } from "app/blog/utils";
-import { baseUrl } from "app/sitemap";
+import { CustomMDX } from "src/components/mdx";
+import { formatDate, getBlogPosts } from "src/app/blog/utils";
+import { baseUrl } from "src/app/sitemap";
 
 export async function generateStaticParams() {
   let posts = getBlogPosts();
@@ -59,7 +59,7 @@ export default function Blog({ params }) {
   }
 
   return (
-    <section>
+    <section className="max-w-xl mx-4 mt-8 lg:mx-auto">
       <script
         type="application/ld+json"
         suppressHydrationWarning
