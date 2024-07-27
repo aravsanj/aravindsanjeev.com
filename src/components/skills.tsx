@@ -1,3 +1,5 @@
+import Tag from "./ui/tag";
+
 const skills = [
   {
     title: "Languages",
@@ -58,12 +60,7 @@ export default function Skills() {
             <h2 className="text-lg font-bold">{skill.title}</h2>
             <div className="flex gap-2">
               {skill.skills.map((item) => (
-                <span
-                  className="flex items-center rounded-full bg-teal-400/10 px-3 py-1 text-xs font-medium leading-5 text-teal-300"
-                  key={item}
-                >
-                  {item}
-                </span>
+                <Tag key={item} title={item} />
               ))}
             </div>
           </div>
