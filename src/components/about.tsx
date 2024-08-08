@@ -8,10 +8,10 @@ export default function About() {
       </div>
       <div className="space-y-4">
         <p>
-          I graduated with a Mechanical Engineering degree in 2019. For the
-          better or the worse, 2020 happened. I began working as a technical
-          content writer online. Eventually, I started learning web development
-          and I've been hooked ever since.
+          I graduated with a Mechanical Engineering degree in 2019. For the better
+          or the worse, 2020 happened. I began working as a technical content
+          writer online. Eventually, I started learning web development and I've
+          been hooked ever since.
         </p>
         <p>
           The projects I worked on ranges from simple static websites to

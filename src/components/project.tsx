@@ -48,7 +48,7 @@ export default function Project(props: ProjectProps) {
           </h3>
           <p className="mt-2 text-sm leading-normal">{description}</p>
 
-          <ul className="mt-2 flex flex-wrap" aria-label="Technologies used:">
+          <ul className="mt-2 flex flex-wrap">
             {tags.map((tag) => {
               return (
                 <li key={tag} className="mr-1.5 mt-2">

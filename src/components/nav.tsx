@@ -1,11 +1,12 @@
 "use client";
 import useIntersectionObserver from "@/services/hooks/useIntersectionObserver";
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+
 const navItems = {
   "#about": {
     name: "about",
+  },
+  "#experience": {
+    name: "experience",
   },
 
   "#skills": {
@@ -19,7 +20,7 @@ const navItems = {
   },
 };
 
-const targets = ["about", "skills", "projects", "blog"];
+const targets = ["about", "skills", "experience", "projects", "blog"];
 
 export function Navbar() {
   const { activeSection } = useIntersectionObserver({
