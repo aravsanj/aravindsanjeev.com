@@ -19,8 +19,7 @@ export default function About() {
           experience that is both intuitive and visually appealing.
         </p>
         <p>
-          I'm currently working as a full-stack engineer. I'm open to
-          collaborating on new projects. Feel free to reach out to me via my
+          I'm currently working on a project for <a className="text-slate-200" href="https://saudiarabiangp.com/en"  target="_blank">Saudi Arabian Grand Prix 2025</a>.  If you need anything, feel free to reach out to me via my
           <a href="mailto:saravind436@gmail.com" className="text-slate-200">
             {" "}
             email

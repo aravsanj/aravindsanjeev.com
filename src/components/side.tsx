@@ -9,7 +9,7 @@ export default function Side() {
           Aravind Sanjeev
         </h1>
         <h2 className="mt-3 text-lg font-medium tracking-tight text-slate-200 sm:text-xl">
-          Full-Stack Engineer
+          Frontend Engineer  
         </h2>
         <p className="mt-4 max-w-xs leading-normal">
           I design, develop, and maintain web applications from front to back.

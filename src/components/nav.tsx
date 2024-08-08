@@ -15,12 +15,12 @@ const navItems = {
   "#projects": {
     name: "projects",
   },
-  "#blog": {
-    name: "blog",
+  "#writings": {
+    name: "writings",
   },
 };
 
-const targets = ["about", "skills", "experience", "projects", "blog"];
+const targets = ["about", "skills", "experience", "projects", "writings"];
 
 export function Navbar() {
   const { activeSection } = useIntersectionObserver({
