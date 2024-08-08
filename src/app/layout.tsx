@@ -49,7 +49,7 @@ export default function RootLayout({
       lang="en"
       className={cx("scroll-smooth", GeistSans.variable, GeistMono.variable)}
     >
-      <body className="bg-[#101820] leading-relaxed text-slate-400 antialiased selection:bg-teal-300 selection:text-teal-900">
+      <body className="bg-[#101820] leading-relaxed text-slate-400 antialiased selection:bg-[#FEE715]/20 selection:text-[#FEE715]">
         {children}
       </body>
     </html>
