@@ -4,6 +4,8 @@ import Projects from "../components/projects";
 import Skills from "@/components/skills";
 import Side from "@/components/side";
 import Experience from "@/components/experience";
+import Closing from "@/components/closing";
+
 
 export default function Page() {
   return (
@@ -16,6 +18,7 @@ export default function Page() {
           <Skills />
           <Projects />
           <BlogPosts />
+          <Closing />
         </main>
       </div>
     </div>
