@@ -3,6 +3,7 @@ import About from "../components/about";
 import Projects from "../components/projects";
 import Skills from "@/components/skills";
 import Side from "@/components/side";
+import Experience from "@/components/experience";
 
 export default function Page() {
   return (
@@ -11,6 +12,7 @@ export default function Page() {
         <Side />
         <main className="lg:pt-24 lg:w-1/2 lg:py-24 min-h-screen">
           <About />
+          <Experience />
           <Skills />
           <Projects />
           <BlogPosts />

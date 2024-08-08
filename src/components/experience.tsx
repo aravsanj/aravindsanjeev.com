@@ -2,13 +2,21 @@ import Tag from "./ui/tag";
 
 const exp = [
   {
+    duration: "2024 — present",
+    title: "Frontend Engineer",
+    company: "UXBERT Labs",
+    companyUrl: "https://uxbert.com/",
+    description: "I am currently working as the Frontend Engineer for a cool project in the upcoming Formula 1 Saudi Arabian Grand Prix.",
+    technologies: ["JavaScript", "TypeScript", "React", "Next", "Contentful"],
+  },
+  {
     duration: "2023 — 2024",
     title: "MERN Stack Developer",
     company: "Brototype",
     companyUrl: "https://brototype.com/",
     description:
       "Gained hands-on experience building robust web applications through intensive, project-based learning. Developed full-stack web applications including a social media platform and a microservices-based article sharing platform. Benefited from weekly code reviews and mentorship to enhance coding and problem-solving skills.",
-    technologies: ["JavaScript", "React", "Next", "Node", "Express", "MongoDB"],
+    technologies: ["JavaScript", "TypeScript", "React", "Next", "Node", "Express", "MongoDB", "Kafka", "Docker", "Kubernetes"],
   },
   {
     duration: "2022 — 2023",
@@ -19,6 +27,15 @@ const exp = [
       "Worked for a hybrid remote working app, and a scalable decision-making platform. Integrated Agora, Google Drive, Microsoft Graph, and Dropbox APIs to enhance the app's functionality. Developed reusable components and implemented responsive design to improve the user experience.",
     technologies: ["JavaScript", "TypeScript", "React", "Next", "Urql"],
   },
+  {
+    duration: "2020 — 2022",
+    title: "Technical Content Writer",
+    company: "Freelance",
+    companyUrl: "",
+    description:
+    "During this time, I worked as a freelance content writer for various parties and blogs.",
+    technologies: ["Writing", "Documentation"]
+  }
 ];
 
 type ExpItem = {
