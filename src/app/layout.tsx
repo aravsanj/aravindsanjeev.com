@@ -49,6 +49,7 @@ export default function RootLayout({
       lang="en"
       className={cx("scroll-smooth", GeistSans.variable, GeistMono.variable)}
     >
+      <script src="https://platform.linkedin.com/badges/js/profile.js" async defer type="text/javascript"></script>
       <body className="bg-[#101820] leading-relaxed text-slate-400 antialiased selection:bg-[#FEE715]/20 selection:text-[#FEE715]">
         {children}
       </body>

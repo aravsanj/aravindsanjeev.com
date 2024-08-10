@@ -5,6 +5,7 @@ import Side from "@/components/side";
 import Experience from "@/components/experience";
 import Closing from "@/components/closing";
 import Writings from "@/components/writings";
+import LinkedInBadge from "@/components/linkedin_badge";
 
 
 export default function Page() {
@@ -18,6 +19,7 @@ export default function Page() {
           <Skills />
           <Projects />
           <Writings />
+          <LinkedInBadge />
           <Closing />
         </main>
       </div>
