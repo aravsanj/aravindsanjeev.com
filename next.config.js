@@ -5,7 +5,6 @@ module.exports = {
         protocol: "https",
         hostname: "images.unsplash.com",
         port: "",
-        //   pathname: '/account123/**',
       },
     ],
   },

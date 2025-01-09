@@ -2,12 +2,7 @@ import "./global.css";
 import type { Metadata } from "next";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
-import { Navbar } from "../components/nav";
-import { Analytics } from "@vercel/analytics/react";
-import { SpeedInsights } from "@vercel/speed-insights/next";
-import Footer from "../components/footer";
 import { baseUrl } from "./sitemap";
-import Side from "../components/side";
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
@@ -49,7 +44,12 @@ export default function RootLayout({
       lang="en"
       className={cx("scroll-smooth", GeistSans.variable, GeistMono.variable)}
     >
-      <script src="https://platform.linkedin.com/badges/js/profile.js" async defer type="text/javascript"></script>
+      <script
+        src="https://platform.linkedin.com/badges/js/profile.js"
+        async
+        defer
+        type="text/javascript"
+      ></script>
       <body className="bg-[#101820] leading-relaxed text-slate-400 antialiased selection:bg-[#FEE715]/20 selection:text-[#FEE715]">
         {children}
       </body>
