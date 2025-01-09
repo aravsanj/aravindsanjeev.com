@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import { baseUrl } from "./sitemap";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
@@ -53,6 +54,7 @@ export default function RootLayout({
       <body className="bg-[#101820] leading-relaxed text-slate-400 antialiased selection:bg-[#FEE715]/20 selection:text-[#FEE715]">
         {children}
       </body>
+      <GoogleAnalytics gaId="G-BELR0CJR8V" />
     </html>
   );
 }
