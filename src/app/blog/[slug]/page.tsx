@@ -85,7 +85,14 @@ export default async function Blog(props) {
           }),
         }}
       />
-      <Link href="/blog" scroll={false} className="block text-slate-200 hover:underline mb-10"> ← Back to blog</Link>
+      <Link
+        href="/blog"
+        scroll={false}
+        className="block text-slate-200 hover:underline mb-10"
+      >
+        {" "}
+        ← Back to blog
+      </Link>
 
       <h1 className="title font-semibold text-2xl text-slate-200 tracking-tighter">
         {post.metadata.title}
