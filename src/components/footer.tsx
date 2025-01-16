@@ -6,9 +6,10 @@ export default function Footer() {
     <footer className="mb-16">
       <span className="flex items-center gap-2 p-2 rounded-lg bg-amber-200/20 w-max text-xs text-white mb-6">
         <MdDateRange />
-       Last updated on Aug 8, 2024
+        Last updated on Aug 8, 2024
       </span>
       <SocialLinks
+        fillColor=""
         email="saravind436@gmail.com"
         whatsapp={8848304872}
         twitter="aravsanj"

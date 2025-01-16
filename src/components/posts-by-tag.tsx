@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { formatDate, getBlogPosts } from "src/app/blog/utils";
+import { formatDate, getBlogPostsByTag } from "src/app/blog/utils";
 
-export function BlogPosts() {
-  const allBlogs = getBlogPosts();
+export function BlogPostsByTag({ tag }: { tag: string }) {
+  const allBlogs = getBlogPostsByTag(tag);
 
   return (
     <div className="space-y-6">

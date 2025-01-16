@@ -51,7 +51,7 @@ export default function RootLayout({
         defer
         type="text/javascript"
       ></script>
-      <body className="bg-[#101820] leading-relaxed text-slate-400 antialiased selection:bg-[#FEE715]/20 selection:text-[#FEE715]">
+      <body className=" leading-relaxed text-slate-400 antialiased selection:bg-[#FEE715]/20 selection:text-[#FEE715]">
         {children}
       </body>
       <GoogleAnalytics gaId="G-BELR0CJR8V" />

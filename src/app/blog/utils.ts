@@ -6,6 +6,7 @@ type Metadata = {
   publishedAt: string;
   summary: string;
   image?: string;
+  tags: string;
 };
 
 function parseFrontmatter(fileContent: string) {
@@ -53,6 +54,14 @@ export function getBlogPosts() {
   return getMDXData(path.join(process.cwd(), "src", "app", "blog", "posts"));
 }
 
+export function getBlogPostsByTag(tag: string) {
+  let allPosts = getBlogPosts();
+  return allPosts.filter((post) => {
+    let tags = JSON.parse(post.metadata.tags || "[]");
+    return tags.includes(tag);
+  });
+}
+
 export function formatDate(date: string, includeRelative = false) {
   let currentDate = new Date();
   if (!date.includes("T")) {
@@ -77,7 +86,7 @@ export function formatDate(date: string, includeRelative = false) {
   }
 
   let fullDate = targetDate.toLocaleString("en-us", {
-    month: "long",
+    month: "short",
     day: "numeric",
     year: "numeric",
   });

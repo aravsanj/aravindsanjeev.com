@@ -7,33 +7,51 @@ import {
   FaWhatsapp,
 } from "react-icons/fa";
 
-const SocialLink = ({ icon, url }) => (
+const SocialLink = ({ icon, fillColor, url }) => (
   <a
     href={url}
     target="_blank"
     rel="noreferrer"
-    className="inline-flex items-center hover:text-gray-500"
+    className={`inline-flex ${fillColor ? `text-[${fillColor}]` : ""} items-center hover:text-gray-500`}
   >
     <span className={`text-xl`}>{icon}</span>
   </a>
 );
 
-const SocialLinks = ({ email, linkedIn, instagram, twitter, whatsapp }) => (
+const SocialLinks = ({
+  email,
+  linkedIn,
+  instagram,
+  twitter,
+  whatsapp,
+  fillColor,
+}) => (
   <div className="flex gap-2">
-    <SocialLink icon={<FaEnvelope />} url={`mailto:${email}`} />
     <SocialLink
+      fillColor={fillColor}
+      icon={<FaEnvelope />}
+      url={`mailto:${email}`}
+    />
+    <SocialLink
+      fillColor={fillColor}
       icon={<FaLinkedinIn />}
       url={`https://www.linkedin.com/in/${linkedIn}/`}
     />
     <SocialLink
+      fillColor={fillColor}
       icon={<FaInstagram />}
       url={`https://www.instagram.com/${instagram}/`}
     />
     <SocialLink
+      fillColor={fillColor}
       icon={<FaTwitter />}
       url={`https://www.twitter.com/${twitter}/`}
     />
-    <SocialLink icon={<FaWhatsapp />} url={`https://wa.me/${whatsapp}/`} />
+    <SocialLink
+      fillColor={fillColor}
+      icon={<FaWhatsapp />}
+      url={`https://wa.me/${whatsapp}/`}
+    />
   </div>
 );
 
