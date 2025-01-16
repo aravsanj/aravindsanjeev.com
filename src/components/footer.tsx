@@ -11,7 +11,6 @@ export default function Footer() {
       <SocialLinks
         fillColor=""
         email="saravind436@gmail.com"
-        whatsapp={8848304872}
         twitter="aravsanj"
         instagram="aravsanj"
         linkedIn="aravsanj"

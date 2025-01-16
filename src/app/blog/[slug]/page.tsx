@@ -140,7 +140,6 @@ export default async function Blog(props) {
                 <SocialLinks
                   fillColor="#141414"
                   email="saravind436@gmail.com"
-                  whatsapp={8848304872}
                   twitter="aravsanj"
                   instagram="aravsanj"
                   linkedIn="aravsanj"

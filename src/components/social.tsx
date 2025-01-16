@@ -18,14 +18,7 @@ const SocialLink = ({ icon, fillColor, url }) => (
   </a>
 );
 
-const SocialLinks = ({
-  email,
-  linkedIn,
-  instagram,
-  twitter,
-  whatsapp,
-  fillColor,
-}) => (
+const SocialLinks = ({ email, linkedIn, instagram, twitter, fillColor }) => (
   <div className="flex gap-2">
     <SocialLink
       fillColor={fillColor}
@@ -46,11 +39,6 @@ const SocialLinks = ({
       fillColor={fillColor}
       icon={<FaTwitter />}
       url={`https://www.twitter.com/${twitter}/`}
-    />
-    <SocialLink
-      fillColor={fillColor}
-      icon={<FaWhatsapp />}
-      url={`https://wa.me/${whatsapp}/`}
     />
   </div>
 );
