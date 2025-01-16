@@ -95,7 +95,10 @@ export default async function Blog(props) {
           <div className="">
             <div className="mt-6 mb-20">
               <div className="mb-10 flex flex-col gap-4 sm:gap-0 sm:flex-row justify-between">
-                <p className=" font-medium  text-gray-600">
+                <p
+                  className="bg-gray-200 text-gray-600 text-sm font-medium px-3 py-1 rounded-full 
+    border border-gray-400 inline-block max-w-fit"
+                >
                   {formatDate(post.metadata.publishedAt)}
                 </p>
                 <div className="flex flex-wrap gap-2">
