@@ -19,7 +19,7 @@ export default function Project(props: ProjectProps) {
         <div className="z-10 sm:order-2 sm:col-span-6">
           <h3>
             <a
-              className="inline-flex items-baseline font-medium leading-tight text-slate-200 hover:text-[#FEE715]/80 focus-visible:text-[#FEE715]/80  group/link text-base"
+              className="inline-flex items-baseline font-medium leading-tight text-slate-900 hover:text-fuchsia-900/80 focus-visible:text-fuchsia-900/80  group/link text-base"
               href={url}
               target="_blank"
               rel="noreferrer noopener"

@@ -6,7 +6,8 @@ const exp = [
     title: "Frontend Engineer",
     company: "UXBERT Labs",
     companyUrl: "https://uxbert.com/",
-    description: "I am currently working as the Frontend Engineer for a cool project in the upcoming Formula 1 Saudi Arabian Grand Prix.",
+    description:
+      "I am currently working as the Frontend Engineer for a cool project in the upcoming Formula 1 Saudi Arabian Grand Prix.",
     technologies: ["JavaScript", "TypeScript", "React", "Next", "Contentful"],
   },
   {
@@ -16,7 +17,18 @@ const exp = [
     companyUrl: "https://brototype.com/",
     description:
       "Gained hands-on experience building robust web applications through intensive, project-based learning. Developed full-stack web applications including a social media platform and a microservices-based article sharing platform. Benefited from weekly code reviews and mentorship to enhance coding and problem-solving skills.",
-    technologies: ["JavaScript", "TypeScript", "React", "Next", "Node", "Express", "MongoDB", "Kafka", "Docker", "Kubernetes"],
+    technologies: [
+      "JavaScript",
+      "TypeScript",
+      "React",
+      "Next",
+      "Node",
+      "Express",
+      "MongoDB",
+      "Kafka",
+      "Docker",
+      "Kubernetes",
+    ],
   },
   {
     duration: "2022 — 2023",
@@ -33,9 +45,9 @@ const exp = [
     company: "Freelance",
     companyUrl: "",
     description:
-    "During this time, I worked as a freelance content writer for various parties and blogs.",
-    technologies: ["Writing", "Documentation"]
-  }
+      "During this time, I worked as a freelance content writer for various parties and blogs.",
+    technologies: ["Writing", "Documentation"],
+  },
 ];
 
 type ExpItem = {
@@ -62,7 +74,7 @@ function ExpItem(props: ExpItem) {
           <h3 className="font-medium leading-snug text-slate-200">
             <div>
               <a
-                className="inline-flex items-baseline font-medium leading-tight text-slate-200  hover:text-[#FEE715]/80 focus-visible:text-[#FEE715]/80   group/link text-base"
+                className="inline-flex items-baseline font-medium leading-tight text-slate-900  hover:text-fuchsia-900/80 focus-visible:text-fuchsia-900/80   group/link text-base"
                 href={companyUrl}
                 target="_blank"
                 rel="noreferrer noopener"
@@ -109,8 +121,8 @@ function ExpItem(props: ExpItem) {
 export default function Experience() {
   return (
     <section id="experience" className="mt-20 lg:mt-40">
-      <div className="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-[#101820]/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0">
-        <h2 className="text-sm font-bold uppercase tracking-widest text-slate-200 lg:sr-only">
+      <div className="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-[#ffffff]/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0">
+        <h2 className="text-sm font-bold uppercase tracking-widest text-slate-900 lg:sr-only">
           Experience
         </h2>
       </div>

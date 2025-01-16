@@ -4,6 +4,7 @@ import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import { baseUrl } from "./sitemap";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import Providers from "../components/providers";
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
@@ -41,18 +42,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html
-      lang="en"
-      className={cx("scroll-smooth", GeistSans.variable, GeistMono.variable)}
-    >
-      <script
-        src="https://platform.linkedin.com/badges/js/profile.js"
-        async
-        defer
-        type="text/javascript"
-      ></script>
-      <body className=" leading-relaxed text-slate-400 antialiased selection:bg-[#FEE715]/20 selection:text-[#FEE715]">
-        {children}
+    <html lang="en" className={cx(GeistSans.variable, GeistMono.variable)}>
+      <body className="relative min-h-screen leading-relaxed text-slate-900 antialiased">
+        <div className="absolute inset-0 -z-10 h-full w-full bg-white bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]"></div>
+        <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-[310px] w-[310px] rounded-full bg-fuchsia-400 opacity-20 blur-[100px]"></div>
+        <Providers>{children}</Providers>
       </body>
       <GoogleAnalytics gaId="G-BELR0CJR8V" />
     </html>

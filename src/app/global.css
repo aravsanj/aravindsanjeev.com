@@ -106,7 +106,7 @@ table {
 .active .nav-indicator {
   width: 4rem;
   --tw-bg-opacity: 1;
-  background-color: rgb(254 231 21 / var(--tw-bg-opacity));
+  background-color: #86198f;
 }
 
 
