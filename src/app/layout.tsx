@@ -48,7 +48,10 @@ export default function RootLayout({
       <body className="relative min-h-screen leading-relaxed text-slate-900 antialiased">
         <div className="absolute inset-0 -z-10 h-full w-full bg-white bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]"></div>
         <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-[310px] w-[310px] rounded-full bg-fuchsia-400 opacity-20 blur-[100px]"></div>
-        <Providers>{children}</Providers>
+        {/* <Providers> */}
+        {children}
+
+        {/* </Providers> */}
       </body>
       <GoogleAnalytics gaId="G-BELR0CJR8V" />
     </html>
