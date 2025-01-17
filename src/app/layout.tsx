@@ -12,10 +12,12 @@ export const metadata: Metadata = {
     default: "Aravind Sanjeev",
     template: "%s | Aravind Sanjeev",
   },
-  description: "My personal blog.",
+  description:
+    "This portfolio documents my journey as I learn, grow, and explore the ever-evolving world of software engineering.",
   openGraph: {
     title: "Aravind Sanjeev",
-    description: "My personal blog.",
+    description:
+      "This portfolio documents my journey as I learn, grow, and explore the ever-evolving world of software engineering.",
     url: baseUrl,
     siteName: "Aravind Sanjeev",
     locale: "en_US",

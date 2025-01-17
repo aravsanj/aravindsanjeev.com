@@ -1,9 +1,14 @@
 import { BlogPostsByTag } from "@/components/posts-by-tag";
 
-export const metadata = {
-  title: "Blog",
-  description: "Read my blog.",
-};
+export async function generateMetadata({ params }) {
+  const capitalizedTag =
+    params.tag.charAt(0).toUpperCase() + params.tag.slice(1);
+
+  return {
+    title: `${capitalizedTag}`,
+    description: `All articles tagged ${capitalizedTag}`,
+  };
+}
 
 export default async function Page(props) {
   const params = await props.params;

@@ -2,7 +2,8 @@ import { BlogPosts } from "src/components/posts";
 
 export const metadata = {
   title: "Blog",
-  description: "Read my blog.",
+  description:
+    "My journey through the ever-evolving tech landscape. I share my coding projects, learning experiences, and reflections on the software engineering world.",
 };
 
 export default function Page() {
