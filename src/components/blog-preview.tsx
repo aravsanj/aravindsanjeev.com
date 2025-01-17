@@ -23,12 +23,12 @@ export function BlogPreview() {
               <span className="text-fuchsia-600">{index + 1}.</span>
               <Link
                 href={`/blog/${post.slug}`}
-                className="text-gray-600 tracking-tight group-hover:underline hover:underline"
+                className="text-gray-600  title text-sm sm:text-base tracking-tight group-hover:underline hover:underline"
               >
                 {post.metadata.title}
               </Link>
             </div>
-            <span className="text-gray-400  text-sm font-medium tabular-nums ">
+            <span className="text-gray-400 min-w-fit  text-xs sm:text-sm font-medium tabular-nums ">
               {formatDate(post.metadata.publishedAt, false)}
             </span>
           </div>

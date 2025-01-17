@@ -15,7 +15,7 @@ export default async function Page(props) {
 
   return (
     <>
-      <section className=" max-w-fit px-4 py-20 mx-auto">
+      <section className="max-w-xl  px-4 py-12 sm:py-20 mx-auto">
         <h1 className="text-black text-3xl capitalize text-center font-semibold mb-24">
           {params.tag}
         </h1>
