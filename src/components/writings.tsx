@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { BlogPosts } from "./posts";
 import { BlogPreview } from "./blog-preview";
 
 export default function Writings() {

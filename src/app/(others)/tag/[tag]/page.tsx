@@ -1,18 +1,17 @@
 import { BlogPostsByTag } from "@/components/posts-by-tag";
+import { getBlogPosts } from "../../blog/utils";
 
-export async function generateMetadata({ params }) {
-  const capitalizedTag =
-    params.tag.charAt(0).toUpperCase() + params.tag.slice(1);
+export async function generateStaticParams() {
+  const allTags = await getAllTags();
 
-  return {
-    title: `${capitalizedTag}`,
-    description: `All articles tagged ${capitalizedTag}`,
-  };
+  return allTags.map((tag: string) => ({
+    params: {
+      tag: tag.toLowerCase(),
+    },
+  }));
 }
-
 export default async function Page(props) {
   const params = await props.params;
-
   return (
     <>
       <section className="max-w-xl  px-4 py-12 sm:py-20 mx-auto">
@@ -23,4 +22,14 @@ export default async function Page(props) {
       </section>
     </>
   );
+}
+async function getAllTags() {
+  const allPosts = await getBlogPosts();
+  const allTags = new Set();
+  for (const post of allPosts) {
+    for (const tag of JSON.parse(post.metadata.tags)) {
+      allTags.add(tag);
+    }
+  }
+  return Array.from(allTags);
 }
