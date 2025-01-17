@@ -1,3 +1,4 @@
+import Topbar from "@/components/top-nav";
 import { BlogPosts } from "src/components/posts";
 
 export const metadata = {

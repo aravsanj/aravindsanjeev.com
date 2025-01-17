@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { formatDate, getBlogPostsByTag } from "src/app/blog/utils";
+import { formatDate, getBlogPostsByTag } from "@/app/(others)/blog/utils";
 
 export function BlogPostsByTag({ tag }: { tag: string }) {
   const allBlogs = getBlogPostsByTag(tag);

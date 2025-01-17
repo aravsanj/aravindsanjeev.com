@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { CustomMDX } from "src/components/mdx";
-import { formatDate, getBlogPosts } from "src/app/blog/utils";
+import { formatDate, getBlogPosts } from "@/app/(others)/blog/utils";
 import { baseUrl } from "src/app/sitemap";
 import Link from "next/link";
 import SocialLinks from "@/components/social";

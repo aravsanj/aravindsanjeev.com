@@ -1,4 +1,4 @@
-import { getBlogPosts } from "src/app/blog/utils";
+import { getBlogPosts } from "@/app/(others)/blog/utils";
 
 export const baseUrl = "https://aravindsanjeev.com";
 
