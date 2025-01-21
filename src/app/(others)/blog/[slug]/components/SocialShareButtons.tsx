@@ -8,7 +8,8 @@ import {
   TwitterIcon,
 } from "react-share";
 export default function SocialShareButtons({ size, post }) {
-  const link = typeof window !== "undefined" ? window.location.href : "";
+  const baseUrl = "https://aravindsanjeev.com";
+  const link = `${baseUrl}/blog/${post.slug}`;
 
   return (
     <>
