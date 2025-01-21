@@ -4,6 +4,7 @@ import { formatDate, getBlogPosts } from "@/app/(others)/blog/utils";
 import { baseUrl } from "src/app/sitemap";
 import Link from "next/link";
 import SocialLinks from "@/components/social";
+import SocialShareButtons from "./components/SocialShareButtons";
 
 export async function generateStaticParams() {
   let posts = getBlogPosts();
@@ -116,9 +117,13 @@ export default async function Blog(props) {
               <h1 className="title font-semibold text-5xl sm:text-6xl  text-slate-900 tracking-tighter">
                 {post.metadata.title}
               </h1>
+              <div className="flex gap-1 pt-6">
+                <SocialShareButtons size={24} post={post} />
+              </div>
             </div>
           </div>
-          <article className=" prose prose-xl font-semibold prose-zinc">
+
+          <article className="article prose prose-xl font-semibold prose-zinc">
             <CustomMDX source={post.content} />
           </article>
 

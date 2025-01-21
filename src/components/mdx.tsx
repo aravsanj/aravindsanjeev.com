@@ -48,29 +48,9 @@ function RoundedImage(props) {
   return <Image alt={props.alt} className="rounded-lg" {...props} />;
 }
 
-function HeaderImage(props) {
-  return (
-    <Image
-      alt={props.alt}
-      className="rounded-lg"
-      {...props}
-      width={1000}
-      height={400}
-    />
-  );
-}
-
 function Code({ children, ...props }) {
   let codeHTML = highlight(children);
   return <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />;
-}
-
-function CustomBlockQuote({ children, ...props }) {
-  return (
-    <blockquote className="text-white" {...props}>
-      {children}
-    </blockquote>
-  );
 }
 
 function slugify(str) {
@@ -117,8 +97,6 @@ let components = {
   a: CustomLink,
   code: Code,
   Table,
-  CustomBlockQuote,
-  HeaderImage,
 };
 
 export function CustomMDX(props) {

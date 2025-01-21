@@ -123,3 +123,12 @@ table {
   overflow-x: auto;  
   white-space: pre;  
 }
+
+.article  a {
+  color: #cb13db;
+  text-decoration: none;
+}
+
+.article a:hover {
+  color: #86198f;
+}
