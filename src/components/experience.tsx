@@ -7,8 +7,15 @@ const exp = [
     company: "UXBERT Labs",
     companyUrl: "https://uxbert.com/",
     description:
-      "I am currently working as the Frontend Engineer for a cool project in the upcoming Formula 1 Saudi Arabian Grand Prix.",
-    technologies: ["JavaScript", "TypeScript", "React", "Next", "Contentful"],
+      "I am currently working as the Frontend Engineer for multiple projects under the Saudi General Entertainment Ministry.",
+    technologies: [
+      "JavaScript",
+      "TypeScript",
+      "React",
+      "Next",
+      "Contentful",
+      "Strapi",
+    ],
   },
   {
     duration: "2023 — 2024",
