@@ -57,10 +57,18 @@ export function getBlogPosts() {
 }
 
 export function getBlogPostsByTag(tag: string) {
-  let allPosts = getBlogPosts();
+  const decodedTag = decodeURIComponent(tag).toLowerCase().trim();
+  const allPosts = getBlogPosts();
+
   return allPosts.filter((post) => {
-    let tags = JSON.parse(post.metadata.tags || "[]");
-    return tags.includes(tag);
+    try {
+      const tags = JSON.parse(post.metadata.tags || "[]").map((t: string) =>
+        t.toLowerCase().trim(),
+      );
+      return tags.includes(decodedTag);
+    } catch {
+      return false;
+    }
   });
 }
 

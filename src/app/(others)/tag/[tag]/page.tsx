@@ -16,7 +16,11 @@ export default async function Page(props) {
     <>
       <section className="max-w-xl  px-4 py-12 sm:py-20 mx-auto">
         <h1 className="text-black text-3xl capitalize text-center font-semibold mb-24">
-          {params.tag}
+          {decodeURIComponent(params.tag)
+            .replace(/[-_]/g, " ")
+            .split(" ")
+            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(" ")}
         </h1>
         <BlogPostsByTag tag={params.tag} />
       </section>
