@@ -114,7 +114,7 @@ export default async function Blog(props) {
                   ))}
                 </div>
               </div>
-              <h1 className="title font-semibold text-5xl sm:text-6xl  text-slate-900 tracking-tighter">
+              <h1 className="title font-semibold text-4xl sm:text-5xl md:text-6xl  text-slate-900 tracking-tighter">
                 {post.metadata.title}
               </h1>
               <div className="flex gap-1 pt-6">
