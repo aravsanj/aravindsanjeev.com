@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { highlight } from "sugar-high";
-import React from "react";
+import React, { ReactNode } from "react";
 
 function Table({ data }) {
   let headers = data.headers.map((header, index) => (
@@ -86,6 +86,42 @@ function createHeading(level) {
   return Heading;
 }
 
+function Callout({
+  type = "note",
+  children,
+}: {
+  type?: "note" | "tip" | "important" | "warning" | "caution";
+  children: ReactNode;
+}) {
+  const baseStyles = "rounded-md p-4 border-l-4 my-4";
+
+  const variants: Record<string, string> = {
+    note: "bg-blue-50 border-blue-500 text-blue-900",
+    tip: "bg-green-50 border-green-500 text-green-900",
+    important: "bg-purple-50 border-purple-500 text-purple-900",
+    warning: "bg-yellow-50 border-yellow-500 text-yellow-900",
+    caution: "bg-red-50 border-red-500 text-red-900",
+  };
+
+  const icons: Record<string, string> = {
+    note: "ℹ️",
+    tip: "💡",
+    important: "📌",
+    warning: "⚠️",
+    caution: "🚫",
+  };
+
+  return (
+    <div className={`${baseStyles} ${variants[type] || variants.note}`}>
+      <div className="font-semibold mb-2 flex items-center gap-2">
+        <span>{icons[type]}</span>
+        <span className="capitalize">{type}</span>
+      </div>
+      <div className="text-sm leading-relaxed">{children}</div>
+    </div>
+  );
+}
+
 let components = {
   h1: createHeading(1),
   h2: createHeading(2),
@@ -97,6 +133,7 @@ let components = {
   a: CustomLink,
   code: Code,
   Table,
+  Callout,
 };
 
 export function CustomMDX(props) {
