@@ -42,6 +42,12 @@ export default function Topbar() {
                 Projects
               </Link>
               <Link
+                href="/workbench"
+                className="text-gray-600 hover:text-fuchsia-600"
+              >
+                Workbench
+              </Link>
+              <Link
                 href="/blog"
                 className="text-gray-600 hover:text-fuchsia-600"
               >
@@ -130,6 +136,12 @@ export default function Topbar() {
               onClick={toggleMenu}
             >
               Projects
+            </Link>
+            <Link
+              href="/workbench"
+              className="block text-gray-600 text-lg hover:text-fuchsia-600"
+            >
+              Workbench
             </Link>
             <Link
               href="/blog"
