@@ -115,6 +115,7 @@ export default function ColorPaletteFromImage() {
 
       <div
         ref={dropRef}
+        onClick={() => fileInputRef.current?.click()}
         onDragOver={(e) => e.preventDefault()}
         onDrop={(e) => {
           e.preventDefault();
@@ -127,7 +128,7 @@ export default function ColorPaletteFromImage() {
             if (fileInputRef.current) fileInputRef.current.value = "";
           }
         }}
-        className="border-2 border-dashed border-neutral-300 rounded-xl p-6 text-center transition-colors hover:border-blue-400"
+        className="border-2 cursor-pointer border-dashed border-neutral-300 rounded-xl p-6 text-center transition-colors hover:border-blue-400"
       >
         <p className="text-sm text-neutral-500 mb-4">
           Drag & drop image here, paste from clipboard, or upload
@@ -135,10 +136,7 @@ export default function ColorPaletteFromImage() {
 
         <div className="flex flex-col gap-2 items-center">
           <div className="flex flex-col items-center space-y-2">
-            <button
-              onClick={() => fileInputRef.current?.click()}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-ring text-black cursor-pointer transition-colors hover:bg-ring/80"
-            >
+            <button className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-ring text-black cursor-pointer transition-colors hover:bg-ring/80">
               <FiUploadCloud className="w-5 h-5" />
               Upload Image
             </button>
