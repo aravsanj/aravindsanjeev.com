@@ -12,11 +12,11 @@ export const metadata: Metadata = {
     template: "%s | Aravind Sanjeev",
   },
   description:
-    "This portfolio documents my journey as I learn, grow, and explore the ever-evolving world of software engineering.",
+    "Aravind Sanjeev's personal site — a collection of engineering blog posts, useful developer tools, and projects exploring the future of software and AI.",
   openGraph: {
     title: "Aravind Sanjeev",
     description:
-      "This portfolio documents my journey as I learn, grow, and explore the ever-evolving world of software engineering.",
+      "Explore Aravind Sanjeev's portfolio, engineering blog, and a growing set of developer tools and experiments with software, AI, and design.",
     url: baseUrl,
     siteName: "Aravind Sanjeev",
     locale: "en_US",
@@ -50,6 +50,33 @@ export default function RootLayout({
         {children}
       </body>
       <GoogleAnalytics gaId="G-BELR0CJR8V" />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Person",
+            name: "Aravind Sanjeev",
+            url: "https://aravindsanjeev.com",
+            image: "https://aravindsanjeev.com/profile.png",
+            sameAs: [
+              "https://github.com/aravsanj",
+              "https://twitter.com/aravsanj",
+              "https://linkedin.com/in/aravsanj",
+            ],
+            jobTitle: "Software Engineer",
+            worksFor: {
+              "@type": "Organization",
+              name: "Freelance / Independent",
+            },
+            knowsAbout: ["React", "Next.js", "AI", "Web Development"],
+            alumniOf: {
+              "@type": "EducationalOrganization",
+              name: "APJ Abdul Kalam Technological University",
+            },
+          }),
+        }}
+      />
     </html>
   );
 }

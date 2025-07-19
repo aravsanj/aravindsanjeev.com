@@ -32,7 +32,7 @@ export const metadata: Metadata = {
         url: ogImage,
         width: 1200,
         height: 630,
-        alt: "Free Online Tools by Aravind Sanjeev",
+        alt: "Free Online Tools",
       },
     ],
     type: "website",
