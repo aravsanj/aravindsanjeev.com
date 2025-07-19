@@ -9,7 +9,7 @@ import {
   generateTailwindConfig,
 } from "./utils";
 
-export default function ColorPaletteUploader() {
+export default function ColorPaletteFromImage() {
   const [imageUrl, setImageUrl] = useState<string | null>("/assets/panda.png");
   const [colors, setColors] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
