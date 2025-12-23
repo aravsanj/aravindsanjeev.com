@@ -1,0 +1,5 @@
+---
+const props = Astro.props;
+// Use standard img tag instead of next/image, replacing RoundedImage
+---
+<img alt={props.alt} class="rounded-lg" {...props} />

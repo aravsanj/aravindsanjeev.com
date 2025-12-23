@@ -1,0 +1,46 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import TopNav from '../../components/TopNav.astro';
+import PostsByTag from '../../components/PostsByTag.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  const uniqueTags = [...new Set(posts.flatMap(post => {
+       let tags = [];
+       try {
+           tags = typeof post.data.tags === 'string' ? JSON.parse(post.data.tags) : post.data.tags || [];
+       } catch(e) {}
+       return tags;
+  }))];
+
+  return uniqueTags.map(tag => {
+    const filteredPosts = posts.filter(post => {
+       let tags = [];
+       try {
+           tags = typeof post.data.tags === 'string' ? JSON.parse(post.data.tags) : post.data.tags || [];
+       } catch(e) {}
+       return tags.includes(tag);
+    });
+    return {
+      params: { tag },
+      props: { posts: filteredPosts }
+    };
+  });
+}
+
+const { tag } = Astro.params;
+const { posts } = Astro.props;
+---
+
+<Layout title={`Posts tagged with ${tag}`}>
+  <header>
+    <TopNav />
+  </header>
+  <section class="max-w-xl px-4 py-12 sm:py-20 mx-auto">
+    <h1 class="text-black text-3xl capitalize text-center font-semibold mb-16 sm:mb-24">
+      {`#${tag}`}
+    </h1>
+    <PostsByTag posts={posts} />
+  </section>
+</Layout>
