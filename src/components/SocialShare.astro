@@ -1,0 +1,25 @@
+---
+import SocialShareButtons from './SocialShareButtons.astro';
+const { post } = Astro.props;
+---
+
+<div id="social-share-container" class="opacity-0 hidden flex-col gap-1 -ml-20 transition-all duration-300">
+  <SocialShareButtons size={40} post={post} />
+</div>
+
+<script>
+  const container = document.getElementById('social-share-container');
+  
+  if (container) {
+    window.addEventListener('scroll', () => {
+      const scrollPosition = window.scrollY;
+      if (scrollPosition >= 500) {
+        container.classList.remove('opacity-0', 'hidden');
+        container.classList.add('fixed', 'top-40', 'opacity-100', 'visible');
+      } else {
+        container.classList.add('opacity-0', 'hidden');
+        container.classList.remove('fixed', 'top-40', 'opacity-100', 'visible');
+      }
+    });
+  }
+</script>

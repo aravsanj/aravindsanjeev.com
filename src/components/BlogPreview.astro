@@ -1,0 +1,33 @@
+---
+import { formatDate } from "@/lib/utils";
+const { posts } = Astro.props;
+const allBlogs = posts || [];
+const sortedBlogs = allBlogs
+  .sort(
+    (a: any, b: any) =>
+      new Date(b.data.publishedAt).getTime() -
+      new Date(a.data.publishedAt).getTime(),
+  )
+  .slice(0, 3);
+---
+
+<div class="space-y-6">
+  {
+    sortedBlogs.map((post: any, index: number) => (
+      <div class="flex relative items-center gap-4 justify-between w-full">
+        <div class="flex gap-4 items-center justify-between">
+          <span class="text-fuchsia-600">{index + 1}.</span>
+          <a
+            href={`/${post.slug}`}
+            class="text-gray-600 title text-sm sm:text-base tracking-tight group-hover:underline hover:underline"
+          >
+            {post.data.title}
+          </a>
+        </div>
+        <span class="text-gray-400 min-w-fit text-xs sm:text-sm font-medium tabular-nums">
+          {formatDate(post.data.publishedAt, false)}
+        </span>
+      </div>
+    ))
+  }
+</div>

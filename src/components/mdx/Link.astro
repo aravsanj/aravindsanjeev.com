@@ -1,0 +1,13 @@
+---
+const props = Astro.props;
+const href = props.href;
+const isInternal = href && (href.startsWith('/') || href.startsWith('#'));
+---
+
+{
+    isInternal ? (
+        <a {...props}><slot /></a>
+    ) : (
+        <a target="_blank" rel="noopener noreferrer" {...props}><slot /></a>
+    )
+}
