@@ -1,10 +1,8 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import TopNav from '../../components/TopNav.astro';
-import BlogPosts from '../../components/Posts.astro';
-import { getCollection } from 'astro:content';
+import Layout from "../../layouts/Layout.astro";
+import { getCollection } from "astro:content";
 
-const posts = await getCollection('blog');
+const posts = await getCollection("blog");
 
 const metadata = {
   title: "Blog",
@@ -14,13 +12,36 @@ const metadata = {
 ---
 
 <Layout title={metadata.title} description={metadata.description}>
-  <header>
-    <TopNav />
-  </header>
-  <section class="max-w-xl px-4 py-12 sm:py-20 mx-auto">
-    <h1 class="text-black text-3xl capitalize text-center font-semibold mb-16 sm:mb-24">
-      All posts
-    </h1>
-    <BlogPosts posts={posts} />
-  </section>
+  <main class="py-24 max-w-full">
+    <h1 class="text-5xl font-bold text-primary mb-16">All Posts</h1>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {
+        posts.map((post) => (
+          <a href={`/${post.slug}`} class="group flex flex-col gap-4">
+            <div class="aspect-video w-full rounded-xl bg-surface border border-white/5 overflow-hidden relative">
+              {post.data.image ? (
+                <img
+                  src={post.data.image}
+                  alt={post.data.title}
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+              ) : (
+                <div class="w-full h-full flex items-center justify-center text-secondary/50 font-mono text-sm">
+                  No Cover
+                </div>
+              )}
+            </div>
+            <div>
+              <h3 class="text-2xl font-bold text-primary group-hover:text-accent transition-colors leading-tight mb-3">
+                {post.data.title}
+              </h3>
+              <p class="text-secondary text-base line-clamp-2">
+                {post.data.summary}
+              </p>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </main>
 </Layout>

@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import Breadcrumbs from "../components/ui/Breadcrumbs.astro";
 
 interface Props {
   title?: string;
@@ -14,6 +15,7 @@ const {
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const isHome = Astro.url.pathname === "/";
 ---
 
 <!doctype html>
@@ -24,7 +26,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
-    
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalURL} />
@@ -38,7 +40,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content={image} />
-    
+
     <title>{title}</title>
 
     <!-- Schema.org -->
@@ -66,25 +68,32 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         }
       }
     </script>
-    
   </head>
-  <body class="relative min-h-screen leading-relaxed text-slate-900 antialiased">
-    <div class="absolute inset-0 -z-10 h-full w-full bg-white bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]"></div>
-    <div class="absolute left-0 right-0 top-0 -z-10 m-auto h-[310px] w-[310px] rounded-full bg-fuchsia-400 opacity-20 blur-[100px]"></div>
-    <slot />
-    
+  <body class="relative min-h-screen leading-relaxed antialiased">
+    <div class="mx-auto max-w-7xl px-6 md:px-12 lg:px-24">
+      {
+        !isHome && (
+          <Breadcrumbs className="py-8" customLabel={title.split(" | ")[0]} />
+        )
+      }
+      <slot />
+    </div>
+
     <!-- Google Analytics -->
     <!-- Assuming generic Google Tag Manager or similar if needed. Originally checking next/third-parties. 
          If user wants GA, they should use astro-analytics or a script. 
          For now omitting GA to avoid breakage without ID/setup or relying on deprecated Next comp.
          If 'G-BELR0CJR8V' is critical, I can add a script tag.
     -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BELR0CJR8V"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BELR0CJR8V"
+    ></script>
     <script is:inline>
       window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-BELR0CJR8V');
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-BELR0CJR8V");
     </script>
   </body>
 </html>

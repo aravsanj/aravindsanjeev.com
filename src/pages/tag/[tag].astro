@@ -1,30 +1,40 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import TopNav from '../../components/TopNav.astro';
-import PostsByTag from '../../components/PostsByTag.astro';
-import { getCollection } from 'astro:content';
+import Layout from "../../layouts/Layout.astro";
+import TopNav from "../../components/TopNav.astro";
+import PostsByTag from "../../components/PostsByTag.astro";
+import { getCollection } from "astro:content";
 
 export async function getStaticPaths() {
-  const posts = await getCollection('blog');
-  const uniqueTags = [...new Set(posts.flatMap(post => {
-       let tags = [];
-       try {
-           tags = typeof post.data.tags === 'string' ? JSON.parse(post.data.tags) : post.data.tags || [];
-       } catch(e) {}
-       return tags;
-  }))];
+  const posts = await getCollection("blog");
+  const uniqueTags = [
+    ...new Set(
+      posts.flatMap((post: any) => {
+        let tags: string[] = [];
+        try {
+          tags =
+            typeof post.data.tags === "string"
+              ? JSON.parse(post.data.tags)
+              : post.data.tags || [];
+        } catch (e) {}
+        return tags;
+      }),
+    ),
+  ];
 
-  return uniqueTags.map(tag => {
-    const filteredPosts = posts.filter(post => {
-       let tags = [];
-       try {
-           tags = typeof post.data.tags === 'string' ? JSON.parse(post.data.tags) : post.data.tags || [];
-       } catch(e) {}
-       return tags.includes(tag);
+  return uniqueTags.map((tag) => {
+    const filteredPosts = posts.filter((post: any) => {
+      let tags = [];
+      try {
+        tags =
+          typeof post.data.tags === "string"
+            ? JSON.parse(post.data.tags)
+            : post.data.tags || [];
+      } catch (e) {}
+      return tags.includes(tag);
     });
     return {
       params: { tag },
-      props: { posts: filteredPosts }
+      props: { posts: filteredPosts },
     };
   });
 }
@@ -34,13 +44,12 @@ const { posts } = Astro.props;
 ---
 
 <Layout title={`Posts tagged with ${tag}`}>
-  <header>
-    <TopNav />
-  </header>
-  <section class="max-w-xl px-4 py-12 sm:py-20 mx-auto">
-    <h1 class="text-black text-3xl capitalize text-center font-semibold mb-16 sm:mb-24">
+  <main class="py-24 max-w-full">
+    <h1 class="text-5xl font-bold text-primary mb-16 text-center">
       {`#${tag}`}
     </h1>
-    <PostsByTag posts={posts} />
-  </section>
+    <div class="max-w-full mx-auto">
+      <PostsByTag posts={posts} />
+    </div>
+  </main>
 </Layout>

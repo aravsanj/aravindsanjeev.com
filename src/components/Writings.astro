@@ -1,23 +1,65 @@
 ---
-import BlogPreview from "./BlogPreview.astro";
+import { type CollectionEntry } from "astro:content";
+
+interface Props {
+  posts: CollectionEntry<"blog">[];
+}
+
 const { posts } = Astro.props;
+const latestPosts = posts.slice(0, 3); // Show top 3
 ---
 
-<section id="blog" class="mt-20 lg:mt-40 space-y-10">
-  <div class="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-[#ffffff]/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0">
-    <h2 class="text-sm font-bold uppercase tracking-widest text-slate-900 lg:sr-only">
-      Blog
-    </h2>
-  </div>
-  <div class="flex flex-col items-start">
-    <span class="relative w-full">
-      <BlogPreview posts={posts} />
-    </span>
+<section id="blog" class="py-24 border-t border-white/5">
+  <div class="flex items-center justify-between mb-12">
+    <h2 class="text-3xl font-bold text-primary">Latest Writings</h2>
     <a
       href="/blog"
-      class="block text-slate-600 my-10 text-sm hover:underline self-end uppercase"
+      class="text-accent hover:text-white transition-colors flex items-center gap-2 group"
     >
-      View all
+      See more
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="group-hover:translate-x-1 transition-transform"
+        ><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg
+      >
     </a>
+  </div>
+
+  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+    {
+      latestPosts.map((post) => (
+        <a href={`/${post.slug}`} class="group flex flex-col gap-4">
+          <div class="aspect-video w-full rounded-xl bg-surface border border-white/5 overflow-hidden relative">
+            {post.data.image ? (
+              <img
+                src={post.data.image}
+                alt={post.data.title}
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+            ) : (
+              <div class="w-full h-full flex items-center justify-center text-slate-700 font-mono text-sm">
+                No Cover
+              </div>
+            )}
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-primary group-hover:text-accent transition-colors leading-tight mb-2">
+              {post.data.title}
+            </h3>
+            <p class="text-secondary text-sm line-clamp-2">
+              {post.data.summary}
+            </p>
+          </div>
+        </a>
+      ))
+    }
   </div>
 </section>
