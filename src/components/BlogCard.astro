@@ -1,0 +1,50 @@
+---
+import { Picture } from "astro:assets";
+import { type CollectionEntry } from "astro:content";
+import Tag from "./ui/Tag.astro";
+
+interface Props {
+  post: CollectionEntry<"blog">;
+}
+
+const { post } = Astro.props;
+const tags = post.data.tags || [];
+---
+
+<div class="group relative flex flex-col gap-4">
+  <div class="aspect-video w-full rounded-xl bg-surface border border-white/5 overflow-hidden relative">
+    {post.data.image ? (
+      <Picture
+        src={post.data.image}
+        alt={post.data.title}
+        widths={[292, 584, post.data.image.width]}
+        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 292px"
+        formats={["avif", "webp"]}
+        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+      />
+    ) : (
+      <div class="w-full h-full flex items-center justify-center text-secondary font-mono text-sm">
+        No Cover
+      </div>
+    )}
+  </div>
+  <div class="flex flex-col flex-1">
+    <h3 class="text-2xl font-bold text-primary group-hover:text-accent transition-colors leading-tight mb-3">
+      <a href={`/${post.slug}`} class="after:absolute after:inset-0">
+        {post.data.title}
+      </a>
+    </h3>
+    <p class="text-secondary text-base line-clamp-2 mb-4">
+      {post.data.summary}
+    </p>
+    {tags.length > 0 && (
+      <ul class="mt-auto flex flex-wrap gap-2 relative z-10">
+        {tags.map((tag: string) => (
+          <li>
+            <Tag title={tag} href={`/tag/${tag.toLowerCase()}`} />
+          </li>
+        ))}
+      </ul>
+    )}
+  </div>
+</div>
