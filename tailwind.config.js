@@ -12,7 +12,19 @@ module.exports = {
         border: "#27272a", // Subtle borders
       },
       fontFamily: {
-        sans: ['Inter', 'sans-serif'], // Ensuring a clean sans-serif
+        sans: ["Inter", "sans-serif"], // Ensuring a clean sans-serif
+      },
+      typography: {
+        DEFAULT: {
+          css: {
+            "code::before": {
+              content: '""',
+            },
+            "code::after": {
+              content: '""',
+            },
+          },
+        },
       },
       animation: {
         spotlight: "spotlight 2s ease .75s 1 forwards",
