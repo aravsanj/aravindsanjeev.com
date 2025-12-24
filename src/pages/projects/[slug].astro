@@ -1,17 +1,19 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import { getCollection } from "astro:content";
+import { getCollection, type CollectionEntry } from "astro:content";
 import Tag from "../../components/ui/Tag.astro";
+
+type ProjectEntry = CollectionEntry<'projects'>;
 
 export async function getStaticPaths() {
     const projects = await getCollection("projects");
-    return projects.map((entry: any) => ({
+    return projects.map((entry: ProjectEntry) => ({
         params: { slug: entry.slug },
         props: { entry },
     }));
 }
 
-const { entry } = Astro.props;
+const { entry }: { entry: ProjectEntry } = Astro.props;
 const { Content } = await entry.render();
 ---
 
@@ -27,7 +29,7 @@ const { Content } = await entry.render();
 
             <div class="flex flex-wrap gap-3 mb-10">
                 {
-                    entry.data.tags?.map((tag: any) => (
+                    entry.data.tags?.map((tag: string) => (
                         <Tag title={tag} href={`/tag/${tag.toLowerCase()}`} />
                     ))
                 }

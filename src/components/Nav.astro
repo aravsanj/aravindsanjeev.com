@@ -41,7 +41,7 @@ const navItems = {
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          const id = entry.target.getAttribute('id');
+          const id = entry.target.getAttribute('id') ?? "";
           updateActiveLink(id);
         }
       });
@@ -54,7 +54,7 @@ const navItems = {
     if (element) observer.observe(element);
   });
 
-  function updateActiveLink(id) {
+  function updateActiveLink(id: string) {
     navLinks.forEach((link) => {
       const linkText = link.querySelector('.nav-text');
       const target = link.getAttribute('data-target');

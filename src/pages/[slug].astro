@@ -1,5 +1,5 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection, type CollectionEntry } from "astro:content";
 import Layout from "../layouts/Layout.astro";
 import { components } from "../components/mdx-components";
 import { formatDate } from "../lib/utils";
@@ -8,15 +8,17 @@ import SocialShareButtons from "../components/SocialShareButtons.astro";
 import Social from "../components/Social.astro";
 import Tag from "../components/ui/Tag.astro";
 
+type BlogEntry = CollectionEntry<'blog'>;
+
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
-  return posts.map((post: any) => ({
+  return posts.map((post: BlogEntry) => ({
     params: { slug: post.slug },
     props: { post },
   }));
 }
 
-const { post } = Astro.props;
+const { post }: { post: BlogEntry } = Astro.props;
 const { Content } = await post.render();
 
 const metadata = {
@@ -77,7 +79,7 @@ const baseUrl = "https://aravindsanjeev.com";
               </span>
               <div class="flex flex-wrap gap-2">
                 {
-                  tags.map((tag: any) => (
+                  tags.map((tag: string) => (
                     <Tag title={tag} href={`/tag/${tag.toLowerCase()}`} />
                   ))
                 }

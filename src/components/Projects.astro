@@ -1,10 +1,12 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection, type CollectionEntry } from "astro:content";
 import Project from "./Project.astro";
+
+type ProjectEntry = CollectionEntry<'projects'>;
 
 const allProjects = await getCollection("projects");
 const projects = allProjects
-  .sort((a: any, b: any) => {
+  .sort((a: ProjectEntry, b: ProjectEntry) => {
     // Sort by priority property first (if it exists) - higher priority first
     const priorityA = a.data.priority ?? 0;
     const priorityB = b.data.priority ?? 0;
@@ -51,7 +53,7 @@ const projects = allProjects
 
   <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
     {
-      projects.map((project: any) => (
+      projects.map((project: ProjectEntry) => (
         <Project
           title={project.data.title}
           description={project.data.description}

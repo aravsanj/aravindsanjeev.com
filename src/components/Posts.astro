@@ -1,9 +1,13 @@
 ---
 import { formatDate } from "@/lib/utils";
+import type { CollectionEntry } from "astro:content";
+
+type BlogEntry = CollectionEntry<'blog'>;
+
 const { posts } = Astro.props;
 const allBlogs = posts || [];
 const sortedBlogs = allBlogs.sort(
-  (a: any, b: any) =>
+  (a: BlogEntry, b: BlogEntry) =>
     new Date(b.data.publishedAt).getTime() -
     new Date(a.data.publishedAt).getTime(),
 );
@@ -11,7 +15,7 @@ const sortedBlogs = allBlogs.sort(
 
 <div class="space-y-6">
   {
-    sortedBlogs.map((post: any, index: number) => (
+    sortedBlogs.map((post: BlogEntry, index: number) => (
       <div class="flex items-center space-x-4 border-b border-neutral-200 pb-4">
         <span class="text-fuchsia-600 text-lg font-medium">{index + 1}.</span>
 
