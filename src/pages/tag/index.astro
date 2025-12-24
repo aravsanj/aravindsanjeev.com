@@ -39,9 +39,8 @@ const metadata = {
 };
 ---
 
-<Layout title={metadata.title} description={metadata.description}>
-    <main class="py-24 max-w-full">
-        <h1 class="text-5xl font-bold text-primary mb-16">All Tags</h1>
+<Layout title={metadata.title} description={metadata.description} mainClass="py-24 max-w-full">
+    <h1 class="text-5xl font-bold text-primary mb-16">All Tags</h1>
         <div class="flex flex-wrap gap-4">
             {
                 uniqueTags.map(([tag, count]) => (
@@ -58,5 +57,4 @@ const metadata = {
                 ))
             }
         </div>
-    </main>
 </Layout>

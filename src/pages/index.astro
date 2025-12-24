@@ -10,10 +10,8 @@ const posts = await getCollection("blog");
 ---
 
 <Layout>
-  <main class="max-w-full">
-    <Hero />
-    <Projects />
-    <Writings posts={posts} />
-    <Experience />
-  </main>
+  <Hero />
+  <Projects />
+  <Writings posts={posts} />
+  <Experience />
 </Layout>

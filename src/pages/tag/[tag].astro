@@ -76,8 +76,7 @@ const { tag } = Astro.params;
 const { posts, projects, experiences: matchedExperiences } = Astro.props;
 ---
 
-<Layout title={`Content tagged with ${tag}`}>
-  <main class="py-24 max-w-full">
+<Layout title={`Content tagged with ${tag}`} mainClass="py-24 max-w-full">
     <h1 class="text-5xl font-bold text-primary mb-16 text-center">
       {`#${tag}`}
     </h1>
@@ -163,5 +162,4 @@ const { posts, projects, experiences: matchedExperiences } = Astro.props;
         )
       }
     </div>
-  </main>
 </Layout>

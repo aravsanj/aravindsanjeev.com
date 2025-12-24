@@ -18,12 +18,11 @@ const { entry }: { entry: ProjectEntry } = Astro.props;
 const { Content } = await entry.render();
 ---
 
-<Layout title={`${entry.data.title} | Aravind Sanjeev`}>
-    <main class="py-24 max-w-full">
-        <header class="mb-16 max-w-4xl">
-            <h1 class="text-5xl md:text-6xl font-bold text-primary mb-8">
-                {entry.data.title}
-            </h1>
+<Layout title={`${entry.data.title} | Aravind Sanjeev`} mainClass="py-24 max-w-full">
+    <header class="mb-16 max-w-4xl">
+        <h1 class="text-5xl md:text-6xl font-bold text-primary mb-8">
+            {entry.data.title}
+        </h1>
             <p class="text-2xl text-secondary leading-relaxed mb-8">
                 {entry.data.description}
             </p>
@@ -81,5 +80,4 @@ const { Content } = await entry.render();
         <article class="prose prose-invert prose-lg max-w-none">
             <Content />
         </article>
-    </main>
 </Layout>

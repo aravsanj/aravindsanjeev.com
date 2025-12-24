@@ -7,12 +7,14 @@ interface Props {
   title?: string;
   description?: string;
   image?: string;
+  mainClass?: string;
 }
 
 const {
   title = "Aravind Sanjeev",
   description = "Aravind Sanjeev's personal site — a collection of engineering blog posts, useful developer tools, and projects exploring the future of software and AI.",
   image = "https://aravindsanjeev.com/profile.jpg",
+  mainClass = "max-w-full",
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -72,20 +74,24 @@ const isHome = Astro.url.pathname === "/";
   </head>
   <body class="relative min-h-screen leading-relaxed antialiased">
     <div class="mx-auto max-w-7xl px-6 md:px-12 lg:px-24">
-      {
-        !isHome && (
-          <div class="flex items-center justify-between py-8">
-            <Breadcrumbs customLabel={title.split(" | ")[0]} />
-            <a
-              href="/contact"
-              class="hidden sm:block px-5 py-2 rounded-full bg-accent/10 text-accent border border-accent/20 hover:bg-accent hover:text-gray-950 transition-all text-sm font-semibold"
-            >
-              Hire Me
-            </a>
-          </div>
-        )
-      }
-      <slot />
+      <header>
+        {
+          !isHome && (
+            <div class="flex items-center justify-between py-8">
+              <Breadcrumbs customLabel={title.split(" | ")[0]} />
+              <a
+                href="/contact"
+                class="hidden sm:block px-5 py-2 rounded-full bg-accent/10 text-accent border border-accent/20 hover:bg-accent hover:text-gray-950 transition-all text-sm font-semibold"
+              >
+                Hire Me
+              </a>
+            </div>
+          )
+        }
+      </header>
+      <main class={mainClass}>
+        <slot />
+      </main>
       <Footer />
     </div>
 
