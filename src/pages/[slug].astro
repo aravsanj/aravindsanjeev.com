@@ -1,22 +1,24 @@
 ---
-import { getCollection } from 'astro:content';
-import Layout from '../layouts/Layout.astro';
-import TopNav from '../components/TopNav.astro';
-import { components } from '../components/mdx-components';
-import { formatDate } from '../lib/utils';
-import SocialShare from '../components/SocialShare.astro'; 
-import SocialShareButtons from '../components/SocialShareButtons.astro'; 
-import Social from '../components/Social.astro'; 
+import { getCollection, type CollectionEntry } from "astro:content";
+import Layout from "../layouts/Layout.astro";
+import { components } from "../components/mdx-components";
+import { formatDate } from "../lib/utils";
+import SocialShare from "../components/SocialShare.astro";
+import SocialShareButtons from "../components/SocialShareButtons.astro";
+import Social from "../components/Social.astro";
+import Tag from "../components/ui/Tag.astro";
+
+type BlogEntry = CollectionEntry<'blog'>;
 
 export async function getStaticPaths() {
-  const posts = await getCollection('blog');
-  return posts.map(post => ({
+  const posts = await getCollection("blog");
+  return posts.map((post: BlogEntry) => ({
     params: { slug: post.slug },
     props: { post },
   }));
 }
 
-const { post } = Astro.props;
+const { post }: { post: BlogEntry } = Astro.props;
 const { Content } = await post.render();
 
 const metadata = {
@@ -28,23 +30,30 @@ const metadata = {
 let tags = [];
 if (post.data.tags) {
   try {
-     tags = typeof post.data.tags === 'string' ? JSON.parse(post.data.tags) : post.data.tags || [];
+    tags =
+      typeof post.data.tags === "string"
+        ? JSON.parse(post.data.tags)
+        : post.data.tags || [];
   } catch (e) {
-     tags = [];
+    tags = [];
   }
 }
 
-const baseUrl = "https://aravindsanjeev.com"; 
+const baseUrl = "https://aravindsanjeev.com";
 ---
 
-<Layout title={metadata.title} description={metadata.description} image={metadata.image}>
-  <header>
-    <TopNav />
-  </header>
-  <section class="relative">
-      <section class="max-w-full px-4 py-20 mb-16">
-         <!-- Schema.org Script -->
-         <script type="application/ld+json" set:html={JSON.stringify({
+<Layout
+  title={metadata.title}
+  description={metadata.description}
+  image={metadata.image}
+>
+  <main class="py-24 max-w-full">
+    <section class="relative">
+      <header class="mb-16">
+        <!-- Schema.org Script -->
+        <script
+          type="application/ld+json"
+          set:html={JSON.stringify({
             "@context": "https://schema.org",
             "@type": "BlogPosting",
             headline: post.data.title,
@@ -52,65 +61,65 @@ const baseUrl = "https://aravindsanjeev.com";
             dateModified: post.data.publishedAt,
             description: post.data.summary,
             image: post.data.image
-                ? `${baseUrl}${post.data.image}`
-                : `/og?title=${encodeURIComponent(post.data.title)}`,
+              ? `${baseUrl}${post.data.image}`
+              : `/og?title=${encodeURIComponent(post.data.title)}`,
             url: `${baseUrl}/${post.slug}`,
             author: {
-                "@type": "Person",
-                name: "Aravind Sanjeev",
+              "@type": "Person",
+              name: "Aravind Sanjeev",
             },
-         })} />
+          })}
+        />
 
-        <div class="max-w-[800px] mx-auto">
-          <div class="mt-6 mb-20">
-              <div class="mb-10 flex flex-col gap-4 sm:gap-0 sm:flex-row justify-between">
-                <p class="bg-gray-200 text-gray-600 text-sm font-medium px-3 py-1 rounded-full border border-gray-400 inline-block max-w-fit">
-                  {formatDate(post.data.publishedAt)}
-                </p>
-                <div class="flex flex-wrap gap-2">
-                  {tags.map((tag) => (
-                    <a href={`/tag/${tag}`} class="no-underline">
-                      <span class="bg-fuchsia-100 text-fuchsia-600 cursor-pointer text-sm font-medium px-3 py-1 rounded-full border-2 border-fuchsia-600 hover:bg-fuchsia-200 focus:outline-none focus:ring-2 focus:ring-fuchsia-500 transition duration-300 ease-in-out shadow-sm">
-                        {`#${tag}`}
-                      </span>
-                    </a>
-                  ))}
-                </div>
+        <div class="max-w-4xl">
+          <div class="mb-12">
+            <div class="mb-8 flex flex-wrap items-center gap-4">
+              <span class="text-secondary text-sm font-medium">
+                {formatDate(post.data.publishedAt)}
+              </span>
+              <div class="flex flex-wrap gap-2">
+                {
+                  tags.map((tag: string) => (
+                    <Tag title={tag} href={`/tag/${tag.toLowerCase()}`} />
+                  ))
+                }
               </div>
-              <h1 class="title font-semibold text-4xl sm:text-5xl md:text-6xl text-slate-900 tracking-tighter">
-                {post.data.title}
-              </h1>
-              <div class="flex gap-1 pt-6">
-                <!-- Inline Social Share -->
-                <SocialShareButtons size={24} post={post} /> 
-              </div>
+            </div>
+            <h1
+              class="text-6xl md:text-8xl font-bold text-primary tracking-tight mb-8"
+            >
+              {post.data.title}
+            </h1>
+            <div class="flex gap-1 pt-6 border-t border-white/5">
+              <SocialShareButtons size={24} post={post} />
+            </div>
           </div>
 
-          <article class="article prose prose-xl font-semibold prose-zinc">
+          <article class="article prose prose-invert prose-2xl max-w-4xl">
             <!-- Floating Social Share -->
-            <SocialShare size={40} post={post} /> 
-            
+            <SocialShare size={40} post={post} />
+
             <Content components={components} />
           </article>
 
-          <div class="mt-16 border-t border-neutral-700 pt-8">
-            <div class="flex items-start space-x-4">
+          <div class="mt-24 border-t border-white/5 pt-12 max-w-4xl">
+            <div class="flex items-start space-x-6">
               <img
-                src="/assets/avatar.png"
+                src="/assets/profile_transparent.png"
                 alt="Aravind Sanjeev"
-                class="w-16 h-16 rounded-full object-fit"
+                class="w-20 h-20 rounded-full object-cover border-2 border-white/10"
               />
               <div>
-                <h3 class="text-lg font-semibold text-black">
+                <h3 class="text-xl font-bold text-primary mb-2">
                   Aravind Sanjeev
                 </h3>
-                <p class="text-sm text-gray-800 mb-4">
+                <p class="text-base text-secondary mb-6 leading-relaxed">
                   Aravind Sanjeev is a software engineer and blogger who loves
                   sharing his thoughts on web development, programming, and
                   technology trends.
                 </p>
                 <Social
-                  fillColor="#141414"
+                  fillColor="#e8eaed"
                   email="saravind436@gmail.com"
                   twitter="aravsanj"
                   instagram="aravsanj"
@@ -120,6 +129,7 @@ const baseUrl = "https://aravindsanjeev.com";
             </div>
           </div>
         </div>
-      </section>
-  </section>
+      </header>
+    </section>
+  </main>
 </Layout>

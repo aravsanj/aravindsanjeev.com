@@ -1,46 +1,167 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import TopNav from '../../components/TopNav.astro';
-import PostsByTag from '../../components/PostsByTag.astro';
-import { getCollection } from 'astro:content';
+import Layout from "../../layouts/Layout.astro";
+import PostsByTag from "../../components/PostsByTag.astro";
+import Project from "../../components/Project.astro";
+import TagComponent from "../../components/ui/Tag.astro";
+import { getCollection, type CollectionEntry } from "astro:content";
+import { experiences } from "../../data/experience";
+
+type BlogEntry = CollectionEntry<'blog'>;
+type ProjectEntry = CollectionEntry<'projects'>;
 
 export async function getStaticPaths() {
-  const posts = await getCollection('blog');
-  const uniqueTags = [...new Set(posts.flatMap(post => {
-       let tags = [];
-       try {
-           tags = typeof post.data.tags === 'string' ? JSON.parse(post.data.tags) : post.data.tags || [];
-       } catch(e) {}
-       return tags;
-  }))];
+  const posts = await getCollection("blog");
+  const projects = await getCollection("projects");
 
-  return uniqueTags.map(tag => {
-    const filteredPosts = posts.filter(post => {
-       let tags = [];
-       try {
-           tags = typeof post.data.tags === 'string' ? JSON.parse(post.data.tags) : post.data.tags || [];
-       } catch(e) {}
-       return tags.includes(tag);
+  const allContent = [
+    ...posts,
+    ...projects,
+    ...experiences.map((e) => ({ data: { tags: e.technologies } })),
+  ];
+
+  const uniqueTags = [
+    ...new Set(
+      allContent.flatMap((item: BlogEntry | ProjectEntry | { data: { tags: string[] } }) => {
+        let tags: string[] = [];
+        try {
+          tags =
+            typeof item.data.tags === "string"
+              ? JSON.parse(item.data.tags)
+              : item.data.tags || [];
+        } catch (e) {}
+        return tags.map((t: string) => t.toLowerCase());
+      }),
+    ),
+  ];
+
+  return uniqueTags.map((tag) => {
+    const filteredPosts = posts.filter((post: BlogEntry) => {
+      let tags: string[] = [];
+      try {
+        tags =
+          typeof post.data.tags === "string"
+            ? JSON.parse(post.data.tags)
+            : post.data.tags || [];
+      } catch (e) {}
+      return tags.some((t: string) => t.toLowerCase() === tag);
     });
+
+    const filteredProjects = projects.filter((project: ProjectEntry) => {
+      let tags: string[] = [];
+      try {
+        tags =
+          typeof project.data.tags === "string"
+            ? JSON.parse(project.data.tags)
+            : project.data.tags || [];
+      } catch (e) {}
+      return tags.some((t: string) => t.toLowerCase() === tag);
+    });
+
+    const filteredExperiences = experiences.filter((exp) => {
+      return exp.technologies.some((t: string) => t.toLowerCase() === tag);
+    });
+
     return {
       params: { tag },
-      props: { posts: filteredPosts }
+      props: {
+        posts: filteredPosts,
+        projects: filteredProjects,
+        experiences: filteredExperiences,
+      },
     };
   });
 }
 
 const { tag } = Astro.params;
-const { posts } = Astro.props;
+const { posts, projects, experiences: matchedExperiences } = Astro.props;
 ---
 
-<Layout title={`Posts tagged with ${tag}`}>
-  <header>
-    <TopNav />
-  </header>
-  <section class="max-w-xl px-4 py-12 sm:py-20 mx-auto">
-    <h1 class="text-black text-3xl capitalize text-center font-semibold mb-16 sm:mb-24">
+<Layout title={`Content tagged with ${tag}`}>
+  <main class="py-24 max-w-full">
+    <h1 class="text-5xl font-bold text-primary mb-16 text-center">
       {`#${tag}`}
     </h1>
-    <PostsByTag posts={posts} />
-  </section>
+
+    <div class="space-y-24">
+      {
+        projects && projects.length > 0 && (
+          <section>
+            <h2 class="text-3xl font-bold text-primary mb-8 border-b border-white/5 pb-4">
+              Projects
+            </h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {projects.map((project: ProjectEntry) => (
+                <Project
+                  title={project.data.title}
+                  description={project.data.description}
+                  imageUrl={project.data.imageUrl}
+                  url={`/projects/${project.slug}`}
+                  tags={project.data.tags}
+                />
+              ))}
+            </div>
+          </section>
+        )
+      }
+
+      {
+        posts && posts.length > 0 && (
+          <section>
+            <h2 class="text-3xl font-bold text-primary mb-8 border-b border-white/5 pb-4">
+              Articles
+            </h2>
+            <PostsByTag posts={posts} />
+          </section>
+        )
+      }
+
+      {
+        matchedExperiences && matchedExperiences.length > 0 && (
+          <section>
+            <h2 class="text-3xl font-bold text-primary mb-8 border-b border-white/5 pb-4">
+              Experience
+            </h2>
+            <div class="grid md:grid-cols-2 gap-8">
+              {matchedExperiences.map((item) => (
+                <div class="group relative flex flex-col gap-6 p-6 rounded-2xl bg-surface border border-white/5 hover:border-accent/30 transition-all duration-300">
+                  <div class="flex flex-col flex-1">
+                    <header class="mb-4">
+                      <span class="text-sm font-bold uppercase tracking-widest text-accent block mb-2">
+                        {item.duration}
+                      </span>
+                      <h3 class="text-2xl font-bold text-primary group-hover:text-accent transition-colors">
+                        <a
+                          href={item.companyUrl}
+                          target="_blank"
+                          rel="noreferrer noopener"
+                          class="after:absolute after:inset-0"
+                        >
+                          {`${item.title} · ${item.company}`}
+                        </a>
+                      </h3>
+                    </header>
+
+                    <p class="text-secondary text-base leading-relaxed mb-6">
+                      {item.description}
+                    </p>
+
+                    <ul class="mt-auto flex flex-wrap gap-2 relative z-10">
+                      {item.technologies.map((tech: string) => (
+                        <li>
+                          <TagComponent
+                            title={tech}
+                            href={`/tag/${tech.toLowerCase()}`}
+                          />
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        )
+      }
+    </div>
+  </main>
 </Layout>

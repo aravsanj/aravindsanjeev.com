@@ -1,0 +1,45 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Project from "../../components/Project.astro";
+import { getCollection, type CollectionEntry } from "astro:content";
+
+type ProjectEntry = CollectionEntry<'projects'>;
+
+const allProjects = await getCollection("projects");
+const projects = allProjects.sort((a: ProjectEntry, b: ProjectEntry) => {
+    // Sort by priority property first (if it exists) - higher priority first
+    const priorityA = a.data.priority ?? 0;
+    const priorityB = b.data.priority ?? 0;
+    
+    if (priorityA !== priorityB) {
+        return priorityB - priorityA; // Descending order
+    }
+    
+    // Fall back to publishedAt if priority is the same or not defined
+    const dateA = a.data.publishedAt
+        ? new Date(a.data.publishedAt).valueOf()
+        : 0;
+    const dateB = b.data.publishedAt
+        ? new Date(b.data.publishedAt).valueOf()
+        : 0;
+    return dateB - dateA;
+});
+---
+
+<Layout title="All Projects | Aravind Sanjeev">
+    <h1 class="text-5xl font-bold text-primary mb-16">All Projects</h1>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {
+            projects.map((project: ProjectEntry) => (
+                <Project
+                    title={project.data.title}
+                    description={project.data.description}
+                    imageUrl={project.data.imageUrl}
+                    url={`/projects/${project.slug}`}
+                    tags={project.data.tags}
+                />
+            ))
+        }
+    </div>
+</Layout>

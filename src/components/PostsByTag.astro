@@ -1,33 +1,55 @@
 ---
-import { formatDate } from "@/lib/utils";
+import Tag from "./ui/Tag.astro";
+import type { CollectionEntry } from "astro:content";
+
+type BlogEntry = CollectionEntry<'blog'>;
+
 const { posts } = Astro.props;
-const allBlogs = posts || [];
-const sortedBlogs = allBlogs.sort(
-  (a: any, b: any) =>
+const sortedBlogs = posts.sort(
+  (a: BlogEntry, b: BlogEntry) =>
     new Date(b.data.publishedAt).getTime() -
     new Date(a.data.publishedAt).getTime(),
 );
 ---
 
-<div class="space-y-6">
+<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
   {
-    sortedBlogs.map((post: any, index: number) => (
-      <div class="flex items-center space-x-4 border-b border-neutral-200 pb-4">
-        <span class="text-fuchsia-600 text-lg font-medium">{index + 1}.</span>
-
-        <div class="flex flex-col md:flex-row md:items-center md:gap-12">
-          <a
-            href={`/blog/${post.slug}`}
-            class="text-gray-600 sm:min-w-[400px] font-semibold md:text-lg tracking-tight group-hover:underline hover:underline"
-          >
-            {post.data.title}
-          </a>
-
-          <span class="text-gray-400 min-w-[100px] text-sm md:text-base font-medium tabular-nums">
-            {formatDate(post.data.publishedAt, false)}
-          </span>
+    sortedBlogs.map((post: BlogEntry) => {
+      const tags = post.data.tags || [];
+      return (
+        <div class="group relative flex flex-col gap-6 p-6 rounded-2xl bg-surface border border-white/5 hover:border-accent/30 transition-all duration-300">
+          <div class="aspect-video w-full rounded-xl bg-surface border border-white/5 overflow-hidden relative">
+            {post.data.image ? (
+              <img
+                src={post.data.image}
+                alt={post.data.title}
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+            ) : (
+              <div class="w-full h-full flex items-center justify-center text-secondary/50 font-mono text-sm">
+                No Cover
+              </div>
+            )}
+          </div>
+          <div class="flex flex-col flex-1">
+            <h3 class="text-2xl font-bold text-primary mb-3 group-hover:text-accent transition-colors leading-tight">
+              <a href={`/${post.slug}`} class="after:absolute after:inset-0">
+                {post.data.title}
+              </a>
+            </h3>
+            <p class="text-secondary text-base leading-relaxed mb-6 line-clamp-3">
+              {post.data.summary}
+            </p>
+            <ul class="mt-auto flex flex-wrap gap-2 relative z-10">
+              {tags.map((tag: string) => (
+                <li>
+                  <Tag title={tag} href={`/tag/${tag.toLowerCase()}`} />
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
-      </div>
-    ))
+      );
+    })
   }
 </div>

@@ -1,72 +1,67 @@
 ---
+import { getCollection, type CollectionEntry } from "astro:content";
 import Project from "./Project.astro";
 
-const projects = [
-  {
-    title: "Golden Pen Award",
-    description:
-      "The Golden Pen Award aims to celebrate the most influential literary works in the Arab world, supporting writers who enrich Arabic literature with their unique contributions.",
-    imageUrl: "/assets/golden_pen.png",
-    url: "https://www.goldenpenaward.com/ar",
-    tags: ["Next.js", "Typescript", "TailwindCSS", "Strapi"],
-  },
-  {
-    title: "Joy Awards",
-    description:
-      "The Joy Awards is an annual ceremony in Riyadh, Saudi Arabia that honors the artistic achievements of Arab celebrities.",
-    imageUrl: "/assets/joy_awards.png",
-    url: "https://joyawards.sa/en",
-    tags: ["Next.js", "Typescript", "TailwindCSS", "Strapi"],
-  },
-  {
-    title: "Saudi Arabian Grand Prix",
-    description:
-      "The Saudi Arabian Grand Prix is a Formula One motor racing event which took place for the first time in 2021. The inaugural edition of the race was held in Jeddah, in Saudi Arabia.",
-    imageUrl: "/assets/saudi_grand_prix.png",
-    url: "https://saudiarabiangp.com/en",
-    tags: ["Next.js", "Typescript", "TailwindCSS", "Contentful", "GraphQL"],
-  },
-  {
-    title: "People Supported Intelligence",
-    description:
-      "People Supported Intelligence (PSi) is a platform for a new type of online dialogue that fosters consensus from opposing views.",
-    imageUrl: "/assets/psi.png",
-    url: "https://psi.tech/",
-    tags: [
-      "Next.js",
-      "Typescript",
-      "TailwindCSS",
-      "Hasura",
-      "GraphQL",
-      "Figma",
-    ],
-  },
-  {
-    title: "Worx Remotely",
-    description: "All in one digital workplace for enterprise productivity.",
-    imageUrl: "/assets/worx.png",
-    url: "https://worxsquad.com/",
-    tags: [
-      "Next.js",
-      "Typescript",
-      "TailwindCSS",
-      "Hasura",
-      "GraphQL",
-      "Figma",
-    ],
-  },
-  ];
+type ProjectEntry = CollectionEntry<'projects'>;
+
+const allProjects = await getCollection("projects");
+const projects = allProjects
+  .sort((a: ProjectEntry, b: ProjectEntry) => {
+    // Sort by priority property first (if it exists) - higher priority first
+    const priorityA = a.data.priority ?? 0;
+    const priorityB = b.data.priority ?? 0;
+    
+    if (priorityA !== priorityB) {
+      return priorityB - priorityA; // Descending order
+    }
+    
+    // Fall back to publishedAt if priority is the same or not defined
+    const dateA = a.data.publishedAt
+      ? new Date(a.data.publishedAt).valueOf()
+      : 0;
+    const dateB = b.data.publishedAt
+      ? new Date(b.data.publishedAt).valueOf()
+      : 0;
+    return dateB - dateA;
+  })
+  .slice(0, 3); // Limit to top 3 for home page
 ---
 
-<section id="projects" class="mt-20 lg:mt-40">
-  <div class="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-[#ffffff]/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0">
-    <h2 class="text-sm font-bold uppercase tracking-widest text-slate-900 lg:sr-only">
-      Projects
-    </h2>
+<section id="projects" class="py-24 border-t border-white/5">
+  <div class="flex items-center justify-between mb-12">
+    <h2 class="text-3xl font-bold text-primary">My Projects</h2>
+    <a
+      href="/projects"
+      class="text-accent hover:text-white transition-colors flex items-center gap-2 group"
+    >
+      See all
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="group-hover:translate-x-1 transition-transform"
+        ><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg
+      >
+    </a>
   </div>
-  <div class="flex flex-col gap-y-10">
-    {projects.map((project) => (
-      <Project {...project} />
-    ))}
+
+  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+    {
+      projects.map((project: ProjectEntry) => (
+        <Project
+          title={project.data.title}
+          description={project.data.description}
+          imageUrl={project.data.imageUrl}
+          url={`/projects/${project.slug}`}
+          tags={project.data.tags}
+        />
+      ))
+    }
   </div>
 </section>

@@ -1,29 +1,19 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import About from '../components/About.astro';
-import Projects from '../components/Projects.astro';
-import Side from '../components/Side.astro';
-import Experience from '../components/Experience.astro';
-import Closing from '../components/Closing.astro';
-import Writings from '../components/Writings.astro';
-import { getCollection } from 'astro:content';
+import Layout from "../layouts/Layout.astro";
+import Hero from "../components/Hero.astro";
+import Projects from "../components/Projects.astro";
+import Experience from "../components/Experience.astro";
+import Writings from "../components/Writings.astro";
+import { getCollection } from "astro:content";
 
-const posts = await getCollection('blog');
+const posts = await getCollection("blog");
 ---
 
 <Layout>
-  <div class="">
-    <div class="mx-auto min-h-screen max-w-[1280px] px-6 py-12 font-sans md:px-12 md:py-20 lg:px-24 lg:py-0">
-      <div class="lg:flex lg:justify-between lg:gap-4">
-        <Side />
-        <main class="lg:pt-24 lg:w-1/2 lg:py-24 min-h-screen">
-          <About />
-          <Experience />
-          <Projects />
-          <Writings posts={posts} />
-          <Closing />
-        </main>
-      </div>
-    </div>
-  </div>
+  <main class="max-w-full">
+    <Hero />
+    <Projects />
+    <Writings posts={posts} />
+    <Experience />
+  </main>
 </Layout>

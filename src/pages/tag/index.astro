@@ -1,0 +1,62 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getCollection, type CollectionEntry } from "astro:content";
+import Tag from "../../components/ui/Tag.astro";
+import { experiences } from "../../data/experience";
+
+const posts: CollectionEntry<"blog">[] = await getCollection("blog");
+const projects: CollectionEntry<"projects">[] = await getCollection("projects");
+
+const tagCounts = [
+    ...posts,
+    ...projects,
+    ...experiences.map((e) => ({ data: { tags: e.technologies } })),
+].reduce(
+    (acc: Record<string, number>, item: { data: { tags?: string | string[] } }) => {
+        let tags: string[] = [];
+        try {
+            tags =
+                typeof item.data.tags === "string"
+                    ? JSON.parse(item.data.tags)
+                    : item.data.tags || [];
+        } catch (e) {}
+        tags.forEach((tag) => {
+            const normalized = tag.toLowerCase();
+            acc[normalized] = (acc[normalized] || 0) + 1;
+        });
+        return acc;
+    },
+    {} as Record<string, number>,
+);
+
+const uniqueTags = (Object.entries(tagCounts) as [string, number][]).sort(
+    (a, b) => b[1] - a[1],
+);
+
+const metadata = {
+    title: "All Tags",
+    description: "Explore posts by their topics and technologies.",
+};
+---
+
+<Layout title={metadata.title} description={metadata.description}>
+    <main class="py-24 max-w-full">
+        <h1 class="text-5xl font-bold text-primary mb-16">All Tags</h1>
+        <div class="flex flex-wrap gap-4">
+            {
+                uniqueTags.map(([tag, count]) => (
+                    <a href={`/tag/${tag.toLowerCase()}`} class="group">
+                        <div class="flex items-center gap-2 px-6 py-4 rounded-xl bg-surface border border-white/5 hover:border-accent/50 transition-all">
+                            <span class="text-xl font-bold text-primary group-hover:text-accent transition-colors">
+                                #{tag}
+                            </span>
+                            <span class="text-sm text-secondary">
+                                ({count})
+                            </span>
+                        </div>
+                    </a>
+                ))
+            }
+        </div>
+    </main>
+</Layout>

@@ -2,13 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-
-::selection {
-  background-color: #47a3f3;
-  color: #fefefe;
+@layer base {
+  body {
+    @apply bg-background text-primary antialiased selection:bg-accent selection:text-white;
+  }
 }
-
-
 
 :root {
   --sh-class: #569cd6; /* Soft blue for classes */
