@@ -25,8 +25,8 @@ const { title, description, url, imageUrl, tags } = Astro.props;
       widths={[400, 800, 1200]}
       sizes="(max-width: 767px) calc(100vw - 100px), (max-width: 1023px) calc((100vw - 160px) / 2), 340px"
       formats={["avif", "webp"]}
-      loading="lazy"
       decoding="async"
+      fetchpriority="high"
       class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
     />
   </div>
