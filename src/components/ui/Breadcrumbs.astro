@@ -23,12 +23,14 @@ let breadcrumbs = segments.map((segment, index) => {
     return { label, url };
 });
 
-// Special case: If we are on a root-level post (1 segment and not 'blog' or 'projects')
+// Special case: If we are on a root-level post (1 segment and not 'blog', 'projects', 'tag' or 'contact')
 // insert "Blog" segment manually.
 if (
     segments.length === 1 &&
     segments[0] !== "blog" &&
-    segments[0] !== "projects"
+    segments[0] !== "projects" &&
+    segments[0] !== "tag" &&
+    segments[0] !== "contact"
 ) {
     breadcrumbs = [{ label: "Blog", url: "/blog" }, ...breadcrumbs];
 }
