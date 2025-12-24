@@ -1,0 +1,43 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="404 | Page Not Found" mainClass="max-w-2xl mx-auto py-24 px-6">
+  <div class="text-center space-y-8">
+    <div class="space-y-4">
+      <h1 class="text-8xl font-black text-accent/20 select-none">404</h1>
+      <h2 class="text-3xl font-bold tracking-tight text-primary sm:text-4xl">Page Not Found</h2>
+      <p class="text-lg text-secondary">
+        Sorry, the page you looking for doesn't exist or has been moved.
+      </p>
+    </div>
+
+    <div class="pt-4">
+      <p class="text-sm text-secondary mb-6">
+        Redirecting to home in <span id="countdown" class="font-mono font-bold text-accent">5</span> seconds...
+      </p>
+      
+      <a
+        href="/"
+        class="inline-flex items-center justify-center px-6 py-3 rounded-full bg-accent text-gray-950 font-bold hover:scale-105 transition-all shadow-lg shadow-accent/20"
+      >
+        Go Home Now
+      </a>
+    </div>
+  </div>
+
+  <script is:inline>
+    let seconds = 5;
+    const countdownEl = document.getElementById('countdown');
+    
+    const interval = setInterval(() => {
+      seconds--;
+      if (countdownEl) countdownEl.textContent = seconds;
+      
+      if (seconds <= 0) {
+        clearInterval(interval);
+        window.location.href = "/";
+      }
+    }, 1000);
+  </script>
+</Layout>
