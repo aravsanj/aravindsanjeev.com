@@ -1,46 +1,37 @@
 ---
 import Tag from "./ui/Tag.astro";
-import { experiences } from "../data/experience";
+import { experiences, type ExperienceItem } from "../data/experience";
 ---
 
 <section id="experience" class="py-24 border-t border-white/5">
   <h2 class="text-3xl font-bold text-primary mb-12">Experience</h2>
-  <div class="flex flex-col gap-y-10">
+  <div class="grid md:grid-cols-2 gap-8">
     {
-      experiences.map((item) => (
-        <div class="group relative grid pb-1 transition-all sm:grid-cols-12 sm:gap-8 md:gap-4 border-b border-white/5 last:border-0 pb-12 last:pb-0">
-          <header class="z-10 mb-2 mt-1 text-sm font-bold uppercase tracking-widest text-accent sm:col-span-3">
-            {item.duration}
-          </header>
-          <div class="z-10 sm:col-span-9">
-            <h3 class="font-bold leading-none text-2xl text-primary mb-3">
-              <a
-                class="hover:text-accent transition-colors"
-                href={item.companyUrl}
-                target="_blank"
-                rel="noreferrer noopener"
-              >
-                {`${item.title} · ${item.company}`}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  class="inline-block h-5 w-5 ml-1 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"
-                  aria-hidden="true"
+      experiences.map((item: ExperienceItem) => (
+        <div class="group relative flex flex-col gap-6 p-6 rounded-2xl bg-surface border border-white/5 hover:border-accent/30 transition-all duration-300">
+          <div class="flex flex-col flex-1">
+            <header class="mb-4">
+              <span class="text-sm font-bold uppercase tracking-widest text-accent block mb-2">
+                {item.duration}
+              </span>
+              <h3 class="text-2xl font-bold text-primary group-hover:text-accent transition-colors">
+                <a
+                  href={item.companyUrl}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  class="after:absolute after:inset-0"
                 >
-                  <path
-                    fill-rule="evenodd"
-                    d="M5.22 14.78a.75.75 0 001.06 0l7.22-7.22v5.69a.75.75 0 001.5 0v-7.5a.75.75 0 00-.75-.75h-7.5a.75.75 0 000 1.5h5.69l-7.22 7.22a.75.75 0 000 1.06z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-              </a>
-            </h3>
-            <p class="text-lg leading-relaxed text-secondary mb-6">
+                  {`${item.title} · ${item.company}`}
+                </a>
+              </h3>
+            </header>
+
+            <p class="text-secondary text-base leading-relaxed mb-6">
               {item.description}
             </p>
-            <ul class="flex flex-wrap gap-2">
-              {item.technologies.map((tech) => (
+
+            <ul class="mt-auto flex flex-wrap gap-2 relative z-10">
+              {item.technologies.map((tech: string) => (
                 <li>
                   <Tag title={tech} href={`/tag/${tech.toLowerCase()}`} />
                 </li>
