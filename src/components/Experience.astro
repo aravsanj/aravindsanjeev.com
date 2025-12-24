@@ -1,69 +1,13 @@
 ---
 import Tag from "./ui/Tag.astro";
-
-const exp = [
-  {
-    duration: "2024 — present",
-    title: "Frontend Engineer",
-    company: "UXBERT Labs",
-    companyUrl: "https://uxbert.com/",
-    description:
-      "I am currently working as the Frontend Engineer for multiple projects under the Saudi General Entertainment Ministry.",
-    technologies: [
-      "JavaScript",
-      "TypeScript",
-      "React",
-      "Next",
-      "Contentful",
-      "Strapi",
-    ],
-  },
-  {
-    duration: "2023 — 2024",
-    title: "MERN Stack Developer",
-    company: "Brototype",
-    companyUrl: "https://brototype.com/",
-    description:
-      "Gained hands-on experience building robust web applications through intensive, project-based learning. Developed full-stack web applications including a social media platform and a microservices-based article sharing platform. Benefited from weekly code reviews and mentorship to enhance coding and problem-solving skills.",
-    technologies: [
-      "JavaScript",
-      "TypeScript",
-      "React",
-      "Next",
-      "Node",
-      "Express",
-      "MongoDB",
-      "Kafka",
-      "Docker",
-      "Kubernetes",
-    ],
-  },
-  {
-    duration: "2022 — 2023",
-    title: "React Developer Intern",
-    company: "RaftLabs",
-    companyUrl: "https://www.raftlabs.com/",
-    description:
-      "Worked for a hybrid remote working app, and a scalable decision-making platform. Integrated Agora, Google Drive, Microsoft Graph, and Dropbox APIs to enhance the app's functionality. Developed reusable components and implemented responsive design to improve the user experience.",
-    technologies: ["JavaScript", "TypeScript", "React", "Next", "Urql"],
-  },
-  {
-    duration: "2020 — 2022",
-    title: "Technical Content Writer",
-    company: "Freelance",
-    companyUrl: "",
-    description:
-      "During this time, I worked as a freelance content writer for various parties and blogs.",
-    technologies: ["Writing", "Documentation"],
-  },
-];
+import { experiences } from "../data/experience";
 ---
 
 <section id="experience" class="py-24 border-t border-white/5">
   <h2 class="text-3xl font-bold text-primary mb-12">Experience</h2>
   <div class="flex flex-col gap-y-10">
     {
-      exp.map((item: any) => (
+      experiences.map((item) => (
         <div class="group relative grid pb-1 transition-all sm:grid-cols-12 sm:gap-8 md:gap-4 border-b border-white/5 last:border-0 pb-12 last:pb-0">
           <header class="z-10 mb-2 mt-1 text-sm font-bold uppercase tracking-widest text-accent sm:col-span-3">
             {item.duration}
@@ -98,7 +42,7 @@ const exp = [
             <ul class="flex flex-wrap gap-2">
               {item.technologies.map((tech) => (
                 <li>
-                  <Tag title={tech} />
+                  <Tag title={tech} href={`/tag/${tech.toLowerCase()}`} />
                 </li>
               ))}
             </ul>

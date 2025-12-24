@@ -2,19 +2,27 @@
 import Layout from "../../layouts/Layout.astro";
 import { getCollection } from "astro:content";
 import Tag from "../../components/ui/Tag.astro";
+import { experiences } from "../../data/experience";
 
 const posts = await getCollection("blog");
-const tagCounts = posts.reduce(
-    (acc: Record<string, number>, post) => {
+const projects = await getCollection("projects");
+
+const tagCounts = [
+    ...posts,
+    ...projects,
+    ...experiences.map((e) => ({ data: { tags: e.technologies } })),
+].reduce(
+    (acc: Record<string, number>, item) => {
         let tags: string[] = [];
         try {
             tags =
-                typeof post.data.tags === "string"
-                    ? JSON.parse(post.data.tags)
-                    : post.data.tags || [];
+                typeof item.data.tags === "string"
+                    ? JSON.parse(item.data.tags)
+                    : item.data.tags || [];
         } catch (e) {}
         tags.forEach((tag) => {
-            acc[tag] = (acc[tag] || 0) + 1;
+            const normalized = tag.toLowerCase();
+            acc[normalized] = (acc[normalized] || 0) + 1;
         });
         return acc;
     },
@@ -37,7 +45,7 @@ const metadata = {
         <div class="flex flex-wrap gap-4">
             {
                 uniqueTags.map(([tag, count]) => (
-                    <a href={`/tag/${tag}`} class="group">
+                    <a href={`/tag/${tag.toLowerCase()}`} class="group">
                         <div class="flex items-center gap-2 px-6 py-4 rounded-xl bg-surface border border-white/5 hover:border-accent/50 transition-all">
                             <span class="text-xl font-bold text-primary group-hover:text-accent transition-colors">
                                 #{tag}

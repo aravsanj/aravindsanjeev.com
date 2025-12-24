@@ -31,11 +31,11 @@ const { title, description, url, imageUrl, tags } = Astro.props;
       {description}
     </p>
 
-    <ul class="mt-auto flex flex-wrap gap-2">
+    <ul class="mt-auto flex flex-wrap gap-2 relative z-10">
       {
         tags.map((tag) => (
           <li>
-            <Tag title={tag} />
+            <Tag title={tag} href={`/tag/${tag.toLowerCase()}`} />
           </li>
         ))
       }

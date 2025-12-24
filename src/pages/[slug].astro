@@ -78,9 +78,7 @@ const baseUrl = "https://aravindsanjeev.com";
               <div class="flex flex-wrap gap-2">
                 {
                   tags.map((tag: any) => (
-                    <a href={`/tag/${tag}`} class="no-underline">
-                      <Tag title={tag} />
-                    </a>
+                    <Tag title={tag} href={`/tag/${tag.toLowerCase()}`} />
                   ))
                 }
               </div>
