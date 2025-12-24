@@ -95,9 +95,9 @@ const isHome = Astro.url.pathname === "/";
          For now omitting GA to avoid breakage without ID/setup or relying on deprecated Next comp.
          If 'G-BELR0CJR8V' is critical, I can add a script tag.
     -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BELR0CJR8V"
+    <script type="text/partytown" src="https://www.googletagmanager.com/gtag/js?id=G-BELR0CJR8V"
     ></script>
-    <script is:inline>
+    <script type="text/partytown">
       window.dataLayer = window.dataLayer || [];
       function gtag() {
         dataLayer.push(arguments);
