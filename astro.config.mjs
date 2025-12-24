@@ -23,6 +23,9 @@ export default defineConfig({
       },
     }),
   ],
+  build: {
+    inlineStylesheets: "always",
+  },
   markdown: {
     rehypePlugins: [rehypeSlug, rehypeAutolinkHeadings],
     shikiConfig: {
