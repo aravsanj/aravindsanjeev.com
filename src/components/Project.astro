@@ -1,6 +1,14 @@
 ---
 import Tag from "./ui/Tag.astro";
 
+interface Props {
+  title: string;
+  description: string;
+  url: string;
+  imageUrl: string;
+  tags: string[];
+}
+
 const { title, description, url, imageUrl, tags } = Astro.props;
 ---
 

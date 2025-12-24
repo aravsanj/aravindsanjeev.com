@@ -1,18 +1,18 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import { getCollection } from "astro:content";
+import { getCollection, type CollectionEntry } from "astro:content";
 import Tag from "../../components/ui/Tag.astro";
 import { experiences } from "../../data/experience";
 
-const posts = await getCollection("blog");
-const projects = await getCollection("projects");
+const posts: CollectionEntry<"blog">[] = await getCollection("blog");
+const projects: CollectionEntry<"projects">[] = await getCollection("projects");
 
 const tagCounts = [
     ...posts,
     ...projects,
     ...experiences.map((e) => ({ data: { tags: e.technologies } })),
 ].reduce(
-    (acc: Record<string, number>, item) => {
+    (acc: Record<string, number>, item: { data: { tags?: string | string[] } }) => {
         let tags: string[] = [];
         try {
             tags =

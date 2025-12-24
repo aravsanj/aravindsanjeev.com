@@ -1,8 +1,8 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import { getCollection } from "astro:content";
+import { getCollection, type CollectionEntry } from "astro:content";
 
-const posts = await getCollection("blog");
+const posts: CollectionEntry<"blog">[] = await getCollection("blog");
 
 const metadata = {
   title: "Blog",
