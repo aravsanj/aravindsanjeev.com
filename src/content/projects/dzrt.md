@@ -1,7 +1,7 @@
 ---
 title: "DZRT"
 description: "A premium Saudi brand specializing in tobacco-free nicotine pouches as a modern alternative to smoking."
-imageUrl: "/assets/dzrt.webp"
+imageUrl: "../../assets/dzrt.webp"
 url: "https://www.dzrt.com/en-sa"
 tags: ["Next.js", "React", "TailwindCSS", "TypeScript", "E-commerce", "Gsap"]
 publishedAt: "2023-01-01"

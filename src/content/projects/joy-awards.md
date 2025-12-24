@@ -1,7 +1,7 @@
 ---
 title: "Joy Awards"
 description: "The Joy Awards is an annual ceremony in Riyadh, Saudi Arabia that honors the artistic achievements of Arab celebrities."
-imageUrl: "/assets/joy_awards.webp"
+imageUrl: "../../assets/joy_awards.webp"
 url: "https://joyawards.sa/en"
 tags: ["Next.js", "React", "Typescript", "TailwindCSS", "Strapi", "i18n"]
 publishedAt: "2024-02-01"

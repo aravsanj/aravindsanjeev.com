@@ -1,7 +1,7 @@
 ---
 title: "UXBERT Website"
 description: "Saudi Arabia's leading UX design and usability agency, specializing in research-driven digital experiences."
-imageUrl: "/assets/uxbert.webp"
+imageUrl: "../../assets/uxbert.webp"
 url: "https://uxbert.com"
 tags: ["TanStack Start", "React", "TailwindCSS", "GSAP"]
 publishedAt: "2024-06-01"

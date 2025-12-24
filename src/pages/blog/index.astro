@@ -1,5 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import { Picture } from "astro:assets";
 import { getCollection, type CollectionEntry } from "astro:content";
 
 const posts: CollectionEntry<"blog">[] = await getCollection("blog");
@@ -20,9 +21,12 @@ const metadata = {
           <a href={`/${post.slug}`} class="group flex flex-col gap-4">
             <div class="aspect-video w-full rounded-xl bg-surface border border-white/5 overflow-hidden relative">
               {post.data.image ? (
-                <img
+                <Picture
                   src={post.data.image}
                   alt={post.data.title}
+                  widths={[292, 584, post.data.image.width]}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 292px"
+                  formats={["avif", "webp"]}
                   class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
               ) : (

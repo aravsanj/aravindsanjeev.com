@@ -1,11 +1,12 @@
 ---
 import Tag from "./ui/Tag.astro";
+import { Picture } from "astro:assets";
 
 interface Props {
   title: string;
   description: string;
   url: string;
-  imageUrl: string;
+  imageUrl: ImageMetadata;
   tags: string[];
 }
 
@@ -18,12 +19,15 @@ const { title, description, url, imageUrl, tags } = Astro.props;
   <div
     class="aspect-video w-full rounded-xl overflow-hidden border border-white/5 relative"
   >
-    <img
+    <Picture
+      src={imageUrl}
       alt={title}
+      widths={[292, 584, imageUrl.width]}
+      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 292px"
+      formats={["avif", "webp"]}
       loading="lazy"
       decoding="async"
       class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-      src={imageUrl}
     />
   </div>
 

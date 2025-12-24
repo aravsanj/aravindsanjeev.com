@@ -1,7 +1,7 @@
 ---
 title: "Golden Pen Award"
 description: "The Golden Pen Award aims to celebrate the most influential literary works in the Arab world, supporting writers who enrich Arabic literature with their unique contributions."
-imageUrl: "/assets/golden_pen.webp"
+imageUrl: "../../assets/golden_pen.webp"
 url: "https://www.goldenpenaward.com/ar"
 tags: ["Next.js", "React", "Typescript", "TailwindCSS", "Strapi"]
 publishedAt: "2024-01-01"

@@ -1,7 +1,7 @@
 ---
 title: "Ring Magazine"
 description: "The digital home of 'The Bible of Boxing,' providing world-class boxing news, rankings, and fight schedules."
-imageUrl: "/assets/ring.webp"
+imageUrl: "../../assets/ring.webp"
 url: "https://ringmagazine.com"
 tags: ["Next.js", "React", "TailwindCSS", "Strapi"]
 publishedAt: "2024-01-01"

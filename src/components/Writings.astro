@@ -1,5 +1,6 @@
 ---
 import { type CollectionEntry } from "astro:content";
+import { Picture } from "astro:assets";
 import Tag from "./ui/Tag.astro";
 
 interface Props {
@@ -42,9 +43,12 @@ const latestPosts = posts.slice(0, 3); // Show top 3
           <div class="group relative flex flex-col gap-6 p-6 rounded-2xl bg-surface border border-white/5 hover:border-accent/30 transition-all duration-300">
             <div class="aspect-video w-full rounded-xl bg-surface border border-white/5 overflow-hidden relative">
               {post.data.image ? (
-                <img
+                <Picture
                   src={post.data.image}
                   alt={post.data.title}
+                  widths={[292, 584, post.data.image.width]}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 292px"
+                  formats={["avif", "webp"]}
                   class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
               ) : (

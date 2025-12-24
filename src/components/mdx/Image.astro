@@ -1,5 +1,24 @@
 ---
-const props = Astro.props;
-// Use standard img tag instead of next/image, replacing RoundedImage
+import { Image as AstroImage } from "astro:assets";
+
+interface Props {
+  src: string | ImageMetadata;
+  alt: string;
+  width?: number | `${number}`;
+  height?: number | `${number}`;
+  class?: string;
+  [key: string]: any;
+}
+
+const { src, alt, class: className, width, height, ...props } = Astro.props;
 ---
-<img alt={props.alt} class="rounded-lg" {...props} />
+
+{/* @ts-ignore - Astro's Image component has overly restrictive internal types for optional width/height */}
+<AstroImage
+  src={src}
+  alt={alt || ""}
+  class:list={["rounded-lg", className]}
+  width={width as any}
+  height={height as any}
+  {...props}
+/>

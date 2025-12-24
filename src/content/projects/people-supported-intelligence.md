@@ -1,7 +1,7 @@
 ---
 title: "People Supported Intelligence"
 description: "People Supported Intelligence (PSi) is a platform for a new type of online dialogue that fosters consensus from opposing views."
-imageUrl: "/assets/psi.webp"
+imageUrl: "../../assets/psi.webp"
 url: "https://psi.tech/"
 tags:
   [

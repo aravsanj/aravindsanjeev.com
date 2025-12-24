@@ -1,7 +1,7 @@
 ---
 title: "Worx Remotely"
 description: "All in one digital workplace for enterprise productivity."
-imageUrl: "/assets/worx.webp"
+imageUrl: "../../assets/worx.webp"
 url: "https://worxsquad.com/"
 tags:
   [

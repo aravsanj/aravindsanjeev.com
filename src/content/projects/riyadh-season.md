@@ -1,7 +1,7 @@
 ---
 title: "Riyadh Season 2025"
 description: "The official portal for Riyadh Season 2025, one of the world's largest winter entertainment festivals in Saudi Arabia."
-imageUrl: "/assets/riyadh_season.webp"
+imageUrl: "../../assets/riyadh_season.webp"
 url: "https://riyadhseason.com/"
 tags: ["React", "React Router", "TailwindCSS", "Contentful", "Gsap"]
 publishedAt: "2024-10-01"

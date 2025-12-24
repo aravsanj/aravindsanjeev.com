@@ -1,5 +1,6 @@
 ---
 import Tag from "./ui/Tag.astro";
+import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 
 type BlogEntry = CollectionEntry<'blog'>;
@@ -20,7 +21,7 @@ const sortedBlogs = posts.sort(
         <div class="group relative flex flex-col gap-6 p-6 rounded-2xl bg-surface border border-white/5 hover:border-accent/30 transition-all duration-300">
           <div class="aspect-video w-full rounded-xl bg-surface border border-white/5 overflow-hidden relative">
             {post.data.image ? (
-              <img
+              <Image
                 src={post.data.image}
                 alt={post.data.title}
                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
