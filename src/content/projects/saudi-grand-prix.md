@@ -5,6 +5,7 @@ imageUrl: "/assets/saudi_grand_prix.webp"
 url: "https://saudiarabiangp.com/en"
 tags: ["Next.js", "React", "Typescript", "TailwindCSS", "Contentful", "GraphQL"]
 publishedAt: "2023-03-01"
+priority: 30
 ---
 
 Not much introduction is needed to Formula One or Grand Prix. It is one of the most prestigious events in the world.

@@ -5,6 +5,7 @@ imageUrl: "/assets/golden_pen.webp"
 url: "https://www.goldenpenaward.com/ar"
 tags: ["Next.js", "React", "Typescript", "TailwindCSS", "Strapi"]
 publishedAt: "2024-01-01"
+priority: 40
 ---
 
 As an event that celebrates the most influential literary works in the Arab world, the Golden Pen Award project was a technical feat.

@@ -5,7 +5,15 @@ import Project from "./Project.astro";
 const allProjects = await getCollection("projects");
 const projects = allProjects
   .sort((a: any, b: any) => {
-    // robust sort if publishedAt is missing
+    // Sort by priority property first (if it exists) - higher priority first
+    const priorityA = a.data.priority ?? 0;
+    const priorityB = b.data.priority ?? 0;
+    
+    if (priorityA !== priorityB) {
+      return priorityB - priorityA; // Descending order
+    }
+    
+    // Fall back to publishedAt if priority is the same or not defined
     const dateA = a.data.publishedAt
       ? new Date(a.data.publishedAt).valueOf()
       : 0;

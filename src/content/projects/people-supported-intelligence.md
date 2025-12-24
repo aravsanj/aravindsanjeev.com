@@ -14,6 +14,7 @@ tags:
     "Figma",
   ]
 publishedAt: "2022-01-01"
+priority: 20
 ---
 
 An application for using collective intelligence for decision making.
