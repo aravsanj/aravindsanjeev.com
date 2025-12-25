@@ -1,0 +1,17 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post: CollectionEntry<'blog'>) => ({
+    params: { slug: post.slug }
+  }));
+}
+
+const { slug } = Astro.params;
+---
+<meta http-equiv="refresh" content={`0;url=/${slug}`} />
+<script define:vars={{slug}}>
+  window.location.href = `/${slug}`;
+</script>
+<p>Redirecting to <a href={`/${slug}`}>/{slug}</a>...</p>
