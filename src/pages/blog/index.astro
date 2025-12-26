@@ -3,7 +3,11 @@ import Layout from "../../layouts/Layout.astro";
 import BlogCard from "../../components/BlogCard.astro";
 import { getCollection, type CollectionEntry } from "astro:content";
 
-const posts: CollectionEntry<"blog">[] = await getCollection("blog");
+const posts: CollectionEntry<"blog">[] = (await getCollection("blog")).sort(
+  (a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) =>
+    new Date(b.data.publishedAt).valueOf() -
+    new Date(a.data.publishedAt).valueOf(),
+);
 
 const metadata = {
   title: "Blog",
@@ -12,13 +16,13 @@ const metadata = {
 };
 ---
 
-<Layout title={metadata.title} description={metadata.description} mainClass="py-24 max-w-full">
-    <h1 class="text-5xl font-bold text-primary mb-16">All Posts</h1>
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {
-        posts.map((post) => (
-          <BlogCard post={post} />
-        ))
-      }
-    </div>
+<Layout
+  title={metadata.title}
+  description={metadata.description}
+  mainClass="py-24 max-w-full"
+>
+  <h1 class="text-5xl font-bold text-primary mb-16">All Posts</h1>
+  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+    {posts.map((post) => <BlogCard post={post} />)}
+  </div>
 </Layout>

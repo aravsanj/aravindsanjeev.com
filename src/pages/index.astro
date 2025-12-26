@@ -4,9 +4,13 @@ import Hero from "../components/Hero.astro";
 import Projects from "../components/Projects.astro";
 import Experience from "../components/Experience.astro";
 import Writings from "../components/Writings.astro";
-import { getCollection } from "astro:content";
+import { getCollection, type CollectionEntry } from "astro:content";
 
-const posts = await getCollection("blog");
+const posts = (await getCollection("blog")).sort(
+  (a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) =>
+    new Date(b.data.publishedAt).valueOf() -
+    new Date(a.data.publishedAt).valueOf(),
+);
 ---
 
 <Layout>
