@@ -10,7 +10,7 @@ import SocialShareButtons from "../components/SocialShareButtons.astro";
 import Social from "../components/Social.astro";
 import Tag from "../components/ui/Tag.astro";
 
-type BlogEntry = CollectionEntry<'blog'>;
+type BlogEntry = CollectionEntry<"blog">;
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
@@ -51,86 +51,88 @@ const baseUrl = "https://aravindsanjeev.com";
   mainClass="py-24 max-w-full"
 >
   <section class="relative">
-      <header class="mb-16">
-        <!-- Schema.org Script -->
-        <script
-          type="application/ld+json"
-          set:html={JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "BlogPosting",
-            headline: post.data.title,
-            datePublished: post.data.publishedAt,
-            dateModified: post.data.publishedAt,
-            description: post.data.summary,
-            image: post.data.image
-              ? `${baseUrl}${post.data.image.src}`
-              : `/og?title=${encodeURIComponent(post.data.title)}`,
-            url: `${baseUrl}/${post.slug}`,
-            author: {
-              "@type": "Person",
-              name: "Aravind Sanjeev",
-            },
-          })}
-        />
+    <header class="mb-16">
+      <!-- Schema.org Script -->
+      <script
+        type="application/ld+json"
+        set:html={JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
+          headline: post.data.title,
+          datePublished: post.data.publishedAt,
+          dateModified: post.data.publishedAt,
+          description: post.data.summary,
+          image: post.data.image
+            ? `${baseUrl}${post.data.image.src}`
+            : `/og?title=${encodeURIComponent(post.data.title)}`,
+          url: `${baseUrl}/${post.slug}`,
+          author: {
+            "@type": "Person",
+            name: "Aravind Sanjeev",
+          },
+        })}
+      />
 
-        <div class="max-w-4xl">
-          <div class="mb-12">
-            <div class="mb-8 flex flex-wrap items-center gap-4">
-              <span class="text-secondary text-sm font-medium">
-                {formatDate(post.data.publishedAt)}
-              </span>
-              <div class="flex flex-wrap gap-2">
-                {
-                  tags.map((tag: string) => (
-                    <Tag title={tag} href={`/tag/${tag.toLowerCase()}`} />
-                  ))
-                }
-              </div>
-            </div>
-            <h1
-              class="text-6xl md:text-8xl font-bold text-primary tracking-tight mb-8"
-            >
-              {post.data.title}
-            </h1>
-            <div class="flex gap-1 pt-6 border-t border-white/5">
-              <SocialShareButtons size={24} post={post} />
+      <div class="max-w-4xl">
+        <div class="mb-12">
+          <div class="mb-8 flex flex-wrap items-center gap-4">
+            <span class="text-secondary text-sm font-medium">
+              {formatDate(post.data.publishedAt)}
+            </span>
+            <div class="flex flex-wrap gap-2">
+              {
+                tags.map((tag: string) => (
+                  <Tag title={tag} href={`/tag/${tag.toLowerCase()}`} />
+                ))
+              }
             </div>
           </div>
+          <h1
+            class="text-5xl sm:text-6xl md:text-8xl font-bold text-primary tracking-tight mb-8"
+          >
+            {post.data.title}
+          </h1>
+          <div class="flex gap-1 sm:pt-6 border-t border-white/5">
+            <SocialShareButtons size={24} post={post} />
+          </div>
+        </div>
 
-          <article class="article prose prose-invert prose-2xl max-w-4xl">
-            <!-- Floating Social Share -->
-            <SocialShare size={40} post={post} />
+        <article
+          class="article prose prose-invert prose-lg sm:prose-xl md:prose-2xl max-w-4xl"
+        >
+          <!-- Floating Social Share -->
+          <SocialShare size={40} post={post} />
 
-            <Content components={components} />
-          </article>
+          <Content components={components} />
+        </article>
 
-          <div class="mt-24 border-t border-white/5 pt-12 max-w-4xl">
-            <div class="flex items-start space-x-6">
-              <Image
-                src={profileImage}
-                alt="Aravind Sanjeev"
-                class="w-20 h-20 rounded-full object-cover border-2 border-white/10"
+        <div class="mt-24 border-t border-white/5 pt-12 max-w-4xl">
+          <div class="flex items-start space-x-6">
+            <Image
+              src={profileImage}
+              alt="Aravind Sanjeev"
+              class="w-20 h-20 rounded-full object-cover border-2 border-white/10"
+            />
+            <div>
+              <h3 class="text-xl font-bold text-primary mb-2">
+                Aravind Sanjeev
+              </h3>
+              <p class="text-base text-secondary mb-6 leading-relaxed">
+                Aravind Sanjeev is a software engineer and blogger who loves
+                sharing his thoughts on web development, programming, and
+                technology trends.
+              </p>
+              <Social
+                fillColor="#e8eaed"
+                email="saravind436@gmail.com"
+                twitter="aravsanj"
+                instagram="aravsanj"
+                linkedIn="aravsanj"
               />
-              <div>
-                <h3 class="text-xl font-bold text-primary mb-2">
-                  Aravind Sanjeev
-                </h3>
-                <p class="text-base text-secondary mb-6 leading-relaxed">
-                  Aravind Sanjeev is a software engineer and blogger who loves
-                  sharing his thoughts on web development, programming, and
-                  technology trends.
-                </p>
-                <Social
-                  fillColor="#e8eaed"
-                  email="saravind436@gmail.com"
-                  twitter="aravsanj"
-                  instagram="aravsanj"
-                  linkedIn="aravsanj"
-                />
-              </div>
             </div>
           </div>
         </div>
-      </header>
-    </section>
+      </div>
+    </header>
+  </section>
 </Layout>
