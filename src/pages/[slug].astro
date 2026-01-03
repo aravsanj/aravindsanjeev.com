@@ -9,6 +9,7 @@ import SocialShare from "../components/SocialShare.astro";
 import SocialShareButtons from "../components/SocialShareButtons.astro";
 import Social from "../components/Social.astro";
 import Tag from "../components/ui/Tag.astro";
+import Comments from "../components/Comments.astro";
 
 type BlogEntry = CollectionEntry<"blog">;
 
@@ -92,8 +93,32 @@ const baseUrl = "https://aravindsanjeev.com";
           >
             {post.data.title}
           </h1>
-          <div class="flex gap-1 sm:pt-6 border-t border-white/5">
-            <SocialShareButtons size={24} post={post} />
+          <div
+            class="flex flex-wrap items-center justify-between gap-4 sm:pt-6 border-t border-white/5"
+          >
+            <div class="flex gap-1">
+              <SocialShareButtons size={24} post={post} />
+            </div>
+            <a
+              href="#comments"
+              class="flex items-center gap-2 text-sm text-secondary hover:text-primary transition-colors"
+            >
+              Jump to discussions
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="w-4 h-4"
+              >
+                <path d="m6 9 6 6 6-6"></path>
+              </svg>
+            </a>
           </div>
         </div>
 
@@ -124,7 +149,7 @@ const baseUrl = "https://aravindsanjeev.com";
               </p>
               <Social
                 fillColor="#e8eaed"
-                email="saravind436@gmail.com"
+                email="hi@aravindsanjeev.com"
                 twitter="aravsanj"
                 instagram="aravsanj"
                 linkedIn="aravsanj"
@@ -132,6 +157,7 @@ const baseUrl = "https://aravindsanjeev.com";
             </div>
           </div>
         </div>
+        <Comments />
       </div>
     </header>
   </section>

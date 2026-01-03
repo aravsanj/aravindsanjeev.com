@@ -6,6 +6,7 @@ import mdx from "@astrojs/mdx";
 import partytown from "@astrojs/partytown";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import icon from "astro-icon";
 
 export default defineConfig({
   site: "https://aravindsanjeev.com",
@@ -20,6 +21,7 @@ export default defineConfig({
         forward: ["dataLayer.push"],
       },
     }),
+    icon(),
   ],
   build: {
     inlineStylesheets: "always",

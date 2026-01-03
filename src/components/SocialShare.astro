@@ -1,24 +1,43 @@
 ---
-import SocialShareButtons from './SocialShareButtons.astro';
+import SocialShareButtons from "./SocialShareButtons.astro";
+import { Icon } from "astro-icon/components";
 const { post } = Astro.props;
 ---
 
-<div id="social-share-container" class="opacity-0 hidden flex-col gap-1 -ml-20 transition-all duration-300">
+<div
+  id="social-share-container"
+  class="opacity-0 hidden flex-col -ml-20 transition-all duration-300"
+>
   <SocialShareButtons size={40} post={post} />
+  <div class="mt-4 border-t border-white/10 pt-4">
+    <a
+      href="#comments"
+      aria-label="Jump to conversations"
+      class="cursor-pointer bg-[#7c3aed] text-white rounded-full flex items-center justify-center hover:opacity-80 transition-opacity"
+      style="width: 40px; height: 40px;"
+    >
+      <Icon
+        name="mdi:comment-text-outline"
+        width={22}
+        height={22}
+        class="text-white"
+      />
+    </a>
+  </div>
 </div>
 
 <script>
-  const container = document.getElementById('social-share-container');
-  
+  const container = document.getElementById("social-share-container");
+
   if (container) {
-    window.addEventListener('scroll', () => {
+    window.addEventListener("scroll", () => {
       const scrollPosition = window.scrollY;
       if (scrollPosition >= 500) {
-        container.classList.remove('opacity-0', 'hidden');
-        container.classList.add('fixed', 'top-40', 'opacity-100', 'visible');
+        container.classList.remove("opacity-0", "hidden");
+        container.classList.add("fixed", "top-40", "opacity-100", "visible");
       } else {
-        container.classList.add('opacity-0', 'hidden');
-        container.classList.remove('fixed', 'top-40', 'opacity-100', 'visible');
+        container.classList.add("opacity-0", "hidden");
+        container.classList.remove("fixed", "top-40", "opacity-100", "visible");
       }
     });
   }
