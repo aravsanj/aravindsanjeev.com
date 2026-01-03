@@ -14,7 +14,12 @@ export default defineConfig({
     tailwind({
       applyBaseStyles: false,
     }),
-    sitemap(),
+    sitemap({
+      filter: (page) => {
+        const url = new URL(page);
+        return !(url.pathname.startsWith('/blog/') && url.pathname !== '/blog/');
+      }
+    }),
     mdx(),
     partytown({
       config: {
