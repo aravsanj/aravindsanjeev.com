@@ -1,0 +1,292 @@
+---
+title: "JavaScript this Keyword Explained for Beginners"
+summary: "Explaining JavaScript this keyword for beginners."
+publishedAt: "2021-10-04"
+image: "./hero.webp"
+tags: ["JavaScript"]
+---
+
+The `this` keyword is one of the most confusing topic for JavaScript beginners. In this post, I aim to break down the `this` keyword in a simple and beginner-friendly manner. Please note, this is not an exhaustive coverage of the `this` keyword. Instead it is aimed at complete beginners trying to get a grip on the subject. For intermediate or advanced users, I recommend this [mdn doc](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this#derived_classes).
+
+## Why `this` keyword exist?
+
+Maybe it will do justice to our quest if we can start with why this particular keyword has to exist in the first place.
+
+You see, computers are dumb. It needs to be told at every instance where it can find the data required for execution. The fancy term for this is called _execution context_. The code might look obvious for us, but it isn't for the engine that is executing our code.
+
+So, the best way to start understanding the `this` keyword is to switch our point of view to the point of view of the engine.
+
+From the engine's point of view, everything in JavaScript are objects. A JavaScript program is essentially a cluster of communicating objects. On the top of the hierarchy is the `Window` object (or just global object in node).
+
+When the engine is searching for values (variables) to execute, it only checks directly inside the `Window` object. If the value is in any other place, for example, inside an object, then we need to explicitly tell the engine to look inside that particular object.
+
+The way we communicate it is by using the `this` keyword.
+
+That's a very basic but overall explanation. I promise everything will start to click in its place as we start discussing the specifics.
+
+## JavaScript objects
+
+An object in JavaScript is a container for named properties. A property is a key-value pair where the key act as the name we can use to call. The property can be a variable or a function, known as a method in JavaScript.
+
+The following is a very basic example of a JavaScipt object. It has two variables `firstName` and `lastName` including the values. And a function (method) that returns the full name.
+
+```js
+const user = {
+  firstName: "Aravind",
+  lastName: "Sanjeev",
+  fullName: function () {
+    return this.firstName + " " + this.lastName
+  },
+}
+```
+
+I know I already used the `this` keyword in the above example. Leave it for now, I will come back to `this` later. (See what I did there?)
+
+We can access the property values by their keys.
+
+```js
+user.firstName // Aravind
+user.lastName // Sanjeev
+user.fullName() // Aravind Sanjeev
+```
+
+Now that we have a moderate understanding of JavaScript objects and how to access its values, let's discuss the window object.
+
+## The Window object
+
+The `Window` object is the top-most object in JavaScript. Every other object is a property of the window object.
+
+<Mermaid content={`graph TD
+Window[Window Object]
+Window --> Obj1[Object]
+Window --> Obj2[Object]
+Obj1 --> P1[Property]
+Obj1 --> P2[Property]
+Obj1 --> P3[Method]
+Obj2 --> P4[Property]
+Obj2 --> P5[Property]
+Obj2 --> P6[Method]
+class Window window
+class Obj1,Obj2 object
+class P1,P2,P3,P4,P5,P6 prop`} />
+
+On the [JavaScript console](https://jsconsole.com/), simply run `window` to see the Window object. We can see a whole list of gibberish, it is not necessary that we understand them all. What I want you to take away is that **when a JS engine is executing a code, it only checks for variables directly defined inside the window object**. That is, the variable must be a property of the window object.
+
+This is best exemplified by directly declaring a variable. On the [JSConsole](https://jsconsole.com/), run the following code.
+
+```js
+variableName = "Value"
+```
+
+Please note that I didn't use `var`, `let`, or `const`. The above variable can be called simply by its name.
+
+```js
+variableName // Value
+```
+
+The same result can be achieved if we run the follow command.
+
+```js
+window.variableName // Value
+```
+
+If you noticed, this is how we access the value of a property inside an object. The window initial is always implied even if we doesn't explicitly provide it.
+
+## The `this` keyword
+
+The `this` keyword always refers to the parent object.
+
+Go to [jsconsole.com](https://jsconsole.com/) once again and try the below code.
+
+```js
+console.log(this)
+
+// Window {...}
+```
+
+Since we are using `this` keyword in global scope, it will refer to the window object. So variables defined in the global scope can be called the same way.
+
+```js
+variableName = "Value"
+this.variableName // Value
+```
+
+That's because `this` holds the value `window`.
+
+Now let's recall our example above.
+
+```js
+const user = {
+  firstName: "Aravind",
+  lastName: "Sanjeev",
+  fullName: function () {
+    return this.firstName + " " + this.lastName
+  },
+}
+```
+
+You can see that we are using `this.firstName` and `this.lastName`. Here, the `this` keyword is referring to the object scope which is the `user` object.
+
+When we call the `fullName()` method, the `this` is replaced by `user`.
+
+```js
+user.fullName() // "Aravind Sanjeev"
+
+// this.firstName == user.firstName
+// this.secondName == user.secondName
+```
+
+To be more precise, we are actually checking:
+
+```js
+window.user.firstName
+window.user.secondName
+```
+
+Hence, the `this` keyword is acting like a placeholder that is holding the value `user`. Except, the placeholder is dynamic in the sense that it always inherits the scope of its parent object.
+
+Technically, the JavaScript engine is still only checking inside the window object. However, `this` keyword will force it to check inside the `user` object.
+
+If we do not provide the `this` keyword, it will return a ReferenceError.
+
+```js
+const user = {
+  firstName: "Aravind",
+  lastName: "Sanjeev",
+  fullName: function () {
+    return firstName + " " + lastName
+  },
+}
+
+user.fullName() // ReferenceError
+```
+
+This is because the JS engine is now looking for `window.firstName` and `window.lastName` which doesn't exist.
+
+## call(), apply(), and bind() methods
+
+Now it is time to enter slighly more uncomfortable territory of the `this` keyword. I aim to keep it as simple as possible.
+
+### call()
+
+The `call()` method is used to call a function. However, we can change the value of the `this` keyword hence changing the context.
+
+```js
+const sum = function (a, b) {
+  return a + b + this.n
+}
+
+const obj = {
+  n: 100,
+}
+
+sum.call(obj, 1, 2) // 103
+```
+
+In the above program, `this` keyword refers to the window object. However, by utilizing the the `call()` method, we managed to change the context to the `obj` object.
+
+Notice that the object we intent to change the context to is always passed as the first argument.
+
+### apply()
+
+The `apply()` method is similar to the `call()` method. The difference is, we apply an array of arguments instead.
+
+```js
+const sum = function (a, b) {
+  return a + b + this.n
+}
+
+const obj = {
+  n: 100,
+}
+
+const args = [1, 2]
+
+sum.apply(obj, args) // 103
+```
+
+### bind()
+
+The `bind()` is different from `call()` and `apply()`. It is used to bind a function to an object.
+
+```js
+const obj = {
+  n: 100,
+}
+
+const sum = function (a, b) {
+  return a + b + this.n
+}
+
+const newSum = sum.bind(obj)
+
+newSum(1, 2) // 103
+```
+
+Here we binded the `sum` function by creating a new function `newSum` and then binding it with `obj`. Essentially, we created a separate function that now acts as a method of `obj`.
+
+## Strict mode vs non-strict mode
+
+The `this` keyword behaves a little differently in strict and non-strict modes. In non-strict mode, `this` inside a function defined in global scope will be the `Window` object.
+
+```js
+const func = function () {
+  return this
+}
+
+func() // Window
+```
+
+In strict mode, `this` inside a function defined in global scope will be undefined.
+
+```js
+const func = function () {
+  "use strict"
+  return this
+}
+
+func() // undefined
+```
+
+Inside an object, there is no change in behavior.
+
+## Arrow functions
+
+Arrow functions does not have it's on `this` binding. It instead inherits the scope of its object. Arrow functions should
+
+- Never be used as methods (because there is no `this` binding)
+- May be used as functions inside methods (as it will inherit object's scope)
+
+```js
+const obj1 = {
+  key: "value",
+  method: function () {
+    function normal() {
+      console.log(this)
+    }
+    normal()
+  },
+}
+
+obj1.method() // Window
+
+// here the normal() falls out of scope and defaults to window object
+
+const obj2 = {
+  key: "value",
+  method: function () {
+    const arrow = () => {
+      console.log(this)
+    }
+    arrow()
+  },
+}
+
+obj2.method() // Object
+
+// here arrow() has the object scope
+```
+
+As you can see, method inside `obj2` returned the object itself. That's because arrow functions automatically inherits the scope of object.
+
+And that's about it. Hope `this` was brief but useful. (See what I did there again?)

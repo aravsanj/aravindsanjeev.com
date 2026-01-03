@@ -1,0 +1,236 @@
+---
+title: "JavaScript Scope: An Easy Explanation"
+summary: "A scope in JavaScript defines the accessibility of variables. Local scopes can ensure variables with general names aren't overwritten."
+publishedAt: "2021-11-08T17:08"
+image: "./hero.webp"
+tags: ["JavaScript"]
+---
+
+The scope of a variable determines where the variable can be used. The scope is broadly divided into two - global scope and local scope.
+
+The global scope is the outermost scope in JavaScript. Any variable declared in global scope can be accessed anywhere.
+
+```js
+\\ script.js
+
+let message = "hello"
+```
+
+The variable `message` is defined in global scope. We can access it anywhere in the document. Apart from the global scope, there are multiple local scopes.
+
+A variable declared in local scope can only be accessed inside that local scope. That includes any other (local) scope(s) defined inside it.
+
+For the sake of understanding, we can categorize local scopes into 3 types:
+
+1. Block scope
+2. Function scope
+3. Module scope
+
+<Mermaid content={`flowchart TD
+    Scope[Scope]
+
+    Scope --> Global[GLOBAL]
+    Scope --> Local[LOCAL]
+
+    Local --> Block[BLOCK]
+    Local --> Function[FUNCTION]
+    Local --> Module[MODULE]`} />
+
+## Block scope
+
+In JavaScript, a code block is defined using curly braces `{}`. Any variable declared inside is in block scope. This applies to `if`, `for`, and `while` statements
+
+```js
+if (condition) {
+  let a = 20
+  console.log(a) // 20
+}
+console.log(a) // ReferenceError
+
+for (let i = 1; i < 2; i++) {
+  const b = 30
+  console.log(b) // 30
+}
+console.log(b) // ReferenceError
+```
+
+It should be noted that the block scope only applies to `let` and `const`. Anything declared using `var` will be in global scope.
+
+```js
+while (condition) {
+  var c = 50
+  console.log(c) // 50
+}
+
+console.log(c) // 50
+```
+
+We can create a block scoped variable by simply declaring it inside a code block too.
+
+```js
+{
+  let message = "hello"
+  console.log(message) // hello
+}
+
+console.log(message) // ReferenceError
+```
+
+This way we can work with isolated pieces of codes and variables.
+
+## Function scope
+
+Any variable declared inside a function is in function scope. It works for `var`, `let`, and `const`.
+
+```js
+function test() {
+  var a = 20
+  let b = 30
+  const c = 50
+
+  console.log(a) // 20
+  console.log(b) // 30
+  console.log(c) // 50
+}
+
+console.log(a) // ReferenceError
+console.log(b) // ReferenceError
+console.log(c) // ReferenceError
+```
+
+Any variable intented to be used on multiple independent functions must be declared in global scope (or enclosing block scope).
+
+## Module scope
+
+With the introduction of ES6, modules are a reality. Any variable defined inside a module is within the module scope and cannot be used elsewhere.
+
+```js
+// gravity.js
+
+const g = 9.8
+console.log(g) // 9.8
+```
+
+The above module has defined constant `g` for internal usage.
+
+```js
+import "./gravity"
+console.log(g) // ReferenceError
+```
+
+However, we can use if the variable `g` is explicitly exported using the `export` keyword.
+
+---
+
+## Nesting scopes
+
+Scopes in JavaScript can be nested. This means variables declared in parent scope can be accessed inside children scope.
+
+```js
+function parent() {
+  const num = 2
+
+  if (condition) {
+    console.log(num) // 2
+  }
+}
+```
+
+Technically, this is why a variable declared in global scope is accessible anywhere.
+
+## Lexical scoping (static scoping)
+
+Lexical/static scoping means that a variable defined in outer function can be accessed by the inner function. This is because scope of the variable is _statically_ determined.
+
+```js
+function outer() {
+  let p = "pie"
+
+  return function inner() {
+    console.log("I like " + p)
+  }
+}
+
+const inner = outer()
+
+inner() // I like pie
+```
+
+Here variable `p` is defined inside `outer()`. However, it is also accessible inside `inner()` because of position of variable `p`. The variable is located in the `outer()`'s scope where the `inner()` is also defined. This is called lexical or static scoping.
+
+## let and const keywords (plus ES6 modules)
+
+Before the introduction of `let` and `const` keywords, only global and function scope used to exist. Basically, function scope was the local scope. However, with the introduction of let and const, a separate block scope now exists. You must have noticed that block scope only works for let and const keywords.
+
+In addition, introduction of ES6 module have brought in module scope. Now function scope along with block and module scope are all local scopes in JavaScript.
+
+The introduction of let and const keywords are important because it allows us to repeat general variable names in block scope. So we don't have to keep redeclaring them.
+
+## Undeclared variables
+
+If you have undeclared variables that are assigned a value, it automatically has global scope. For example, in the below example we assign value "Hello" to variable `message` inside a function.
+
+```js
+function test() {
+  message = "Hello"
+}
+```
+
+Here the variable wasn't declared before it was assigned a value. So variable `message` is now in global scope.
+
+```js
+function test() {
+  message = "Hello"
+}
+
+console.log(message) // Hello
+```
+
+It is always recommended to declare your variables before or while assigning the value. Simply assigning a value to a variable is just an assignment operation. In the above example, variable `message` becomes a property of `window` object (because it is defacto declared using `var` keyword, we will get to this later below).
+
+PS: Running JavaScript in strict mode can prevent undeclared variables from being automatically global.
+
+## Why scope exists?
+
+Scopes can create execution context for JS engine. For example, when the engine starts executing a function, all the variables defined inside the function are allocated to memory. Once the function is done executing, the variables are destroyed. This will keep the memory clean and provides a proper execution context to the JS engine.
+
+This will also help developers easily deal with bugs since codes can be looked at in isolated pieces. It will also take care of variable naming issues since we can repeat the same variable names in different scopes.
+
+Variables declared in global scope should be minimum. This is because global scope variables will be in the memory until application closes. Make sure any variable is only within the necessary scope. Principle of least accessibility should be practiced.
+
+## var vs let & const
+
+As we saw earlier, variable scoping has some differences depending on how you declare them. Although `var` is essentially outdated and is not recommended to be used, you should understand why.
+
+`var` was introduced to JavaScript when only global and function scope existed. Both functions and variables declared by `var` keyword is _hoisted_ before JavaScript executes. Hoisting is the process by which JS engine moves functions and variables on top of the file before script is executed.
+
+That means any variable declared using `var` keyword will be available globally. This will not only flood the memory but also creates some painful bugs. Variables declared using `let` and `const` keyword are not hoisted. Hence they're block scoped (unless declared globally) which limits them to a narrow purpose.
+
+Hoisting will also make any variable declared using `var` keyword a property of `window` object.
+
+```js
+var a = 10
+
+console.log(window.a) // 10
+```
+
+This will conflict with variables that are already defined in the `window` object. For example, the `name` variable.
+
+However, since `let` and `const` are not hoisted, the issue is resolved.
+
+```js
+let a = "Apple"
+
+const c = 23
+
+console.log(window.a) // undefined
+console.log(window.c) // undefined
+```
+
+Love it or hate it, you cannot deny ES6 has made an average JavaScript programer's life simpler.
+
+## Conclusion
+
+Scope is a way to define the accessibility of variables. JavaScript has evolved over time in accordance with the principle of least accessibility. Hence in 2015, it introduced `let` and `const` which enables block scoping.
+
+From JavaScript's perspective, scope is a way to clearly define the execution context. It will reduce the clutter during development and execution.

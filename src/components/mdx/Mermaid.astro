@@ -1,0 +1,146 @@
+---
+interface Props {
+    content: string;
+}
+
+const { content } = Astro.props;
+const mermaidId = `mermaid-${Math.random().toString(36).substring(2, 9)}`;
+---
+
+<div class="mermaid-container w-full my-6 flex justify-center">
+    <div
+        class="mermaid opacity-0 transition-opacity duration-300 w-full"
+        id={mermaidId}
+    >
+        {content.trim()}
+    </div>
+</div>
+
+<script>
+    import mermaid from "mermaid";
+
+    function initMermaid() {
+        // Only initialize if there are mermaid elements
+        const mermaidElements = document.querySelectorAll(".mermaid");
+        if (mermaidElements.length === 0) return;
+
+        console.log(
+            "Initializing Mermaid with content:",
+            mermaidElements[0].textContent,
+        );
+
+        const isDarkMode = document.documentElement.classList.contains("dark");
+
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: "dark",
+            securityLevel: "loose",
+            fontFamily: "inherit",
+            flowchart: {
+                htmlLabels: true,
+                curve: "basis",
+                padding: 2,
+                useMaxWidth: true,
+            },
+        });
+
+        // Make elements visible after mermaid renders
+        mermaidElements.forEach((el) => {
+            if (el instanceof HTMLElement) {
+                el.classList.remove("opacity-0");
+            }
+        });
+
+        // Run re-render
+        mermaid.run();
+    }
+
+    // Init on load
+    initMermaid();
+
+    // Support Astro View Transitions
+    document.addEventListener("astro:page-load", initMermaid);
+
+    // Watch for theme changes
+    const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            if (mutation.attributeName === "class") {
+                // Clear initialized state or re-render
+                const elements = document.querySelectorAll(".mermaid");
+                elements.forEach((el) => {
+                    // Mermaid often replaces content, so this is tricky.
+                    // The safest way is a page reload or sophisticated re-render.
+                    // For now, let's re-trigger init.
+                    initMermaid();
+                });
+            }
+        });
+    });
+
+    observer.observe(document.documentElement, { attributes: true });
+</script>
+
+<style is:global>
+    :root {
+        --mermaid-prop-bg: #1f2937;
+        --mermaid-prop-border: #374151;
+        --mermaid-prop-text: #f3f4f6;
+        --mermaid-line-color: #e5e7eb; /* High contrast white/gray for lines */
+    }
+
+    .mermaid svg {
+        width: 100% !important;
+        max-width: 100%;
+        height: auto;
+        padding: 0 !important;
+        margin: 0 auto;
+    }
+
+    /* Edge/Line Styles */
+    .mermaid .edgePath path,
+    .mermaid .edgePaths path {
+        stroke: var(--mermaid-line-color) !important;
+        stroke-width: 1.5px !important;
+    }
+
+    .mermaid marker path,
+    .mermaid .marker path {
+        fill: var(--mermaid-line-color) !important;
+        stroke: var(--mermaid-line-color) !important;
+    }
+
+    /* Targeted Node Styles */
+    .mermaid .window > rect,
+    .mermaid .window > circle,
+    .mermaid .window > path,
+    .mermaid .window > polygon {
+        fill: #3b82f6 !important;
+        stroke: #2563eb !important;
+    }
+    .mermaid .window .nodeLabel {
+        color: #ffffff !important;
+        font-weight: bold !important;
+    }
+
+    .mermaid .object > rect,
+    .mermaid .object > circle,
+    .mermaid .object > path,
+    .mermaid .object > polygon {
+        fill: #10b981 !important;
+        stroke: #059669 !important;
+    }
+    .mermaid .object .nodeLabel {
+        color: #ffffff !important;
+    }
+
+    .mermaid .prop > rect,
+    .mermaid .prop > circle,
+    .mermaid .prop > path,
+    .mermaid .prop > polygon {
+        fill: var(--mermaid-prop-bg) !important;
+        stroke: var(--mermaid-prop-border) !important;
+    }
+    .mermaid .prop .nodeLabel {
+        color: var(--mermaid-prop-text) !important;
+    }
+</style>

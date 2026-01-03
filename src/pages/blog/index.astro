@@ -9,6 +9,23 @@ const posts: CollectionEntry<"blog">[] = (await getCollection("blog")).sort(
     new Date(a.data.publishedAt).valueOf(),
 );
 
+// Group posts by year
+const postsByYear = posts.reduce(
+  (acc, post) => {
+    const year = new Date(post.data.publishedAt).getFullYear();
+    if (!acc[year]) {
+      acc[year] = [];
+    }
+    acc[year].push(post);
+    return acc;
+  },
+  {} as Record<number, CollectionEntry<"blog">[]>,
+);
+
+const sortedYears = Object.keys(postsByYear)
+  .map(Number)
+  .sort((a, b) => b - a);
+
 const metadata = {
   title: "Blog",
   description:
@@ -22,7 +39,24 @@ const metadata = {
   mainClass="py-24 max-w-full"
 >
   <h1 class="text-5xl font-bold text-primary mb-16">All Posts</h1>
-  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-    {posts.map((post) => <BlogCard post={post} />)}
+
+  <div class="space-y-20">
+    {
+      sortedYears.map((year, index) => (
+        <section class={index !== 0 ? "pt-16 border-t border-white/5" : ""}>
+          <div class="flex items-center gap-4 mb-10">
+            <h2 class="text-2xl font-bold text-primary/30 font-mono tracking-tight">
+              {year}
+            </h2>
+            <div class="h-px flex-1 bg-gradient-to-r from-white/5 to-transparent" />
+          </div>
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
+            {postsByYear[year].map((post: CollectionEntry<"blog">) => (
+              <BlogCard post={post} />
+            ))}
+          </div>
+        </section>
+      ))
+    }
   </div>
 </Layout>

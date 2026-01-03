@@ -1,0 +1,238 @@
+---
+title: "Everything You Need to Know About JavaScript Functions"
+summary: "JavaScript functions are building blocks of a JavaScript program."
+publishedAt: "2021-10-02"
+image: "./hero.webp"
+tags: ["JavaScript"]
+
+---
+
+A function is a set of statements that perform a specific task. It is one of the fundamental building blocks of JavaScript. In this article, I aim to cover JavaScript functions in a beginner-friendly manner. This is in no way the most detailed or exhaustive documentation of JavaScript functions. The type of articles that I will refrain from writing because people are traditionally hesitant to read long boring articles. But this is instead an attempt to cover everything important in a neat and beginner-friendly manner. Wish me luck!
+
+## Declaring a function
+
+To declare a function, we use the `function` keyword.
+
+```js
+function functionName(parameter) {
+  // function definition
+}
+```
+
+Three things need to be noted in a function:
+
+- Function name
+- Function parameter
+- Function definition
+
+The function name is used to call the function. The parameters are used to pass the arguments. The definition will determine the behaviour and the output. For that, we use the `return` statement.
+
+```js
+function square(number) {
+  return number * number
+}
+
+square(5) // 25
+```
+
+## Function expression
+
+A function expression is simply assigning a function to a variable.
+
+```js
+const square = function (number) {
+  return number * number
+}
+
+square(5) // 25
+```
+
+Here the variable `square` store reference to the function. The function itself is anonymous and has no name. Although it is still possible to provide a name for the function.
+
+```js
+const squareVar = function square(number) {
+  return number * number
+}
+
+square(5) // 25
+squareVar(5) // 25
+```
+
+In this case, the function is not anymore anonymous and can be called by its name. This maybe helpful for debugging purposes.
+
+## Function declaration vs Function expression
+
+If a function is declared, we can call the function before the declaration itself.
+
+```js
+square(5) // returns 5
+
+function square(number) {
+  return number * number
+}
+```
+
+This works because of something called _hoisting_ in JavaScript. Hoisting is the process where JavaScript interpreter allocates memory for variables and function declarations prior to execution of the code. Hence function declarations are always hoisted to the top of the file and can be called anywhere.
+
+If the same is done in function expressions, it will return a ReferenceError.
+
+```js
+square(5) // referenceError: square is not defined
+
+const square = function (number) {
+  return number * number
+}
+```
+
+As already mentioned, here the variable `square` only stores a reference to the anonymous function. Therefore, it always has to be called after the variable declaration.
+
+As a personal rule, I always use function expressions. This is just to make sure I am always calling the function after its declaration.
+
+We will talk more about function expressions later down the post.
+
+## Arrow functions
+
+Arrow functions are a much easier way to write function expressions. It has a shorter syntax. It was previously called _fat arrow function_.
+
+```js
+const square = number => number * number
+
+square(5) // 25
+```
+
+This is the simplest form of an arrow function. If we have multiple parameters and more than one statement in the function definition, we have to use parenthesis, curly brackets, and return statement.
+
+```js
+const multiply = (num1, num2) => {
+  product = num1 * num2
+  return product
+}
+
+multiply(2, 3) // 6
+```
+
+Unlike regular function expressions, arrow functions are always anonymous. We cannot provide a name for an arrow function and it can be only called by variable reference.
+
+Arrow functions are not merely simpler form of regular function expressions. It serves its own purpose. We will talk about it later down the post once we learn about function scope.
+
+## Function expressions revisited
+
+In the earlier session, we learned about function expressions and the difference between function expressions and function declarations. It is important to note that function expressions just doesn't exist so we can enjoy stricter coding environment. Although it is one of the benefits of function expressions, the key benefit is that we can use function expressions as an argument for other functions.
+
+```js
+const square = function (number) {
+  return number * number
+}
+
+function sumofsquares(num1, num2, square) {
+  return square(num1) + square(num2)
+}
+
+sumofsquares(2, 5, square) // 29
+```
+
+Here we passed variable `square` as an argument to `sumofsquares` function. We were able to call the function inside the definition of another function. This is perhaps the most important quality of a function expression.
+
+## Function scope
+
+A function scope defines which variables a function can use.
+
+```js
+let a = 10
+
+function tentimes(n) {
+  return n * a
+}
+
+tentimes(3) // 30
+```
+
+Here variable `a` is defined in global scope. Since the function `tentimes` is also defined in global scope, the variable can be used inside the function definition.
+
+The same applies if the variable is defined inside the function definition.
+
+```js
+function tentimes(n) {
+  let a = 10
+  return n * a
+}
+
+tentimes(3) // 30
+```
+
+However, here the variable `a` cannot be used outside the function. It is a private variable of the function `tentimes`.
+
+But we can still define a function inside the function and use the variable `a`.
+
+```js
+function hundredtimes(n) {
+  let a = 10
+  let b = a * n
+  function tentimes(b) {
+    return b * a
+  }
+  return tentimes(b)
+}
+
+hundredtimes(3) // 300
+```
+
+Here both variable `a` and function `tentimes` are defined in the same scope. So a function always inherits scope of its parent.
+
+## Arrow functions revisited
+
+Earlier I promised we will come back to arrow functions once we discussed function scope. We already learned what an arrow function is. It is a much simpler form of function expression. But that's not why it was invented.
+
+Arrow function's foremost purpose is to get straightforward with the `this` keyword.
+
+The `this` keyword always refers to the current scope. If it is used inside the window object, it refers to global scope. If it is used inside an object's method, it will refer to the scope of that particular object.
+
+```js
+console.log(this) // Window
+
+const obj = {
+  method: function () {
+    console.log(this)
+  },
+}
+
+obj.method() // Object { method: f ()}
+```
+
+But things get complicated when we use a function inside the object's method.
+
+```js
+const obj = {
+  method: function () {
+    function innerfunction() {
+      console.log(this)
+    }
+    innerfunction()
+  },
+}
+
+obj.method() // Window
+```
+
+While we all expected the `this` keyword to refer to the parent method -or at least the parent object, it referred to the window object instead.
+
+This is because `innerfunction` has fallen out of scope and defaults to the window/global scope.
+
+Here, arrow functions becomes useful as arrow functions have no `this` binding and automatically uses the scope of parent object.
+
+```js
+const obj = {
+  method: function () {
+    const innerfunction = () => {
+      console.log(this)
+    }
+    innerfunction()
+  },
+}
+
+obj.method() // Object { method: f ()}
+```
+
+This allows us to use parent object's properties inside `innerfunction`. Arrow functions makes our life way easier compared to doing work around with traditional functions.
+
+And that's about it. Hopefully it was brief but useful.

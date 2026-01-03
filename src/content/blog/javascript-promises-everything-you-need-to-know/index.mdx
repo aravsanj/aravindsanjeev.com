@@ -1,0 +1,269 @@
+---
+title: "JavaScript Promises: Everything You Need to Know"
+summary: "JavaScript promises is a new way to do function callbacks. With the introduction of promise, syntax is significantly reduced. It also helps us avoid what is called a callback hell."
+publishedAt: "2021-10-15T16:20"
+image: "./hero.webp"
+tags: ["JavaScript"]
+---
+
+In today's post, I promise to give you the best article on JavaScript promises you ever read. See what I did there? A promise in JavaScript is an object that is returned after an asynchronous operation. The object will be returned regardless of whether the asynchronous operation was a success or failure. This is why it is called a **promise**.
+
+The main purpose of using promise is to avoid _callback hell_. In this post, we will learn about JavaScript promises, what they are, what they can do, and how to use them.
+
+To start off, we will discuss what existed before promise was introduced. Before promise, we used to pass callback functions directly as an argument.
+
+Let's take the example of an asynchronous function that downloads a certain image.
+
+```js
+DownloadImageAsync()
+```
+
+The above function has to accept three arguments,
+
+- The url of the image
+- A function that is executed after the image is successfully downloaded
+- A function that is executed after the image download failed
+
+The two functions are called callback functions. Without callback functions, we cannot act up on the result of an asynchronous operation.
+
+```js
+function success() {
+  console.log("success")
+}
+
+function failure() {
+  console.log("failure")
+}
+
+DownloadImageAsync(url, success, failure)
+```
+
+This is how a typical asynchronous operation is structured. The problem with this approach start when we try to run several asynchronous operations.
+
+```js
+asyncFunctionOne(function (result) {
+  asyncFunctionTwo(
+    result,
+    function (newResult) {
+      asyncFunctionThree(
+        result,
+        function (lastResult) {
+          console.log(lastResult)
+        },
+        failure
+      )
+    },
+    failure
+  )
+}, failure)
+```
+
+What you see above is called a callback hell. This will get worse as more asynchronous operations are added. This is where JavaScript promises sweeps in with a better syntax.
+
+As I already mentioned, a promise in JavaScript is an object that is returned after an asynchronous operation. We will get to creating promises later down the post. For now, let's rewrite the above code for promises.
+
+```js
+asyncFunctionOne()
+  .then(result => asyncFunctionTwo(result))
+  .then(newResult => asyncFunctionThree(newResult))
+  .then(lastResult => console.log(lastResult))
+  .catch(failure)
+```
+
+Each asynchronous functions above returns a promise. In a promise, we can attach the `then` method where we pass the next function. From the above code you should take away three things,
+
+- Promises are far shorter and simpler in syntax
+- You only need to pass the failure callback once
+- A promise must always return results (check arrow function syntax, it is returning results which is passed to the next `then` block)
+
+_It is important to note that for most of our JavaScript life, we will be using already-made promises instead of creating them ourselves._ With that being said, let's learn to create promises.
+
+## Creating a promise
+
+To create promises, we use the `Promise` constructor object in JavaScript. The `new` keyword is used to create a new instance of a user-defined object or constructor.
+
+```js
+const promise = new Promise()
+```
+
+A promise has to be resolved (success) or rejected (failure). In both cases, a function is executed (as demonstrated above). We pass these functions as arguments of an arrow function passed to the `Promise` constructor.
+
+```js
+const promise = new Promise((resolve, reject) => {
+  //
+})
+```
+
+Inside the arrow function, we create the definition and condition for resolve or reject to be executed.
+
+```js
+const promise = new Promise((resolve, reject) => {
+  const num = 3
+  if (1 + 2 == num) {
+    resolve("success")
+  } else {
+    reject("failed")
+  }
+})
+```
+
+We already saw how to consume the promise. By using `then` and `catch` methods.
+
+```js
+promise
+  .then(msg => console.log("from then " + msg))
+  .catch(msg => console.log("from catch " + msg))
+
+// output: from then success
+```
+
+If the condition is satisfied (which it is), the resolve function is triggered and `then` method is executed. Otherwise, the `catch` method is executed.
+
+The `then` method above itself returns another promise.
+
+```js
+const promise2 = promise
+  .then(msg => console.log("from then " + msg))
+  .catch(msg => console.log("from catch " + msg))
+```
+
+We can use `then` method again on the new promise object.
+
+```js
+promise2.then(something => something)
+```
+
+Better way to do this is to just tuck in the `then` methods one after another (as we saw in the first example).
+
+```js
+const promise2 = promise
+  .then(msg => console.log("from then " + msg))
+  .then(something => something)
+  .catch(msg => console.log("from catch " + msg))
+```
+
+This is called a promise chain.
+
+To recap,
+
+- A `Promise` is an object (constructor) in JavaScript
+- An instance of the object is created using `new` keyword
+- A function is passed as an argument to the constructor
+- The function accepts two other functions as arguments - resolve & reject
+- Conditions and definitions for these functions are defined in the function definition
+- The `then` and `catch` methods are executed for resolve and reject accordingly
+- The `then` method itself returns a promise that can attach another `then` method creating a promise chain
+
+## States of a promise
+
+A promise always has to be in one of the following three states:
+
+- Pending
+- Fullfilled
+- Rejected
+
+_Pending_ is the initial state of the the promise. The promise is _fullfilled_ when it is a success. The promise is _rejected_ when it is a failure.
+
+When a promise is rejected, it is still returning another promise. That means we can also use `then` method instead of `catch`.
+
+```js
+const promise = new Promise()
+
+promise
+  .then(onSuccess => console.log(onSuccess))
+  .then(onRejection => console.log(onRejection))
+```
+
+But `then` method in this case is used to execute another asynchronous operation. It should not be confused with `catch` which is used for error handling. A `catch` is always necessary.
+
+```js
+const promise = new Promise()
+
+promise
+  .then(onSuccess => console.log(onSuccess))
+  .then(onRejection => console.log(onRejection))
+  .catch(error => console.log(error))
+```
+
+The `catch` method is instantly executed when confronted with an error. It doesn't matter how many `then` methods it had to skip.
+
+The `catch` method also returns a promise. So we can tuck in a `then` method after the `catch` method.
+
+```js
+const promise = new Promise()
+
+promise
+  .then(onSuccess => console.log(onSuccess))
+  .then(onRejection => console.log(onRejection))
+  .catch(error => console.log(error))
+  .then(somethingElse => somethingElse)
+```
+
+This way we can still trigger another asynchronous operation after error handling.
+
+If you want to execute something regardless of whether your promise is fulfilled or rejected, use `finally`.
+
+```js
+const promise = new Promise()
+
+promise
+  .then(msg => console.log("from then " + msg))
+  .then(onRejection => console.log(onRejection))
+  .catch(msg => console.log("from then " + msg))
+  .then(somethingElse => somethingElse)
+  .finally(console.log("whatever"))
+```
+
+Whatever goes in to the `finally` block is always executed.
+
+## The resolve() and reject() methods
+
+When we created a promise earlier, we defined the condition for resolving or rejecting that promise. But there is a way to resolve or reject a promise unconditionally.
+
+`Promise.resolve()` method returns a promise object that is already resolved by a given value.
+
+```js
+Promise.resolve(value)
+```
+
+`Promise.reject()` method returns a promise object that is rejected with a given reason.
+
+```js
+Promise.reject(reason)
+```
+
+Creating promises that are unconditionally resolved or rejected is particularly useful when handling multiple independent promises.
+
+## Handling multiple independent promises
+
+We can handle multiple independent promises using `Promise.all()` and `Promise.race()` methods. Both methods accept an array of promises.
+
+While using `Promise.all()`, the `then` method is only triggered after the last promise is resovled.
+
+```js
+const promise1 = Promise.resolve("result1")
+const promise2 = Promise.resolve("result2")
+const promise3 = Promise.resolve("result3")
+
+Promise.all([promise1, promise1, promise3]).then(results =>
+  console.log(results)
+)
+
+// [ result1, result1, result3 ]
+```
+
+While using `Promise.race()`, the `then` method is triggered the moment first promise is resolved.
+
+```js
+const promise1 = Promise.resolve("result1")
+const promise2 = Promise.resolve("result2")
+const promise3 = Promise.resolve("result3")
+
+Promise.race([promise1, promise1, promise3]).then(results =>
+  console.log(results)
+)
+
+// result1
+```
+
+Since these are simple promises, `promise1` will be resolved first. This may not be the case with complex ones. This enables us to run multiple asynchronous operations and act up on the one that finishes first.
