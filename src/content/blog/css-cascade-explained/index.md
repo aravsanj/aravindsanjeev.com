@@ -2,6 +2,7 @@
 title: "CSS Cascade Explained For Beginners"
 summary: "The cascade is an algorithm used for solving conflicts when multiple CSS rules apply to the same HTML element."
 publishedAt: "2022-01-06"
+lastUpdated: "2026-01-03"
 tags: ["CSS"]
 image: ./hero.webp
 ---

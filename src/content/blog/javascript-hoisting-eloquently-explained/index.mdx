@@ -2,11 +2,12 @@
 title: "JavaScript Hoisting Eloquently Explained"
 summary: "Javascript hoisting is the process of initializing variables and providing them memory space before a JS program is run"
 publishedAt: "2021-12-23"
+lastUpdated: "2026-01-03"
 image: "./hero.webp"
 tags: ["JavaScript"]
 ---
 
-Okay, today I want to breakdown one of the much debated topics in JavaScript — _hoisting_. Many people believe hoisting is "lifting" variables and functions to top of the file during execution. If I had to teach JavaScript to 5 years olds, I would stick with that definition.
+Okay, today I want to breakdown one of the much debated topics in JavaScript â€” _hoisting_. Many people believe hoisting is "lifting" variables and functions to top of the file during execution. If I had to teach JavaScript to 5 years olds, I would stick with that definition.
 
 But since I am not teaching to 5 year olds, hopefully, I would rather define hoisting as a process that JavaScript engines undergo to prepare for an execution. Although that definition is also a bit bloated, a better way to see hoisting is to see it as stage 1 of JavaScript execution.
 
@@ -121,7 +122,7 @@ y = 20
 let z = 30
 ```
 
-In the above case, all variables will be hoisted but no default value will be given. The difference is that, if you have a function that uses any of these variables but is declared before the variable is initialzed, unlike variables declared using `var` — `let` and `const` will throw an error because they do not have a value.
+In the above case, all variables will be hoisted but no default value will be given. The difference is that, if you have a function that uses any of these variables but is declared before the variable is initialzed, unlike variables declared using `var` â€” `let` and `const` will throw an error because they do not have a value.
 
 ```js
 console.log(x) //undefined

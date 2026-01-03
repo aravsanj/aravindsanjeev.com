@@ -2,6 +2,7 @@
 title: "All About Arrow Functions"
 summary: "Arrow functions are introduced in ES6. It has easier syntax and unlike regular functions, it actually has lexical scoping which can be taken advantage off in certain situations"
 publishedAt: "2021-12-29"
+lastUpdated: "2026-01-03"
 tags: ["JavaScript"]
 image: ./hero.webp
 ---

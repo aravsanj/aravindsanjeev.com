@@ -61,7 +61,7 @@ const baseUrl = "https://aravindsanjeev.com";
           "@type": "BlogPosting",
           headline: post.data.title,
           datePublished: post.data.publishedAt,
-          dateModified: post.data.publishedAt,
+          dateModified: post.data.lastUpdated || post.data.publishedAt,
           description: post.data.summary,
           image: post.data.image
             ? `${baseUrl}${post.data.image.src}`
@@ -79,6 +79,13 @@ const baseUrl = "https://aravindsanjeev.com";
           <div class="mb-8 flex flex-wrap items-center gap-4">
             <span class="text-secondary text-sm font-medium">
               {formatDate(post.data.publishedAt)}
+              {
+                post.data.lastUpdated && (
+                  <span class="ml-2 opacity-60 font-normal">
+                    (Updated: {formatDate(post.data.lastUpdated)})
+                  </span>
+                )
+              }
             </span>
             <div class="flex flex-wrap gap-2">
               {
