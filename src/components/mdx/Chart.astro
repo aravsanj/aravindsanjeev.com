@@ -1,0 +1,130 @@
+---
+interface Props {
+    type:
+        | "bar"
+        | "line"
+        | "pie"
+        | "doughnut"
+        | "radar"
+        | "polarArea"
+        | "bubble"
+        | "scatter";
+    data: any;
+    options?: any;
+}
+
+const { type, data, options } = Astro.props;
+const chartId = `chart-${Math.random().toString(36).substring(2, 9)}`;
+---
+
+<div
+    class="chart-container relative w-full h-auto min-h-[300px] p-4 bg-gray-50 dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 my-6"
+>
+    <canvas
+        id={chartId}
+        class="chart-js-canvas w-full h-full"
+        data-type={type}
+        data-data={JSON.stringify(data)}
+        data-options={JSON.stringify(options)}></canvas>
+</div>
+
+<script>
+    import Chart from "chart.js/auto";
+
+    function initCharts() {
+        const canvases = document.querySelectorAll("canvas.chart-js-canvas");
+        canvases.forEach((canvas) => {
+            if (
+                canvas instanceof HTMLCanvasElement &&
+                !canvas.dataset.initialized
+            ) {
+                try {
+                    const type = canvas.dataset.type as any;
+                    const data = JSON.parse(canvas.dataset.data || "{}");
+                    const options = JSON.parse(canvas.dataset.options || "{}");
+
+                    // Ensure basic responsiveness
+                    const defaultOptions = {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                labels: {
+                                    color: document.documentElement.classList.contains(
+                                        "dark",
+                                    )
+                                        ? "#e5e7eb"
+                                        : "#374151",
+                                },
+                            },
+                        },
+                        scales: {
+                            y: {
+                                grid: {
+                                    color: document.documentElement.classList.contains(
+                                        "dark",
+                                    )
+                                        ? "#374151"
+                                        : "#e5e7eb",
+                                },
+                                ticks: {
+                                    color: document.documentElement.classList.contains(
+                                        "dark",
+                                    )
+                                        ? "#9ca3af"
+                                        : "#4b5563",
+                                },
+                            },
+                            x: {
+                                grid: {
+                                    color: document.documentElement.classList.contains(
+                                        "dark",
+                                    )
+                                        ? "#374151"
+                                        : "#e5e7eb",
+                                },
+                                ticks: {
+                                    color: document.documentElement.classList.contains(
+                                        "dark",
+                                    )
+                                        ? "#9ca3af"
+                                        : "#4b5563",
+                                },
+                            },
+                        },
+                    };
+
+                    // Deep merge or just spread (simplified for now)
+                    // For a robust solution we might want deep merge, but this is a starter
+                    const finalOptions = {
+                        ...defaultOptions,
+                        ...options,
+                        plugins: {
+                            ...defaultOptions.plugins,
+                            ...options?.plugins,
+                        },
+                        scales: {
+                            ...defaultOptions.scales,
+                            ...options?.scales,
+                        },
+                    };
+
+                    new Chart(canvas, {
+                        type,
+                        data,
+                        options: finalOptions,
+                    });
+                    canvas.dataset.initialized = "true";
+                } catch (e) {
+                    console.error("Failed to initialize chart", e);
+                }
+            }
+        });
+    }
+
+    // Init on load
+    initCharts();
+
+    // Support Astro View Transitions
+    document.addEventListener("astro:page-load", initCharts);
+</script>
