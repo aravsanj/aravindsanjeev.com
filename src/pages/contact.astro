@@ -79,15 +79,17 @@ const metadata = {
         </div>
 </Layout>
 
+<script is:inline src="https://www.google.com/recaptcha/api.js?render=6Lesx0IsAAAAAEcCZpemdGpSQFiIr-w8jx_aKa6c"></script>
+
 <script is:inline>
     const form = document.getElementById('contact-form');
     const status = document.getElementById('form-status');
     const statusText = status.querySelector('p');
+    const SITE_KEY = '6Lesx0IsAAAAAEcCZpemdGpSQFiIr-w8jx_aKa6c';
 
     if (form) {
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const formData = new FormData(form);
             const button = form.querySelector('button');
             const originalText = button.textContent;
 
@@ -95,6 +97,18 @@ const metadata = {
             button.textContent = 'Sending...';
 
             try {
+                // Execute reCAPTCHA
+                const token = await new Promise((resolve, reject) => {
+                    grecaptcha.ready(() => {
+                        grecaptcha.execute(SITE_KEY, {action: 'submit'})
+                            .then(resolve)
+                            .catch(reject);
+                    });
+                });
+
+                const formData = new FormData(form);
+                formData.append('g-recaptcha-response', token);
+
                 const response = await fetch(form.action, {
                     method: 'POST',
                     body: formData,
