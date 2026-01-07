@@ -133,9 +133,7 @@ const metadata = {
             } catch (error) {
                 console.error('Submission error:', error);
                 status.classList.remove('hidden');
-                statusText.textContent = error.message === 'Form submission failed' 
-                    ? "Oops! Something went wrong. Please try again." 
-                    : "Error: " + error.message;
+                statusText.textContent = "There was error while submitting.";
                 statusText.className = "text-red-500 font-medium";
                 button.disabled = false;
                 button.textContent = originalText;
