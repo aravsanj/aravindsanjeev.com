@@ -114,7 +114,9 @@ const metadata = {
                     body: formData,
                 });
 
-                if (response.ok) {
+                const data = await response.json();
+
+                if (response.ok && data.result === 'success') {
                     status.classList.remove('hidden');
                     statusText.textContent = "Thanks! I'll get back to you soon. Redirecting...";
                     statusText.className = "text-green-500 font-medium";
@@ -122,16 +124,18 @@ const metadata = {
                     form.reset();
                     
                     // Redirect to home page after 2 seconds
-                    setTimeout(() => {
-                        window.location.href = '/';
-                    }, 2000);
+                     setTimeout(() => {
+                         window.location.href = '/';
+                     }, 2000);
                 } else {
-                    throw new Error('Form submission failed');
+                    throw new Error(data.error || 'Form submission failed');
                 }
             } catch (error) {
                 console.error('Submission error:', error);
                 status.classList.remove('hidden');
-                statusText.textContent = "Oops! Something went wrong. Please try again or email me directly.";
+                statusText.textContent = error.message === 'Form submission failed' 
+                    ? "Oops! Something went wrong. Please try again." 
+                    : "Error: " + error.message;
                 statusText.className = "text-red-500 font-medium";
                 button.disabled = false;
                 button.textContent = originalText;
