@@ -25,6 +25,11 @@ module.exports = {
             },
           },
         },
+        "2xl": {
+          css: {
+            fontSize: "22px",
+          },
+        },
       },
       animation: {
         spotlight: "spotlight 2s ease .75s 1 forwards",

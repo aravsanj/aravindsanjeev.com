@@ -1,0 +1,56 @@
+---
+title: "The Paradox of AI Coding: Faster Software, Slower Progress"
+summary: ""
+publishedAt: "2026-01-26"
+tags: ["Thoughts", "AI", "Software", "Coding"]
+---
+
+Last week, the CEO of Cursor announced that their agent vibe coded a browser.
+
+**"It _kind of_ works!"** he [announced on X](https://x.com/mntruell/status/2011562190286045552). The most expensive sentence in software.
+
+The agent wrote more than [three million lines of code](https://github.com/wilsonzlin/fastrender) in a week.  
+
+In contrast, Chromium has 37 million lines of code. Written in a span of 19 years. This is a testament to how complicated browsers are to develop. 
+
+Hell, Microsoft gave up and moved Edge to [Chromium](https://blogs.windows.com/windowsexperience/2018/12/06/microsoft-edge-making-the-web-better-through-more-open-source-collaboration/).
+
+This begs the question, can the 3 million lines code scale to the (carefully crafted) 37 million lines of code? 
+
+Take another news from the same week. Whiteboard app [tldraw](https://github.com/tldraw/tldraw/issues/7695) is pausing contribution from external contributors due to AI slop.
+
+Curl is planning to [shutter their bug bounty program](https://www.theregister.com/2026/01/21/curl_ends_bug_bounty/) due to AI submissions. LLVM policy explicity says that there must be [human in the loop](https://llvm.org/docs/AIToolPolicy.html).
+
+This exposes a fundamental reality of making good software versus "just usable" ones.
+
+Good software aren't written, they're painfully grown by humans who remember why things broke.
+
+AI can write shoddy code at scale. Only humans can write good code that scales well. The way we do this is through iterative development. It requires feedback, reviews, knowledge sharing, coordination, communication, collective context, and, most importantly, _responsibility_.
+
+Software bugs are not limited to pre-defined tests. They usually arise when users use the tool in unintended ways. Most of these cannot be predicted or tested beforehand. And we need raw human intelligence, not AI brute force to fix them.
+
+
+AI will help us write code faster, but make review processes harder. Because we don’t understand the code, it nullifies our ability to improve the software over time.
+
+Yet, AI has created a precident among product owners to have things built far too quickly.
+
+They need speed over quality. They need "good enough" software that can be shipped fast. And AI is the perfect tool for that.
+
+People in charge of the products are not engineers. They don’t understand the codebase. They don’t understand the implications of shipping shoddy code. They just want to ship features the next day. And test them for business viability.
+
+The responsibility of making sure the codebase is maintainable, scalable, and secure falls on the engineers. Those who will leave behind AI-driven technical debt for themselves to fix in the future. And hope that the future never arrives.
+
+This creates a paradox where short-term business requirements are satisfied at the cost of long-term sustainability.
+
+The new software engineer has this additional responsibility of appeasing both ends of the business early on. While the people in charge of deliverables may never understand this bargain.
+
+To be clear, this is not a new challenge. We always needed to ship fast. We always borrowed time from future. AI just accelerated an existing problem. Because expectations have went sky high.
+
+## Path forward
+
+Understanding must again be a first-class citizen. It always was. Whether we were writing great or shitty code ourselves.
+
+Regardless of how good or terrible human programming was, being forced to understand what we wrote played its own part in making the software better over time.
+
+We let it collapse under the AI regime. As its forceful nature is now optional. 
+

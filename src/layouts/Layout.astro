@@ -29,6 +29,12 @@ const isHome = Astro.url.pathname === "/";
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/png" href="/assets/favicon.png" />
     <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Outfit:wght@100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
     <meta name="generator" content={Astro.generator} />
 
     <!-- Open Graph / Facebook -->
@@ -102,8 +108,9 @@ const isHome = Astro.url.pathname === "/";
          For now omitting GA to avoid breakage without ID/setup or relying on deprecated Next comp.
          If 'G-BELR0CJR8V' is critical, I can add a script tag.
     -->
-    <script type="text/partytown" src="https://www.googletagmanager.com/gtag/js?id=G-BELR0CJR8V"
-    ></script>
+    <script
+      type="text/partytown"
+      src="https://www.googletagmanager.com/gtag/js?id=G-BELR0CJR8V"></script>
     <script type="text/partytown">
       window.dataLayer = window.dataLayer || [];
       function gtag() {

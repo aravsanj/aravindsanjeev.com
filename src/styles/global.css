@@ -9,19 +9,31 @@
 }
 
 :root {
-  --sh-class: #569cd6; /* Soft blue for classes */
-  --sh-identifier: #d4d4d4; /* Light gray for identifiers */
-  --sh-sign: #dcdcaa; /* Yellowish tone for operators/signs */
-  --sh-property: #9cdcfe; /* Cyan for properties */
-  --sh-entity: #4ec9b0; /* Greenish cyan for entities */
-  --sh-jsxliterals: #c586c0; /* Light purple for JSX literals */
-  --sh-string: #ce9178; /* Warm orange for strings */
-  --sh-keyword: #c678dd; /* Vibrant pink for keywords */
-  --sh-comment: #6a9955; /* Soft green for comments */
+  --sh-class: #569cd6;
+  /* Soft blue for classes */
+  --sh-identifier: #d4d4d4;
+  /* Light gray for identifiers */
+  --sh-sign: #dcdcaa;
+  /* Yellowish tone for operators/signs */
+  --sh-property: #9cdcfe;
+  /* Cyan for properties */
+  --sh-entity: #4ec9b0;
+  /* Greenish cyan for entities */
+  --sh-jsxliterals: #c586c0;
+  /* Light purple for JSX literals */
+  --sh-string: #ce9178;
+  /* Warm orange for strings */
+  --sh-keyword: #c678dd;
+  /* Vibrant pink for keywords */
+  --sh-comment: #6a9955;
+  /* Soft green for comments */
 
-  --sh-inline-code-bg: #1e1e1e; /* Dark gray for background */
-  --sh-inline-code-text: #dcdcaa; /* Yellowish text for contrast */
-  --sh-inline-code-border: #FF00FF; /* Cyan border for subtle effect */
+  --sh-inline-code-bg: #1e1e1e;
+  /* Dark gray for background */
+  --sh-inline-code-text: #dcdcaa;
+  /* Yellowish text for contrast */
+  --sh-inline-code-border: #FF00FF;
+  /* Cyan border for subtle effect */
 }
 
 code {
@@ -33,7 +45,7 @@ code {
   font-family: 'Courier New', Courier, monospace;
   font-size: 0.95em;
 }
- 
+
 html {
   min-width: 360px;
 }
@@ -44,8 +56,10 @@ pre::-webkit-scrollbar {
 }
 
 pre {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
 }
 
 
@@ -75,7 +89,7 @@ pre {
   content: '#';
 }
 
-.prose *:hover > .anchor {
+.prose *:hover>.anchor {
   @apply visible;
 }
 
@@ -110,20 +124,20 @@ table {
 
 
 
-.prose-xl :where(pre):not(:where([class~="not-prose"],[class~="not-prose"] *)) {
-  line-height: normal; 
+.prose-xl :where(pre):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+  line-height: normal;
 }
 
-.prose-xl pre[class*="sh-"], 
+.prose-xl pre[class*="sh-"],
 .prose-xl pre[class^="sh-"] {
-  line-height: normal !important;  
-  height: auto;  
-  padding: 1em;  
-  overflow-x: auto;  
-  white-space: pre;  
+  line-height: normal !important;
+  height: auto;
+  padding: 1em;
+  overflow-x: auto;
+  white-space: pre;
 }
 
-.article  a {
+.article a {
   color: #cb13db;
   text-decoration: none;
 }
