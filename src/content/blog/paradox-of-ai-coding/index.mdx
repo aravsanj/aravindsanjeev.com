@@ -11,58 +11,42 @@ tags: ["Thoughts", "AI"]
   coding. But not if I don't understand the code AI wrote.
 </Callout>
 
-Vibe coding. Perhaps the most consequential trend of the decade. Its definition is contested. But mine is simple: If you don't understand the code AI wrote, you're effectively vibe coding. Or not coding at all.
+Vibe coding might be the most consequential trend of the decade. People contest over its definition. But mine is simple: If you don't understand the code AI wrote, you're effectively vibe coding it.
 
-Last week, the CEO of Cursor made an [announcement](https://x.com/mntruell/status/2011562190286045552). Their agent vibe coded a browser. Cool.
+Vibe coding is not coding at all. The word is technically oxymoronic. Part of coding requires that we actually understand it. If you know it works, but don't know why it works, you're a vibe coder.
 
-[FastRender](https://github.com/wilsonzlin/fastrender) took a week and produced three million lines of code. The agent did it. Applause.
+Last week, the CEO of Cursor made an [announcement](https://x.com/mntruell/status/2011562190286045552). Their agent vibe coded a browser. [FastRender](https://github.com/wilsonzlin/fastrender) took a week and produced three million lines of code. I admit this is technically an amazing feat.
 
-What caught my attention, however, was what may be the most expensive sentence in the history of software: _“It kind of works.”_
+But what caught my attention from the announcement, however, was also what may be the most expensive sentence in the history of software: _“It kind of works.”_
 
-Google's Chromium has 37 million lines of code. Its development spans 19 years. It stands as a testament to how complicated browser development really is. [Microsoft agrees](https://blogs.windows.com/windowsexperience/2018/12/06/microsoft-edge-making-the-web-better-through-more-open-source-collaboration/).
+Google's Chromium has 37 million lines of code. Its development spans 19 years and stands as a testament to how complicated browser development really is. [Microsoft moved Edge to Chromium for a reason](https://blogs.windows.com/windowsexperience/2018/12/06/microsoft-edge-making-the-web-better-through-more-open-source-collaboration/).
 
-So the question becomes unavoidable: can three million lines of code, written in a week, scale to the carefully crafted 37 million written over decades?
+So the question becomes unavoidable: can three million lines of code, written in a week, scale to the carefully crafted 37 million lines of code written over decades?
 
-Whiteboard app [tldraw](https://github.com/tldraw/tldraw/issues/7695) is pausing contributions. Because external contributors are hitting them with AI slop. Predictable.
+On another note, the whiteboard app [tldraw](https://github.com/tldraw/tldraw/issues/7695) recently announced that they are pausing contributions from external contributors because of AI slop. [Curl](https://www.theregister.com/2026/01/21/curl_ends_bug_bounty/) also recently announced that it's shuttering their bug bounty program for similar reasons. And human-in-the-loop is made mandatory at [LLVM](https://llvm.org/docs/AIToolPolicy.html).
 
-[Curl](https://www.theregister.com/2026/01/21/curl_ends_bug_bounty/) shutters their bug bounty program. And human-in-the-loop is made mandatory at [LLVM](https://llvm.org/docs/AIToolPolicy.html).
+This exposes a fundamental reality. Making good software is far too different from making "just usable" ones. Because good software isn’t written. It’s painfully grown by humans who remember why things broke in the first place.
 
-This exposes a fundamental reality. Making good software is far too different from making "just usable" ones.
+AI can scale shoddy code. But to scale good code that is performant and secure, we need iterative development. This requires feedback, reviews, knowledge sharing, coordination, communication, collective context, and, most importantly, responsibility.
 
-Because good software isn’t written. It’s painfully grown by humans who remember why things broke in the first place.
-
-AI can scale shoddy code. Only humans can scale good code that is performant and secure. Thanks to iterative development.
-
-This requires feedback, reviews, knowledge sharing, coordination, communication, collective context, and, most importantly, responsibility.
-
-Pre-defined tests rarely limit critical bugs. Because they usually arise when users use the tool in unintended ways. They cannot be predicted. Let alone be tested. For these, we need raw human intelligence, not AI brute force.
+Pre-defined tests rarely limit critical bugs. Because they usually arise when users use the tool in unintended ways. They cannot be predicted. Let alone be tested. For those, we need raw human intelligence, not AI brute force.
 
 AI makes writing code fast. But also makes understanding it hard. Because we don’t understand the code, it nullifies our ability to improve it over time.
 
-Yet, and this is a big yet, AI has created a precedent among product owners to have things built far too quickly.
+Yet, and this is a big yet, AI has created a precedent among product owners to have things built far too quickly. They need speed over quality. They need “good enough” software that can be shipped fast. AI excels here.
 
-They need speed over quality. They need “good enough” software that can be shipped fast. AI excels here.
+People in charge of the products are usually not engineers. They don’t understand codebases. They don’t understand the implications of shipping shoddy code. They just want to ship features the next day. And test them for business viability.
 
-People in charge of the products are not engineers. They don’t understand codebases. They don’t understand the implications of shipping shoddy code. Nada. Nil.
+The responsibility of making sure the codebase is maintainable, scalable, and secure falls on the engineers. The engineers will be forced to leave behind AI-driven technical debt for them to fix in the future. And hope that the future never arrives.
 
-They just want to ship features the next day. And test them for business viability.
+This creates a paradox. Short-term business requirements are satisfied, gambling on long-term sustainability. This is not a new problem. But a mightier comeback of an existing one.
 
-The responsibility of making sure the codebase is maintainable, scalable, and secure falls on the engineers. As it should.
+The new software engineer has a weighted responsibility of appeasing both ends of the business early on. While the people in charge of deliverables may never understand this bargain. And might never will.
 
-The engineers will be forced to leave behind AI-driven technical debt for them to fix in the future. And hope that the future never arrives.
+The fix is simple: **understanding must again be a first-class citizen.**
 
-This creates a paradox. Short-term business requirements are satisfied, gambling on long-term sustainability. Too touché?
+Regardless of how good or terrible human programming was, being forced to understand what we wrote played its own part in making the software better over time.
 
-The new software engineer has this additional responsibility of appeasing both ends of the business early on. While the people in charge of deliverables may never understand this bargain. And might never will.
+But now with AI, understanding has become optional. It needs discipline from the engineer's end to prevail. Maybe a larger cultural transformation has become the need of the hour.
 
-To be clear, this is not a new problem. We needed to ship fast. We needed to borrow time from the future. Always.
-
-AI just accelerated an existing problem as the expectations went sky high.
-
-## Path forward
-
-Understanding must again be a first-class citizen. It always was before.
-
-Because, regardless of how good or terrible human programming was, being forced to understand what we wrote played its own part in making the software better over time.
-
-And yet we let it collapse under the AI regime. Its forceful nature has become optional. But as long as AI has not altered the fundamentals of great software building, it will always remain non-negotiable.
+Remember, AI grants you enormous power. And as Uncle Ben said -- with great power comes great responsibility.
