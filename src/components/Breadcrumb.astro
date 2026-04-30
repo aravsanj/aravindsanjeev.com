@@ -1,0 +1,29 @@
+---
+interface Crumb {
+  label: string;
+  href: string;
+}
+
+interface Props {
+  crumbs: Crumb[];
+  current: string;
+}
+
+const { crumbs, current } = Astro.props;
+
+const allAncestors = [{ label: "Home", href: "/" }, ...crumbs];
+const parent = allAncestors[allAncestors.length - 1];
+---
+
+<nav aria-label="Breadcrumb" class="section-label mb-5" data-animate>
+  <a
+    href={parent.href}
+    class="section-label-num hover:opacity-70 transition-opacity duration-200"
+  >
+    {parent.label}
+  </a>
+  <div class="section-label-rule"></div>
+  {current && (
+    <span class="section-label-text" aria-current="page">{current}</span>
+  )}
+</nav>

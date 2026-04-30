@@ -3,59 +3,129 @@ import { Image } from "astro:assets";
 import profileImage from "../assets/profile_transparent.webp";
 ---
 
-<section class="min-h-[80vh] flex flex-col justify-center max-w-6xl mx-auto py-12 lg:py-0">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-        <div class="text-center lg:text-left order-2 lg:order-1">
-            <h1 class="text-4xl sm:text-6xl xl:text-7xl font-bold tracking-tight text-primary mb-2 whitespace-nowrap">
-                Aravind Sanjeev
-            </h1>
-            <h2 class="text-xl sm:text-2xl xl:text-3xl font-medium text-accent mb-6 lg:mb-8">
-                Software Engineer & AI Expert
-            </h2>
-            <p class="text-lg lg:text-xl text-secondary leading-relaxed mb-8 lg:mb-10 max-w-lg mx-auto lg:mx-0">
-                I live at the intersection of <span class="text-primary font-medium bg-accent/10 px-1 rounded italic">"how does this work?"</span> and <span class="text-primary font-medium bg-accent/10 px-1 rounded italic">"how can we make it better?"</span><br class="hidden lg:block" /><br class="hidden lg:block" />
-                My domain expertise spans <span class="text-primary font-medium bg-white/5 px-1 rounded">Engineering</span>, <span class="text-primary font-medium bg-white/5 px-1 rounded">Architecture</span>, <span class="text-primary font-medium bg-white/5 px-1 rounded">AI Integration</span>, <span class="text-primary font-medium bg-white/5 px-1 rounded">System Design</span>, <span class="text-primary font-medium bg-white/5 px-1 rounded">UI/UX</span>, <span class="text-primary font-medium bg-white/5 px-1 rounded">SEO</span>, and more.
-            </p>
-            <div class="flex flex-wrap justify-center lg:justify-start gap-4">
-                <a
-                    href="/projects"
-                    class="px-5 py-2.5 lg:px-6 lg:py-3 rounded-lg bg-surface text-primary border border-white/10 hover:border-accent/50 transition-colors font-medium text-sm lg:text-base text-center"
-                >
-                    View Work
-                </a>
-                <a
-                    href="/contact"
-                    class="px-5 py-2.5 lg:px-6 lg:py-3 rounded-lg bg-accent text-gray-950 hover:bg-accent/90 transition-colors font-bold text-sm lg:text-base text-center"
-                >
-                    Hire Me
-                </a>
-                <a
-                    href="/tag"
-                    class="px-5 py-2.5 lg:px-6 lg:py-3 rounded-lg bg-surface text-primary border border-white/10 hover:border-accent/50 transition-colors font-medium text-sm lg:text-base text-center"
-                >
-                    Everything
-                </a>
-            </div>
-            <div class="mt-6 flex justify-center lg:justify-start">
-                <a 
-                    href="mailto:hi@aravindsanjeev.com" 
-                    class="group flex items-center gap-3 px-5 py-2.5 rounded-full border-2 border-dotted border-fuchsia-500/50 bg-fuchsia-500/5 hover:bg-fuchsia-500/10 hover:border-fuchsia-400 text-fuchsia-300/90 hover:text-fuchsia-200 transition-all duration-300 shadow-[0_0_15px_-3px_rgba(217,70,239,0.15)] hover:shadow-[0_0_25px_-5px_rgba(217,70,239,0.4)]"
-                >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-fuchsia-400/80 group-hover:text-fuchsia-300 group-hover:scale-110 transition-all"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-                    <span class="font-medium tracking-wide">hi@aravindsanjeev.com</span>
-                </a>
-            </div>
-        </div>
-        <div class="relative group order-1 lg:order-2 px-8 lg:px-0">
-            <!-- Subtle accent glow for transparent image -->
-            <div class="absolute inset-0 bg-accent/20 rounded-full blur-[80px] opacity-50 group-hover:opacity-100 transition-opacity duration-700"></div>
-            <Image 
-                fetchpriority="high"
-                loading="eager"
-                src={profileImage} 
-                alt="Aravind Sanjeev" 
-                class="relative w-full max-w-[280px] lg:max-w-md mx-auto aspect-square object-contain filter drop-shadow-[0_0_15px_rgba(var(--accent-rgb),0.3)] transition-transform duration-500 group-hover:scale-[1.02]"
-            />
-        </div>
+<section class="relative min-h-[calc(100vh-64px)] flex flex-col justify-center overflow-hidden py-20 lg:py-0">
+
+  <!-- Background: amber spotlight top-right, subtle grid -->
+  <div class="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
+    <div
+      class="absolute -top-40 right-0 w-[700px] h-[700px] rounded-full opacity-[0.07]"
+      style="background: radial-gradient(circle, #C9963A 0%, transparent 65%);"
+    ></div>
+    <div
+      class="absolute bottom-0 -left-20 w-[450px] h-[450px] rounded-full opacity-[0.04]"
+      style="background: radial-gradient(circle, #4A6FA5 0%, transparent 65%);"
+    ></div>
+    <!-- Fine dot grid -->
+    <div
+      class="absolute inset-0 opacity-[0.025]"
+      style="background-image: radial-gradient(circle, rgba(237,232,223,0.8) 1px, transparent 1px); background-size: 48px 48px;"
+    ></div>
+    <!-- Thin horizontal rule at bottom of hero -->
+    <div class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent/20 to-transparent"></div>
+  </div>
+
+  <div class="relative grid grid-cols-1 lg:grid-cols-5 gap-16 lg:gap-12 items-center max-w-6xl mx-auto w-full">
+
+    <!-- Text content -->
+    <div class="lg:col-span-3 order-2 lg:order-1 text-center lg:text-left">
+
+      <!-- Status badge -->
+      <div data-animate data-delay="1" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-accent/25 text-accent text-[11px] font-sans font-semibold tracking-[0.15em] uppercase bg-accent/5">
+        <span class="w-1.5 h-1.5 rounded-full bg-accent animate-pulse-dot"></span>
+        Available for work
+      </div>
+
+      <!-- Name -->
+      <h1 data-animate data-delay="2" class="font-display text-[clamp(4rem,10vw,6.5rem)] font-black text-primary tracking-tight leading-[0.88] mt-6">
+        Aravind<br />
+        <span class="gradient-text">Sanjeev</span>
+      </h1>
+
+      <!-- Role -->
+      <p data-animate data-delay="3" class="text-base sm:text-lg text-secondary font-sans font-medium mt-5 tracking-wide">
+        Software Engineer &amp; AI Expert
+      </p>
+
+      <!-- Thin separator -->
+      <div data-animate data-delay="3" class="flex justify-center lg:justify-start mt-5">
+        <div class="w-12 h-px bg-accent/40"></div>
+      </div>
+
+      <!-- Bio -->
+      <p data-animate data-delay="4" class="text-base text-secondary/75 leading-relaxed mt-5 max-w-lg mx-auto lg:mx-0 font-body">
+        I live at the intersection of
+        <em class="text-primary/90 not-italic font-semibold">"how does this work?"</em>
+        and
+        <em class="text-primary/90 not-italic font-semibold">"how can we make it better?"</em>
+        — spanning Engineering, Architecture, AI Integration, System Design, and UI/UX.
+      </p>
+
+      <!-- CTA buttons -->
+      <div data-animate data-delay="5" class="flex flex-wrap justify-center lg:justify-start gap-3 mt-8">
+        <a
+          href="/projects"
+          class="px-5 py-2.5 rounded-lg bg-surface-2 text-primary border border-border hover:border-accent/35 hover:bg-accent/5 transition-all duration-300 font-sans font-semibold text-sm tracking-wide"
+        >
+          View Work
+        </a>
+        <a
+          href="/contact"
+          class="px-5 py-2.5 rounded-lg bg-accent text-background hover:bg-accent-bright transition-all duration-300 font-sans font-bold text-sm tracking-wide shadow-lg shadow-accent/15"
+        >
+          Hire Me
+        </a>
+        <a
+          href="/blog"
+          class="px-5 py-2.5 rounded-lg bg-surface-2 text-primary border border-border hover:border-accent/35 hover:bg-accent/5 transition-all duration-300 font-sans font-semibold text-sm tracking-wide"
+        >
+          Read My Writing
+        </a>
+      </div>
+
+      <!-- Email -->
+      <div data-animate data-delay="6" class="mt-6 flex justify-center lg:justify-start">
+        <a
+          href="mailto:hi@aravindsanjeev.com"
+          class="group flex items-center gap-2.5 text-xs text-secondary hover:text-accent transition-colors duration-300 font-sans tracking-wider"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:scale-110">
+            <rect width="20" height="16" x="2" y="4" rx="2"/>
+            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+          </svg>
+          hi@aravindsanjeev.com
+        </a>
+      </div>
     </div>
+
+    <!-- Profile image with crop-mark frame -->
+    <div data-animate data-delay="2" class="lg:col-span-2 order-1 lg:order-2 flex justify-center">
+      <div class="relative p-5">
+        <!-- Corner crop marks: all 4 as child elements (immune to overflow clipping) -->
+        <span class="absolute top-0 left-0 w-5 h-5 pointer-events-none z-10" style="border-top: 1.5px solid rgba(201,150,58,0.7); border-left: 1.5px solid rgba(201,150,58,0.7);"></span>
+        <span class="absolute top-0 right-0 w-5 h-5 pointer-events-none z-10" style="border-top: 1.5px solid rgba(201,150,58,0.7); border-right: 1.5px solid rgba(201,150,58,0.7);"></span>
+        <span class="absolute bottom-0 left-0 w-5 h-5 pointer-events-none z-10" style="border-bottom: 1.5px solid rgba(201,150,58,0.7); border-left: 1.5px solid rgba(201,150,58,0.7);"></span>
+        <span class="absolute bottom-0 right-0 w-5 h-5 pointer-events-none z-10" style="border-bottom: 1.5px solid rgba(201,150,58,0.7); border-right: 1.5px solid rgba(201,150,58,0.7);"></span>
+        <!-- Amber glow beneath image -->
+        <div
+          class="absolute inset-x-6 bottom-0 h-3/4 blur-[60px] opacity-20 rounded-full"
+          style="background: #C9963A;"
+          aria-hidden="true"
+        ></div>
+        <Image
+          fetchpriority="high"
+          loading="eager"
+          src={profileImage}
+          alt="Aravind Sanjeev"
+          class="relative w-60 sm:w-72 lg:w-full lg:max-w-[340px] aspect-square object-contain animate-float"
+          style="filter: drop-shadow(0 0 32px rgba(201,150,58,0.18));"
+        />
+        <!-- Signature label -->
+        <div class="absolute bottom-2 right-4 pointer-events-none" style="font-family: 'Dancing Script', cursive; font-size: 1.15rem; color: rgba(201,150,58,0.6); line-height: 1; transform: rotate(-2deg);">
+          Aravind Sanjeev
+        </div>
+      </div>
+    </div>
+
+  </div>
+
 </section>

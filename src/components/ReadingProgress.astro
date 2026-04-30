@@ -1,0 +1,37 @@
+---
+// Reading progress bar for blog posts
+---
+
+<div id="reading-progress" role="progressbar" aria-label="Reading progress" aria-valuenow={0} aria-valuemin={0} aria-valuemax={100}></div>
+
+<script>
+  function initReadingProgress() {
+    const bar = document.getElementById("reading-progress");
+    if (!bar) return;
+
+    const article = document.querySelector("article");
+    if (!article) {
+      bar.style.display = "none";
+      return;
+    }
+
+    const updateProgress = () => {
+      const articleTop = (article as HTMLElement).offsetTop;
+      const articleHeight = (article as HTMLElement).offsetHeight;
+      const windowHeight = window.innerHeight;
+      const scrolled = window.scrollY;
+
+      const start = articleTop - windowHeight * 0.15;
+      const end = articleTop + articleHeight - windowHeight * 0.85;
+      const progress = Math.min(Math.max((scrolled - start) / (end - start), 0), 1);
+
+      bar.style.width = `${progress * 100}%`;
+      bar.setAttribute("aria-valuenow", String(Math.round(progress * 100)));
+    };
+
+    window.addEventListener("scroll", updateProgress, { passive: true });
+    updateProgress();
+  }
+
+  document.addEventListener("astro:page-load", initReadingProgress);
+</script>

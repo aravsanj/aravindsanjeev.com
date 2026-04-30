@@ -7,38 +7,64 @@ interface Props {
 }
 
 const { posts } = Astro.props;
-const latestPosts = posts.slice(0, 3); // Show top 3
+const latestPosts = posts.slice(0, 3);
 ---
 
-<section id="blog" class="py-24 border-t border-white/5">
-  <div class="flex items-center justify-between mb-12">
-    <h2 class="text-3xl font-bold text-primary">My Writings</h2>
+<section id="blog" class="py-28 border-t border-border/40">
+  <!-- Section header -->
+  <div class="flex items-end justify-between mb-16" data-animate>
+    <div>
+      <div class="section-label">
+        <span class="section-label-num">03</span>
+        <div class="section-label-rule"></div>
+        <span class="section-label-text">Latest</span>
+      </div>
+      <h2 class="font-display text-4xl sm:text-5xl font-bold text-primary leading-tight">
+        My Writings
+      </h2>
+    </div>
     <a
       href="/blog"
-      class="text-accent hover:text-white transition-colors flex items-center gap-2 group"
+      class="hidden sm:flex items-center gap-2 font-sans text-sm font-semibold text-secondary hover:text-accent transition-colors group mb-1 tracking-wide"
     >
-      See all
+      All articles
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        width="20"
-        height="20"
+        width="14"
+        height="14"
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
         stroke-width="2"
         stroke-linecap="round"
         stroke-linejoin="round"
-        class="group-hover:translate-x-1 transition-transform"
-        ><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg
+        class="group-hover:translate-x-1 transition-transform duration-300"
       >
+        <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+      </svg>
     </a>
   </div>
 
-  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
     {
-      latestPosts.map((post) => (
-        <BlogCard post={post} />
+      latestPosts.map((post, i) => (
+        <div data-animate data-delay={String(i + 1)}>
+          <BlogCard post={post} />
+        </div>
       ))
     }
+  </div>
+
+  <!-- Mobile see all -->
+  <div class="mt-10 sm:hidden text-center" data-animate>
+    <a
+      href="/blog"
+      class="inline-flex items-center gap-2 font-sans text-sm text-accent font-bold tracking-wide"
+    >
+      See all articles
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+      </svg>
+    </a>
   </div>
 </section>

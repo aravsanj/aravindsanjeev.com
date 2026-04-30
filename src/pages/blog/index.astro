@@ -1,58 +1,82 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import BlogCard from "../../components/BlogCard.astro";
+import Breadcrumb from "../../components/Breadcrumb.astro";
 import { getCollection, type CollectionEntry } from "astro:content";
 
 const posts: CollectionEntry<"blog">[] = (await getCollection("blog")).sort(
   (a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) =>
     new Date(b.data.publishedAt).valueOf() -
-    new Date(a.data.publishedAt).valueOf(),
+    new Date(a.data.publishedAt).valueOf()
 );
 
-// Group posts by year
 const postsByYear = posts.reduce(
   (acc, post) => {
     const year = new Date(post.data.publishedAt).getFullYear();
-    if (!acc[year]) {
-      acc[year] = [];
-    }
+    if (!acc[year]) acc[year] = [];
     acc[year].push(post);
     return acc;
   },
-  {} as Record<number, CollectionEntry<"blog">[]>,
+  {} as Record<number, CollectionEntry<"blog">[]>
 );
 
-const sortedYears = Object.keys(postsByYear)
-  .map(Number)
-  .sort((a, b) => b - a);
+const sortedYears = Object.keys(postsByYear).map(Number).sort((a, b) => b - a);
 
 const metadata = {
-  title: "Blog | Aravind Sanjeev",
+  title: "Writing | Aravind Sanjeev",
   description:
-    "My journey through the ever-evolving tech landscape. I share my coding projects, learning experiences, and reflections on the software engineering world.",
+    "My journey through the ever-evolving tech landscape. Coding, AI, architecture, and reflections on software engineering.",
 };
 ---
 
 <Layout
   title={metadata.title}
   description={metadata.description}
-  mainClass="py-24 max-w-full"
+  mainClass="py-16 max-w-full"
 >
-  <h1 class="text-5xl font-bold text-primary mb-16">All Posts</h1>
+  <Breadcrumb crumbs={[]} current="Writing" />
 
-  <div class="space-y-20">
+  <!-- Page header -->
+  <header class="mb-20">
+    <h1
+      class="font-display text-5xl sm:text-6xl lg:text-7xl font-bold text-primary leading-[0.95] tracking-tight mb-6"
+      data-animate
+      data-delay="1"
+    >
+      My Writings
+    </h1>
+    <p
+      class="text-secondary font-body text-lg max-w-xl leading-relaxed"
+      data-animate
+      data-delay="2"
+    >
+      Thoughts on engineering, AI, architecture, and the craft of building software.
+      {posts.length} articles published.
+    </p>
+  </header>
+
+  <!-- Posts grouped by year -->
+  <div class="space-y-24">
     {
       sortedYears.map((year, index) => (
-        <section class={index !== 0 ? "pt-16 border-t border-white/5" : ""}>
-          <div class="flex items-center gap-4 mb-10">
-            <h2 class="text-2xl font-bold text-primary/30 font-mono tracking-tight">
+        <section>
+          <!-- Year header -->
+          <div
+            class="flex items-center gap-5 mb-12"
+            data-animate
+            data-delay={String((index % 3) + 1)}
+          >
+            <h2 class="font-display text-3xl font-bold text-primary/20 tracking-tight flex-shrink-0">
               {year}
             </h2>
-            <div class="h-px flex-1 bg-gradient-to-r from-white/5 to-transparent" />
+            <div class="h-px flex-1 bg-gradient-to-r from-white/8 to-transparent" />
           </div>
-          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
-            {postsByYear[year].map((post: CollectionEntry<"blog">) => (
-              <BlogCard post={post} />
+
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-14">
+            {postsByYear[year].map((post: CollectionEntry<"blog">, i: number) => (
+              <div data-animate data-delay={String((i % 3) + 1)}>
+                <BlogCard post={post} />
+              </div>
             ))}
           </div>
         </section>

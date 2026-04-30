@@ -1,7 +1,9 @@
 ---
 import "../styles/global.css";
-import Breadcrumbs from "../components/ui/Breadcrumbs.astro";
+import Nav from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
+import CTABanner from "../components/CTABanner.astro";
+import { ViewTransitions } from "astro:transitions";
 
 interface Props {
   title?: string;
@@ -18,7 +20,6 @@ const {
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const isHome = Astro.url.pathname === "/";
 ---
 
 <!doctype html>
@@ -29,15 +30,18 @@ const isHome = Astro.url.pathname === "/";
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/png" href="/assets/favicon.png" />
     <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <!-- Fonts: Fraunces (display) + Plus Jakarta Sans (UI) + Inter (body) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Outfit:wght@100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Syne:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=Inter:ital,opsz,wght@0,14..32,300..900;1,14..32,300..900&family=JetBrains+Mono:ital,wght@0,400;0,500;1,400&family=Dancing+Script:wght@600&display=swap"
       rel="stylesheet"
     />
+
     <meta name="generator" content={Astro.generator} />
 
-    <!-- Open Graph / Facebook -->
+    <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={title} />
@@ -78,36 +82,22 @@ const isHome = Astro.url.pathname === "/";
         }
       }
     </script>
+
+    <ViewTransitions />
   </head>
+
   <body class="relative min-h-screen leading-relaxed antialiased">
-    <div class="mx-auto max-w-7xl px-6 md:px-12 lg:px-24">
-      <header>
-        {
-          !isHome && (
-            <div class="flex items-center justify-between py-8">
-              <Breadcrumbs customLabel={title.split(" | ")[0]} />
-              <a
-                href="/contact"
-                class="hidden sm:block px-5 py-2 rounded-full bg-accent/10 text-accent border border-accent/20 hover:bg-accent hover:text-gray-950 transition-all text-sm font-semibold"
-              >
-                Hire Me
-              </a>
-            </div>
-          )
-        }
-      </header>
+    <Nav />
+
+    <div class="mx-auto max-w-7xl px-6 md:px-12 lg:px-24 pt-16">
       <main class={mainClass}>
         <slot />
       </main>
+      <CTABanner />
       <Footer />
     </div>
 
     <!-- Google Analytics -->
-    <!-- Assuming generic Google Tag Manager or similar if needed. Originally checking next/third-parties. 
-         If user wants GA, they should use astro-analytics or a script. 
-         For now omitting GA to avoid breakage without ID/setup or relying on deprecated Next comp.
-         If 'G-BELR0CJR8V' is critical, I can add a script tag.
-    -->
     <script
       type="text/partytown"
       src="https://www.googletagmanager.com/gtag/js?id=G-BELR0CJR8V"></script>
@@ -118,6 +108,38 @@ const isHome = Astro.url.pathname === "/";
       }
       gtag("js", new Date());
       gtag("config", "G-BELR0CJR8V");
+    </script>
+
+    <!-- Scroll-triggered animation observer -->
+    <script>
+      function initScrollAnimations() {
+        const elements = document.querySelectorAll("[data-animate]");
+        if (!elements.length) return;
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              const el = entry.target as HTMLElement;
+              if (entry.isIntersecting) {
+                const d = el.dataset.delay ? parseInt(el.dataset.delay) * 80 : 0;
+                el.style.transitionDelay = d + "ms";
+                el.classList.add("in-view");
+              } else {
+                el.style.transitionDelay = "0ms";
+                // Exit above viewport → slide up; exit below → slide down
+                const exitingAbove = entry.boundingClientRect.top < 0;
+                el.style.setProperty("--anim-from", exitingAbove ? "-28px" : "28px");
+                el.classList.remove("in-view");
+              }
+            });
+          },
+          { threshold: 0.1 }
+        );
+
+        elements.forEach((el) => observer.observe(el));
+      }
+
+      document.addEventListener("astro:page-load", initScrollAnimations);
     </script>
   </body>
 </html>

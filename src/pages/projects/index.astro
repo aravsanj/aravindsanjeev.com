@@ -1,6 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import Project from "../../components/Project.astro";
+import Breadcrumb from "../../components/Breadcrumb.astro";
 import { getCollection, type CollectionEntry } from "astro:content";
 
 type ProjectEntry = CollectionEntry<'projects'>;
@@ -26,19 +27,26 @@ const projects = allProjects.sort((a: ProjectEntry, b: ProjectEntry) => {
 });
 ---
 
-<Layout title="All Projects | Aravind Sanjeev" mainClass="py-24 max-w-full">
-    <h1 class="text-5xl font-bold text-primary mb-16">All Projects</h1>
+<Layout title="All Projects | Aravind Sanjeev" mainClass="py-16 max-w-full">
+    <Breadcrumb crumbs={[]} current="Projects" />
+    <header class="mb-20">
+      <h1 class="font-display text-5xl sm:text-6xl lg:text-7xl font-bold text-primary leading-[0.95] tracking-tight" data-animate data-delay="1">
+        All Projects
+      </h1>
+    </header>
 
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         {
-            projects.map((project: ProjectEntry) => (
-                <Project
-                    title={project.data.title}
-                    description={project.data.description}
-                    imageUrl={project.data.imageUrl}
-                    url={`/projects/${project.slug}`}
-                    tags={project.data.tags}
-                />
+            projects.map((project: ProjectEntry, i: number) => (
+                <div class="flex" data-animate data-delay={String((i % 3) + 1)}>
+                    <Project
+                        title={project.data.title}
+                        description={project.data.description}
+                        imageUrl={project.data.imageUrl}
+                        url={`/projects/${project.slug}`}
+                        tags={project.data.tags}
+                    />
+                </div>
             ))
         }
     </div>

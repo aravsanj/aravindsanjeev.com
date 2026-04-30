@@ -1,6 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import PostsByTag from "../../components/PostsByTag.astro";
+import Breadcrumb from "../../components/Breadcrumb.astro";
 import Project from "../../components/Project.astro";
 import TagComponent from "../../components/ui/Tag.astro";
 import { getCollection, type CollectionEntry } from "astro:content";
@@ -92,7 +93,8 @@ const { posts, projects, experiences: matchedExperiences } = Astro.props;
 ---
 
 <Layout title={`Content tagged with ${tag}`} mainClass="py-24 max-w-full">
-  <h1 class="text-5xl font-bold text-primary mb-16 text-center">
+  <Breadcrumb crumbs={[{ label: "Tags", href: "/tag" }]} current={`#${tag}`} />
+  <h1 class="text-5xl font-bold text-primary mb-16 text-center" data-animate data-delay="1">
     {`#${tag}`}
   </h1>
 
@@ -100,18 +102,20 @@ const { posts, projects, experiences: matchedExperiences } = Astro.props;
     {
       projects && projects.length > 0 && (
         <section>
-          <h2 class="text-3xl font-bold text-primary mb-8 border-b border-white/5 pb-4">
+          <h2 class="text-3xl font-bold text-primary mb-8 border-b border-white/5 pb-4" data-animate>
             Projects
           </h2>
           <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {projects.map((project: ProjectEntry) => (
-              <Project
-                title={project.data.title}
-                description={project.data.description}
-                imageUrl={project.data.imageUrl}
-                url={`/projects/${project.slug}`}
-                tags={project.data.tags}
-              />
+            {projects.map((project: ProjectEntry, i: number) => (
+              <div data-animate data-delay={String((i % 3) + 1)}>
+                <Project
+                  title={project.data.title}
+                  description={project.data.description}
+                  imageUrl={project.data.imageUrl}
+                  url={`/projects/${project.slug}`}
+                  tags={project.data.tags}
+                />
+              </div>
             ))}
           </div>
         </section>
@@ -121,7 +125,7 @@ const { posts, projects, experiences: matchedExperiences } = Astro.props;
     {
       posts && posts.length > 0 && (
         <section>
-          <h2 class="text-3xl font-bold text-primary mb-8 border-b border-white/5 pb-4">
+          <h2 class="text-3xl font-bold text-primary mb-8 border-b border-white/5 pb-4" data-animate>
             Articles
           </h2>
           <PostsByTag posts={posts} />
@@ -132,12 +136,12 @@ const { posts, projects, experiences: matchedExperiences } = Astro.props;
     {
       matchedExperiences && matchedExperiences.length > 0 && (
         <section>
-          <h2 class="text-3xl font-bold text-primary mb-8 border-b border-white/5 pb-4">
+          <h2 class="text-3xl font-bold text-primary mb-8 border-b border-white/5 pb-4" data-animate>
             Experience
           </h2>
           <div class="grid md:grid-cols-2 gap-8">
-            {matchedExperiences.map((item) => (
-              <div class="group relative flex flex-col gap-6 p-6 rounded-2xl bg-surface border border-white/5 hover:border-accent/30 transition-all duration-300">
+            {matchedExperiences.map((item, i: number) => (
+              <div class="group relative flex flex-col gap-6 p-6 rounded-2xl bg-surface border border-white/5 hover:border-accent/30 transition-all duration-300" data-animate data-delay={String((i % 2) + 1)}>
                 <div class="flex flex-col flex-1">
                   <header class="mb-4">
                     <span class="text-sm font-bold uppercase tracking-widest text-accent block mb-2">

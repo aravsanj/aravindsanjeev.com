@@ -1,16 +1,65 @@
 ---
-import SocialLinks from "./Social.astro";
 ---
 
-<footer class="mb-16 flex flex-col items-center">
-  <SocialLinks
-    fillColor=""
-    email="hi@aravindsanjeev.com"
-    twitter="aravsanj"
-    instagram="aravsanj"
-    linkedIn="aravsanj"
-  />
-  <p class="mt-4 text-sm text-secondary">
-    © {new Date().getFullYear()} Aravind Sanjeev
-  </p>
+<footer class="border-t border-border/50 mt-20 py-16">
+  <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-10">
+
+    <!-- Brand -->
+    <div>
+      <a data-animate href="/" class="font-sans text-xl font-bold text-primary hover:text-accent transition-colors duration-300 tracking-[0.05em] uppercase">
+        Aravind Sanjeev
+      </a>
+      <p data-animate data-delay="1" class="text-secondary text-sm mt-2.5 max-w-xs leading-relaxed font-body">
+        Software Engineer &amp; AI Expert. Building things at the intersection of code and creativity.
+      </p>
+      <div data-animate data-delay="2" class="w-8 h-px bg-accent/40 mt-4"></div>
+    </div>
+
+    <!-- Nav columns -->
+    <div class="grid grid-cols-2 sm:grid-cols-3 gap-8 text-sm">
+      <div>
+        <p data-animate class="font-sans text-[9px] font-bold uppercase tracking-[0.2em] text-accent/50 mb-4">Pages</p>
+        <ul class="space-y-2.5">
+          <li data-animate data-delay="1"><a href="/" class="text-secondary hover:text-primary transition-colors font-body text-sm">Home</a></li>
+          <li data-animate data-delay="2"><a href="/projects" class="text-secondary hover:text-primary transition-colors font-body text-sm">Work</a></li>
+          <li data-animate data-delay="3"><a href="/blog" class="text-secondary hover:text-primary transition-colors font-body text-sm">Writing</a></li>
+          <li data-animate data-delay="4"><a href="/videos" class="text-secondary hover:text-primary transition-colors font-body text-sm">Videos</a></li>
+        </ul>
+      </div>
+      <div>
+        <p data-animate class="font-sans text-[9px] font-bold uppercase tracking-[0.2em] text-accent/50 mb-4">Connect</p>
+        <ul class="space-y-2.5">
+          <li data-animate data-delay="1">
+            <a href="mailto:hi@aravindsanjeev.com" class="text-secondary hover:text-accent transition-colors font-body text-sm">Email</a>
+          </li>
+          <li data-animate data-delay="2">
+            <a href="https://twitter.com/aravsanj" target="_blank" rel="noreferrer" class="text-secondary hover:text-accent transition-colors font-body text-sm">Twitter / X</a>
+          </li>
+          <li data-animate data-delay="3">
+            <a href="https://linkedin.com/in/aravsanj" target="_blank" rel="noreferrer" class="text-secondary hover:text-accent transition-colors font-body text-sm">LinkedIn</a>
+          </li>
+          <li data-animate data-delay="4">
+            <a href="https://github.com/aravsanj" target="_blank" rel="noreferrer" class="text-secondary hover:text-accent transition-colors font-body text-sm">GitHub</a>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <p data-animate class="font-sans text-[9px] font-bold uppercase tracking-[0.2em] text-accent/50 mb-4">Explore</p>
+        <ul class="space-y-2.5">
+          <li data-animate data-delay="1"><a href="/tag" class="text-secondary hover:text-primary transition-colors font-body text-sm">All Topics</a></li>
+          <li data-animate data-delay="2"><a href="/contact" class="text-secondary hover:text-primary transition-colors font-body text-sm">Hire Me</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom bar -->
+  <div class="mt-12 pt-6 border-t border-border/30 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <p data-animate class="font-sans text-secondary/40 text-xs tracking-wide">
+      © {new Date().getFullYear()} Aravind Sanjeev. All rights reserved.
+    </p>
+    <p data-animate data-delay="1" class="font-sans text-secondary/25 text-xs tracking-wide">
+      Built with Astro &amp; Tailwind
+    </p>
+  </div>
 </footer>

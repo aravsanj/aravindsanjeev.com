@@ -2,65 +2,68 @@
 import { getCollection, type CollectionEntry } from "astro:content";
 import Project from "./Project.astro";
 
-type ProjectEntry = CollectionEntry<'projects'>;
+type ProjectEntry = CollectionEntry<"projects">;
 
 const allProjects = await getCollection("projects");
 const projects = allProjects
   .sort((a: ProjectEntry, b: ProjectEntry) => {
-    // Sort by priority property first (if it exists) - higher priority first
     const priorityA = a.data.priority ?? 0;
     const priorityB = b.data.priority ?? 0;
-    
-    if (priorityA !== priorityB) {
-      return priorityB - priorityA; // Descending order
-    }
-    
-    // Fall back to publishedAt if priority is the same or not defined
-    const dateA = a.data.publishedAt
-      ? new Date(a.data.publishedAt).valueOf()
-      : 0;
-    const dateB = b.data.publishedAt
-      ? new Date(b.data.publishedAt).valueOf()
-      : 0;
+    if (priorityA !== priorityB) return priorityB - priorityA;
+    const dateA = a.data.publishedAt ? new Date(a.data.publishedAt).valueOf() : 0;
+    const dateB = b.data.publishedAt ? new Date(b.data.publishedAt).valueOf() : 0;
     return dateB - dateA;
   })
-  .slice(0, 3); // Limit to top 3 for home page
+  .slice(0, 3);
 ---
 
-<section id="projects" class="py-24 border-t border-white/5">
-  <div class="flex items-center justify-between mb-12">
-    <h2 class="text-3xl font-bold text-primary">My Projects</h2>
+<section id="projects" class="py-28 border-t border-border/40">
+  <!-- Section header -->
+  <div class="flex items-end justify-between mb-16" data-animate>
+    <div>
+      <div class="section-label">
+        <span class="section-label-num">02</span>
+        <div class="section-label-rule"></div>
+        <span class="section-label-text">Portfolio</span>
+      </div>
+      <h2 class="font-display text-4xl sm:text-5xl font-bold text-primary leading-tight">
+        My Projects
+      </h2>
+    </div>
     <a
       href="/projects"
-      class="text-accent hover:text-white transition-colors flex items-center gap-2 group"
+      class="hidden sm:flex items-center gap-2 font-sans text-sm font-semibold text-secondary hover:text-accent transition-colors group mb-1 tracking-wide"
     >
-      See all
+      All projects
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        width="20"
-        height="20"
+        width="14"
+        height="14"
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
         stroke-width="2"
         stroke-linecap="round"
         stroke-linejoin="round"
-        class="group-hover:translate-x-1 transition-transform"
-        ><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg
+        class="group-hover:translate-x-1 transition-transform duration-300"
       >
+        <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+      </svg>
     </a>
   </div>
 
-  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-7">
     {
-      projects.map((project: ProjectEntry) => (
-        <Project
-          title={project.data.title}
-          description={project.data.description}
-          imageUrl={project.data.imageUrl}
-          url={`/projects/${project.slug}`}
-          tags={project.data.tags}
-        />
+      projects.map((project: ProjectEntry, i: number) => (
+        <div data-animate data-delay={String(i + 1)}>
+          <Project
+            title={project.data.title}
+            description={project.data.description}
+            imageUrl={project.data.imageUrl}
+            url={`/projects/${project.slug}`}
+            tags={project.data.tags}
+          />
+        </div>
       ))
     }
   </div>

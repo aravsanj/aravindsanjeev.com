@@ -1,0 +1,73 @@
+---
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface Props {
+  headings: Heading[];
+}
+
+const { headings } = Astro.props;
+const filtered = headings.filter((h) => h.depth === 2 || h.depth === 3);
+---
+
+{
+  filtered.length > 2 && (
+    <aside class="hidden lg:block">
+      <div class="sticky top-24">
+        <p class="text-[10px] font-bold uppercase tracking-widest text-secondary/60 mb-4 pl-3">
+          On this page
+        </p>
+        <nav aria-label="Table of contents" id="toc-nav">
+          <ul class="space-y-0.5">
+            {filtered.map((heading) => (
+              <li>
+                <a
+                  href={`#${heading.slug}`}
+                  class={`toc-link ${heading.depth === 3 ? "toc-h3" : ""}`}
+                  data-heading={heading.slug}
+                >
+                  {heading.text}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </div>
+    </aside>
+  )
+}
+
+<script>
+  function initTOC() {
+    const tocLinks = document.querySelectorAll<HTMLAnchorElement>("[data-heading]");
+    if (!tocLinks.length) return;
+
+    const headingIds = Array.from(tocLinks).map((l) => l.dataset.heading!);
+    const headingEls = headingIds
+      .map((id) => document.getElementById(id))
+      .filter(Boolean) as HTMLElement[];
+
+    let activeId = "";
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            activeId = entry.target.id;
+            tocLinks.forEach((link) => {
+              link.classList.toggle("active", link.dataset.heading === activeId);
+            });
+          }
+        });
+      },
+      { rootMargin: "-10% 0px -80% 0px", threshold: 0 }
+    );
+
+    headingEls.forEach((el) => observer.observe(el));
+  }
+
+  document.addEventListener("astro:page-load", initTOC);
+</script>

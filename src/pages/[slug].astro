@@ -5,11 +5,12 @@ import profileImage from "../assets/profile_transparent.webp";
 import Layout from "../layouts/Layout.astro";
 import { components } from "../components/mdx-components";
 import { formatDate } from "../lib/utils";
-import SocialShare from "../components/SocialShare.astro";
 import SocialShareButtons from "../components/SocialShareButtons.astro";
 import Social from "../components/Social.astro";
 import Tag from "../components/ui/Tag.astro";
 import Comments from "../components/Comments.astro";
+import ReadingProgress from "../components/ReadingProgress.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
 
 type BlogEntry = CollectionEntry<"blog">;
 
@@ -30,17 +31,20 @@ const metadata = {
   image: post.data.image?.src,
 };
 
-let tags = [];
+let tags: string[] = [];
 if (post.data.tags) {
   try {
     tags =
       typeof post.data.tags === "string"
         ? JSON.parse(post.data.tags)
         : post.data.tags || [];
-  } catch (e) {
+  } catch {
     tags = [];
   }
 }
+
+const wordCount = post.body?.split(/\s+/).length ?? 0;
+const readTime = Math.max(1, Math.ceil(wordCount / 200));
 
 const baseUrl = "https://aravindsanjeev.com";
 ---
@@ -49,124 +53,123 @@ const baseUrl = "https://aravindsanjeev.com";
   title={metadata.title}
   description={metadata.description}
   image={metadata.image}
-  mainClass="py-24 max-w-full"
+  mainClass="py-16 max-w-full"
 >
-  <section class="relative">
-    <header class="mb-16">
-      <!-- Schema.org Script -->
-      <script
-        type="application/ld+json"
-        set:html={JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "BlogPosting",
-          headline: post.data.title,
-          datePublished: post.data.publishedAt,
-          dateModified: post.data.lastUpdated || post.data.publishedAt,
-          description: post.data.summary,
-          image: post.data.image
-            ? `${baseUrl}${post.data.image.src}`
-            : `/og?title=${encodeURIComponent(post.data.title)}`,
-          url: `${baseUrl}/${post.slug}`,
-          author: {
-            "@type": "Person",
-            name: "Aravind Sanjeev",
-          },
-        })}
-      />
+  <ReadingProgress />
 
-      <div class="max-w-[750px]">
-        <div class="mb-12">
-          <div class="mb-8 flex flex-wrap items-center gap-4">
-            <span class="text-secondary text-sm font-medium">
-              {formatDate(post.data.publishedAt)}
-              {
-                post.data.lastUpdated && (
-                  <span class="ml-2 opacity-60 font-normal">
-                    (Updated: {formatDate(post.data.lastUpdated)})
-                  </span>
-                )
-              }
-            </span>
-            <div class="flex flex-wrap gap-2">
-              {
-                tags.map((tag: string) => (
-                  <Tag title={tag} href={`/tag/${tag.toLowerCase()}`} />
-                ))
-              }
-            </div>
-          </div>
-          <h1
-            class="text-4xl sm:text-5xl md:text-6xl font-bold text-primary tracking-tight text-balance mb-8"
-          >
-            {post.data.title}
-          </h1>
-          <div
-            class="flex flex-wrap items-center justify-between gap-4 sm:pt-6 border-t border-white/5"
-          >
-            <div class="flex gap-1">
-              <SocialShareButtons size={24} post={post} />
-            </div>
-            <a
-              href="#comments"
-              class="flex items-center gap-2 text-sm text-secondary hover:text-primary transition-colors"
-            >
-              Jump to discussions
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="w-4 h-4"
-              >
-                <path d="m6 9 6 6 6-6"></path>
-              </svg>
-            </a>
-          </div>
-        </div>
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      headline: post.data.title,
+      datePublished: post.data.publishedAt,
+      dateModified: post.data.lastUpdated || post.data.publishedAt,
+      description: post.data.summary,
+      image: post.data.image
+        ? `${baseUrl}${post.data.image.src}`
+        : `/og?title=${encodeURIComponent(post.data.title)}`,
+      url: `${baseUrl}/${post.slug}`,
+      author: {
+        "@type": "Person",
+        name: "Aravind Sanjeev",
+      },
+    })}
+  />
 
-        <article
-          class="article prose prose-invert prose-lg sm:prose-xl md:prose-2xl max-w-[750px]"
-        >
-          <!-- Floating Social Share -->
-          <SocialShare size={40} post={post} />
+  <div class="max-w-[680px]">
 
-          <Content components={components} />
-        </article>
+    <Breadcrumb crumbs={[{ label: "Writing", href: "/blog" }]} current="" />
 
-        <div class="mt-24 border-t border-white/5 pt-12 max-w-[750px]">
-          <div class="flex items-start space-x-6">
-            <Image
-              src={profileImage}
-              alt="Aravind Sanjeev"
-              class="w-20 h-20 rounded-full object-cover border-2 border-white/10"
-              draggable={false}
-            />
-            <div>
-              <h3 class="text-xl font-bold text-primary mb-2">
-                Aravind Sanjeev
-              </h3>
-              <p class="text-base text-secondary mb-6 leading-relaxed">
-                Aravind Sanjeev is a software engineer and blogger who loves
-                sharing his thoughts on web development, programming, and
-                technology trends.
-              </p>
-              <Social
-                fillColor="#e8eaed"
-                email="hi@aravindsanjeev.com"
-                twitter="aravsanj"
-                instagram="aravsanj"
-                linkedIn="aravsanj"
-              />
-            </div>
-          </div>
-        </div>
-        <Comments />
+    <!-- Title -->
+    <h1 class="font-display text-4xl sm:text-5xl font-bold text-primary tracking-tight leading-[1.08] mb-6 text-balance" data-animate data-delay="1">
+      {post.data.title}
+    </h1>
+
+    <!-- Meta row -->
+    <div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-secondary font-sans text-sm mb-4" data-animate data-delay="2">
+      <span class="font-medium">{formatDate(post.data.publishedAt)}</span>
+      <span class="text-secondary/30" aria-hidden="true">·</span>
+      <span>{readTime} min read</span>
+      {post.data.lastUpdated && (
+        <>
+          <span class="text-secondary/30" aria-hidden="true">·</span>
+          <span class="text-secondary/60">Updated {formatDate(post.data.lastUpdated)}</span>
+        </>
+      )}
+    </div>
+
+    <!-- Tags -->
+    {tags.length > 0 && (
+      <ul class="flex flex-wrap gap-2 mb-8" data-animate data-delay="3">
+        {tags.map((tag: string) => (
+          <li>
+            <Tag title={tag} href={`/tag/${tag.toLowerCase()}`} />
+          </li>
+        ))}
+      </ul>
+    )}
+
+    <!-- Divider -->
+    <div class="h-px bg-border/60 mb-12"></div>
+
+    <!-- Cover image (only if set) -->
+    {post.data.image && (
+      <div class="mb-12 rounded-xl overflow-hidden border border-border/60">
+        <Image
+          src={post.data.image}
+          alt={post.data.title}
+          class="w-full h-auto object-cover"
+          loading="eager"
+        />
       </div>
-    </header>
-  </section>
+    )}
+
+    <!-- Article body -->
+    <article class="article prose prose-invert prose-lg max-w-none prose-headings:font-display prose-headings:font-bold prose-headings:tracking-tight prose-p:text-secondary prose-p:leading-[1.85] prose-a:no-underline prose-strong:text-primary prose-blockquote:not-italic">
+      <Content components={components} />
+    </article>
+
+    <!-- Divider -->
+    <div class="h-px bg-border/60 mt-16 mb-10"></div>
+
+    <!-- Share row -->
+    <div class="flex items-center justify-between gap-4 mb-16" data-animate>
+      <span class="font-sans text-xs font-bold uppercase tracking-[0.18em] text-secondary/50">
+        Share this article
+      </span>
+      <div class="flex items-center gap-2">
+        <SocialShareButtons size={32} post={post} />
+      </div>
+    </div>
+
+    <!-- Author card -->
+    <div class="flex items-start gap-5 pb-16 border-b border-border/60" data-animate data-delay="1">
+      <Image
+        src={profileImage}
+        alt="Aravind Sanjeev"
+        class="w-14 h-14 rounded-full object-cover border border-border flex-shrink-0"
+        draggable={false}
+      />
+      <div>
+        <h3 class="font-display text-lg font-bold text-primary mb-1">
+          Aravind Sanjeev
+        </h3>
+        <p class="font-body text-sm text-secondary mb-3 leading-relaxed">
+          Software engineer sharing thoughts on web development, AI, and the craft of building software.
+        </p>
+        <Social
+          fillColor="#7D8088"
+          email="hi@aravindsanjeev.com"
+          twitter="aravsanj"
+          instagram="aravsanj"
+          linkedIn="aravsanj"
+        />
+      </div>
+    </div>
+
+    <!-- Comments -->
+    <Comments />
+
+  </div>
 </Layout>

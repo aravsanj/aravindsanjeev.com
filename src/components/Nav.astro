@@ -1,0 +1,156 @@
+---
+const pathname = Astro.url.pathname;
+
+const navLinks = [
+  { label: "Projects", href: "/projects" },
+  { label: "Experience", href: "/experience" },
+  { label: "Writing", href: "/blog" },
+  { label: "Videos", href: "/videos" },
+];
+
+function isActive(href: string) {
+  if (href === "/") return pathname === "/";
+  return pathname.startsWith(href);
+}
+---
+
+<nav
+  id="main-nav"
+  class="fixed top-0 left-0 right-0 z-50"
+  aria-label="Main navigation"
+>
+  <div class="mx-auto max-w-7xl px-6 md:px-12 lg:px-24">
+    <div class="flex items-center justify-between h-16">
+      <!-- Logo -->
+      <a
+        href="/"
+        class="hover:opacity-80 transition-opacity duration-300"
+        aria-label="Home"
+        style="font-family: 'Dancing Script', cursive; font-size: 1.35rem; color: rgba(201,150,58,0.85); line-height: 1;"
+      >
+        Aravind Sanjeev
+      </a>
+
+      <!-- Desktop Links -->
+      <div class="hidden md:flex items-center gap-1">
+        {
+          navLinks.map((link) => (
+            <a
+              href={link.href}
+              class={`px-4 py-2 rounded-lg font-sans text-sm font-semibold tracking-wide transition-colors duration-200 ${
+                isActive(link.href)
+                  ? "text-primary bg-white/5"
+                  : "text-secondary hover:text-primary hover:bg-white/5"
+              }`}
+            >
+              {link.label}
+            </a>
+          ))
+        }
+        <div class="w-px h-4 bg-border mx-2"></div>
+        <a
+          href="/contact"
+          class="px-4 py-2 rounded-lg bg-accent/10 text-accent border border-accent/25 hover:bg-accent hover:text-background hover:border-accent transition-all duration-200 font-sans text-sm font-bold tracking-wide"
+        >
+          Hire Me
+        </a>
+      </div>
+
+      <!-- Mobile menu button -->
+      <button
+        id="mobile-menu-btn"
+        aria-label="Toggle menu"
+        class="md:hidden flex flex-col gap-1.5 p-2 group"
+      >
+        <span
+          id="hamburger-line-1"
+          class="block w-5 h-[1.5px] bg-primary transition-all duration-300 group-hover:bg-accent origin-center"
+        ></span>
+        <span
+          id="hamburger-line-2"
+          class="block w-5 h-[1.5px] bg-primary transition-all duration-300 group-hover:bg-accent"
+        ></span>
+        <span
+          id="hamburger-line-3"
+          class="block w-5 h-[1.5px] bg-primary transition-all duration-300 group-hover:bg-accent origin-center"
+        ></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div
+    id="mobile-menu"
+    class="hidden md:hidden border-t border-border/60 bg-background/97 backdrop-blur-xl"
+  >
+    <div class="px-6 py-4 flex flex-col gap-1">
+      {
+        navLinks.map((link) => (
+          <a
+            href={link.href}
+            class={`px-4 py-3 rounded-lg font-sans text-sm font-semibold tracking-wide transition-colors ${
+              isActive(link.href)
+                ? "text-primary bg-white/5"
+                : "text-secondary hover:text-primary hover:bg-white/5"
+            }`}
+          >
+            {link.label}
+          </a>
+        ))
+      }
+      <a
+        href="/contact"
+        class="mt-2 px-4 py-3 rounded-lg bg-accent/10 text-accent border border-accent/25 font-sans text-sm font-bold text-center tracking-wide"
+      >
+        Hire Me
+      </a>
+    </div>
+  </div>
+</nav>
+
+<script>
+  function initNav() {
+    const nav = document.getElementById("main-nav");
+    const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+    const mobileMenu = document.getElementById("mobile-menu");
+    const line1 = document.getElementById("hamburger-line-1");
+    const line2 = document.getElementById("hamburger-line-2");
+    const line3 = document.getElementById("hamburger-line-3");
+
+    let lastScrollY = window.scrollY;
+    let menuOpen = false;
+
+    const handleScroll = () => {
+      const currentY = window.scrollY;
+
+      if (currentY > 60) {
+        nav?.classList.add("scrolled");
+      } else {
+        nav?.classList.remove("scrolled");
+      }
+
+      lastScrollY = currentY;
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    const toggleMenu = () => {
+      menuOpen = !menuOpen;
+      mobileMenu?.classList.toggle("hidden", !menuOpen);
+
+      if (menuOpen) {
+        line1?.style.setProperty("transform", "translateY(7px) rotate(45deg)");
+        line2?.style.setProperty("opacity", "0");
+        line3?.style.setProperty("transform", "translateY(-7px) rotate(-45deg)");
+      } else {
+        line1?.style.setProperty("transform", "");
+        line2?.style.setProperty("opacity", "");
+        line3?.style.setProperty("transform", "");
+      }
+    };
+
+    mobileMenuBtn?.addEventListener("click", toggleMenu);
+  }
+
+  document.addEventListener("astro:page-load", initNav);
+</script>

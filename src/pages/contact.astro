@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
 
 const metadata = {
     title: "Hire Me",
@@ -7,76 +8,138 @@ const metadata = {
 };
 ---
 
-<Layout title={metadata.title} description={metadata.description} mainClass="py-24 max-w-2xl mx-auto">
-        <h1 class="text-5xl font-bold text-primary mb-8">Hire Me</h1>
-        
-        <div class="mb-12">
-            <p class="text-xl text-secondary mb-4">
-                I'm always open to discussing new projects, creative ideas or opportunities to be part of your visions.
-            </p>
-            <div class="flex items-center gap-3 p-4 rounded-xl bg-surface border border-white/5">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
-                <a href="mailto:hi@aravindsanjeev.com" class="text-xl font-medium text-primary hover:text-accent transition-colors">
-                    hi@aravindsanjeev.com
+<Layout title={metadata.title} description={metadata.description} mainClass="py-24">
+    <Breadcrumb crumbs={[]} current="Hire Me" />
+    <h1 class="text-5xl font-bold text-primary mb-8" data-animate data-delay="1">Hire Me</h1>
+
+    <div class="grid lg:grid-cols-[1fr_360px] gap-12 items-start">
+
+        <!-- Left: contact form -->
+        <div>
+            <div class="mb-12" data-animate data-delay="2">
+                <p class="text-xl text-secondary mb-4">
+                    I'm always open to discussing new projects, creative ideas or opportunities to be part of your visions.
+                </p>
+                <div class="flex items-center gap-3 p-4 rounded-xl bg-surface border border-white/5">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                    <a href="mailto:hi@aravindsanjeev.com" class="text-xl font-medium text-primary hover:text-accent transition-colors">
+                        hi@aravindsanjeev.com
+                    </a>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-4 mb-12">
+                <div class="h-[1px] flex-1 bg-gradient-to-r from-transparent to-white/10"></div>
+                <span class="text-secondary/40 text-sm font-medium uppercase tracking-widest">or</span>
+                <div class="h-[1px] flex-1 bg-gradient-to-l from-transparent to-white/10"></div>
+            </div>
+
+            <div class="bg-surface p-8 rounded-2xl border border-white/5 shadow-2xl" data-animate data-delay="3">
+                <form id="contact-form" action="https://script.google.com/macros/s/AKfycbywKg0hophDZMU28QdM0Px5PZlcboebKY_NrNO7YkQ_BV-3h4_qgJvhjkWDynzyGE7WSg/exec" method="POST" class="space-y-6">
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-secondary mb-2">Name</label>
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            required
+                            placeholder="John Doe"
+                            class="w-full px-4 py-3 rounded-xl bg-background border border-white/10 text-primary focus:border-accent focus:ring-1 focus:ring-accent outline-none transition-all placeholder:text-secondary/30"
+                        />
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-secondary mb-2">Email</label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            required
+                            placeholder="john@example.com"
+                            class="w-full px-4 py-3 rounded-xl bg-background border border-white/10 text-primary focus:border-accent focus:ring-1 focus:ring-accent outline-none transition-all placeholder:text-secondary/30"
+                        />
+                    </div>
+                    <div>
+                        <label for="message" class="block text-sm font-medium text-secondary mb-2">Message</label>
+                        <textarea
+                            id="message"
+                            name="message"
+                            rows="5"
+                            required
+                            placeholder="Tell me about your project..."
+                            class="w-full px-4 py-3 rounded-xl bg-background border border-white/10 text-primary focus:border-accent focus:ring-1 focus:ring-accent outline-none transition-all placeholder:text-secondary/30 resize-none"
+                        ></textarea>
+                    </div>
+                    <button
+                        type="submit"
+                        class="w-full py-4 rounded-xl bg-accent text-gray-950 font-bold hover:bg-accent/90 transition-all transform active:scale-[0.98] shadow-lg shadow-accent/20"
+                    >
+                        Send Message
+                    </button>
+                </form>
+                <div id="form-status" class="mt-4 text-center hidden">
+                    <p class="text-sm font-medium"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right: strategy call CTA -->
+        <div class="lg:sticky lg:top-28" data-animate data-delay="2">
+            <div class="bg-surface border border-white/5 rounded-2xl p-8 shadow-2xl">
+                <div class="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center mb-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                </div>
+
+                <h2 class="text-xl font-bold text-primary mb-2">Book a Strategy Call</h2>
+                <p class="text-secondary text-sm leading-relaxed mb-6">
+                    Got a project in mind? Let's talk through your goals, challenges, and how I can help — no strings attached.
+                </p>
+
+                <ul class="space-y-3 mb-8">
+                    <li class="flex items-center gap-3 text-sm text-secondary">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-accent flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        15-minute focused session
+                    </li>
+                    <li class="flex items-center gap-3 text-sm text-secondary">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-accent flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        Talk through your project or idea
+                    </li>
+                    <li class="flex items-center gap-3 text-sm text-secondary">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-accent flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        Get honest technical advice
+                    </li>
+                    <li class="flex items-center gap-3 text-sm text-secondary">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-accent flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        Free, no obligation
+                    </li>
+                </ul>
+
+                <a
+                    href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ3XMK9NOox_TPLSyObRx_nRYu49-PV1f2bGqMqrCOp-vYJdiNP2MfcdKTSxxtfrR3IjO6PeHW9z"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl border border-accent/30 text-accent font-semibold text-sm hover:bg-accent/10 transition-all"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    Pick a Time
                 </a>
             </div>
         </div>
 
-        <div class="flex items-center gap-4 mb-12">
-            <div class="h-[1px] flex-1 bg-gradient-to-r from-transparent to-white/10"></div>
-            <span class="text-secondary/40 text-sm font-medium uppercase tracking-widest">or</span>
-            <div class="h-[1px] flex-1 bg-gradient-to-l from-transparent to-white/10"></div>
-        </div>
-
-
-        <div class="bg-surface p-8 rounded-2xl border border-white/5 shadow-2xl">
-            <form id="contact-form" action="https://script.google.com/macros/s/AKfycbywKg0hophDZMU28QdM0Px5PZlcboebKY_NrNO7YkQ_BV-3h4_qgJvhjkWDynzyGE7WSg/exec" method="POST" class="space-y-6">
-                <div>
-                    <label for="name" class="block text-sm font-medium text-secondary mb-2">Name</label>
-                    <input 
-                        type="text" 
-                        id="name" 
-                        name="name" 
-                        required 
-                        placeholder="John Doe"
-                        class="w-full px-4 py-3 rounded-xl bg-background border border-white/10 text-primary focus:border-accent focus:ring-1 focus:ring-accent outline-none transition-all placeholder:text-secondary/30"
-                    />
-                </div>
-                <div>
-                    <label for="email" class="block text-sm font-medium text-secondary mb-2">Email</label>
-                    <input 
-                        type="email" 
-                        id="email" 
-                        name="email" 
-                        required 
-                        placeholder="john@example.com"
-                        class="w-full px-4 py-3 rounded-xl bg-background border border-white/10 text-primary focus:border-accent focus:ring-1 focus:ring-accent outline-none transition-all placeholder:text-secondary/30"
-                    />
-                </div>
-                <div>
-                    <label for="message" class="block text-sm font-medium text-secondary mb-2">Message</label>
-                    <textarea 
-                        id="message" 
-                        name="message" 
-                        rows="5" 
-                        required 
-                        placeholder="Tell me about your project..."
-                        class="w-full px-4 py-3 rounded-xl bg-background border border-white/10 text-primary focus:border-accent focus:ring-1 focus:ring-accent outline-none transition-all placeholder:text-secondary/30 resize-none"
-                    ></textarea>
-                </div>
-                <button 
-                    type="submit" 
-                    class="w-full py-4 rounded-xl bg-accent text-gray-950 font-bold hover:bg-accent/90 transition-all transform active:scale-[0.98] shadow-lg shadow-accent/20"
-                >
-                    Send Message
-                </button>
-            </form>
-            <div id="form-status" class="mt-4 text-center hidden">
-                <p class="text-sm font-medium"></p>
-            </div>
-        </div>
+    </div>
 </Layout>
 
 <script is:inline src="https://www.google.com/recaptcha/api.js?render=6Lesx0IsAAAAAEcCZpemdGpSQFiIr-w8jx_aKa6c"></script>

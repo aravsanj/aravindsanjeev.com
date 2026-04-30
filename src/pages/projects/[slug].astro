@@ -1,6 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import { Image } from "astro:assets";
+import Breadcrumb from "../../components/Breadcrumb.astro";
 import { getCollection, type CollectionEntry } from "astro:content";
 import Tag from "../../components/ui/Tag.astro";
 
@@ -19,15 +20,16 @@ const { Content } = await entry.render();
 ---
 
 <Layout title={`${entry.data.title} | Aravind Sanjeev`} mainClass="py-24 max-w-full">
+    <Breadcrumb crumbs={[{ label: "Projects", href: "/projects" }]} current={entry.data.title} />
     <header class="mb-16 max-w-4xl">
-        <h1 class="text-5xl md:text-6xl font-bold text-primary mb-8">
+        <h1 class="text-5xl md:text-6xl font-bold text-primary mb-8" data-animate data-delay="1">
             {entry.data.title}
         </h1>
-            <p class="text-2xl text-secondary leading-relaxed mb-8">
+            <p class="text-2xl text-secondary leading-relaxed mb-8" data-animate data-delay="2">
                 {entry.data.description}
             </p>
 
-            <div class="flex flex-wrap gap-3 mb-10">
+            <div class="flex flex-wrap gap-3 mb-10" data-animate data-delay="3">
                 {
                     entry.data.tags?.map((tag: string) => (
                         <Tag title={tag} href={`/tag/${tag.toLowerCase()}`} />
@@ -42,6 +44,8 @@ const { Content } = await entry.render();
                         target="_blank"
                         rel="noopener noreferrer"
                         class="inline-flex items-center px-4 py-2 rounded-lg bg-surface text-primary border border-white/10 hover:border-accent/50 transition-colors"
+                        data-animate
+                        data-delay="4"
                     >
                         Visit Project
                         <svg
@@ -67,7 +71,7 @@ const { Content } = await entry.render();
 
         {
             entry.data.imageUrl && (
-                <div class="mb-16 rounded-xl overflow-hidden border border-white/5">
+                <div class="mb-16 rounded-xl overflow-hidden border border-white/5" data-animate data-delay="1">
                     <Image
                         src={entry.data.imageUrl}
                         alt={entry.data.title}
@@ -77,7 +81,7 @@ const { Content } = await entry.render();
             )
         }
 
-        <article class="prose prose-invert prose-lg max-w-none">
+        <article class="prose prose-invert prose-lg max-w-none" data-animate data-delay="2">
             <Content />
         </article>
 </Layout>
