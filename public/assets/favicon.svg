@@ -1,0 +1,12 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <!-- Transparent background by default -->
+
+  <!-- Amber rounded square -->
+  <rect x="0" y="0" width="512" height="512" rx="96" fill="#F59E0B"/>
+
+  <!-- Geometric A -->
+  <path d="M120 380 L256 100 L392 380 L330 380 L256 210 L182 380 Z" fill="#FFFFFF"/>
+
+  <!-- Inner bar -->
+  <path d="M240 300 L300 380 L212 380 Z" fill="#FFFFFF"/>
+</svg>
