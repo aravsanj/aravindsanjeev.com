@@ -140,6 +140,14 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       }
 
       document.addEventListener("astro:page-load", initScrollAnimations);
+
+      document.addEventListener("astro:page-load", () => {
+        if (typeof window.gtag === "function") {
+          window.gtag("config", "G-BELR0CJR8V", {
+            page_path: window.location.pathname,
+          });
+        }
+      });
     </script>
   </body>
 </html>
