@@ -98,10 +98,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     </div>
 
     <!-- Google Analytics -->
-    <script
-      type="text/partytown"
-      src="https://www.googletagmanager.com/gtag/js?id=G-BELR0CJR8V"></script>
-    <script type="text/partytown">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BELR0CJR8V"></script>
+    <script is:inline>
       window.dataLayer = window.dataLayer || [];
       function gtag() {
         dataLayer.push(arguments);
@@ -126,7 +124,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
                 el.classList.add("in-view");
               } else {
                 el.style.transitionDelay = "0ms";
-                // Exit above viewport → slide up; exit below → slide down
                 const exitingAbove = entry.boundingClientRect.top < 0;
                 el.style.setProperty("--anim-from", exitingAbove ? "-28px" : "28px");
                 el.classList.remove("in-view");
@@ -142,11 +139,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       document.addEventListener("astro:page-load", initScrollAnimations);
 
       document.addEventListener("astro:page-load", () => {
-        if (typeof window.gtag === "function") {
-          window.gtag("config", "G-BELR0CJR8V", {
-            page_path: window.location.pathname,
-          });
-        }
+        window.gtag("config", "G-BELR0CJR8V", {
+          page_path: window.location.pathname,
+        });
       });
     </script>
   </body>
