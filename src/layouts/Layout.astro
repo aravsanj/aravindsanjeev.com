@@ -97,15 +97,13 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       <Footer />
     </div>
 
-    <!-- Google Analytics -->
+    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-BELR0CJR8V"></script>
     <script is:inline>
       window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
-      gtag("config", "G-BELR0CJR8V");
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-BELR0CJR8V');
     </script>
 
     <!-- Scroll-triggered animation observer -->
