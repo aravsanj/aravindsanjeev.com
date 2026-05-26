@@ -12,7 +12,7 @@ const { post } = Astro.props;
 const tags = post.data.tags || [];
 ---
 
-<article class="group relative flex flex-col gap-0 card-lift">
+<article class="group relative flex flex-col gap-0 card-lift rounded-2xl -m-4 p-4 border border-transparent hover:border-accent/15 hover:bg-surface/40 transition-colors duration-300">
   <!-- Thumbnail -->
   <div class="aspect-[16/9] w-full rounded-xl bg-surface border border-border/60 overflow-hidden relative mb-5 group-hover:border-accent/20 transition-colors duration-300">
     {
