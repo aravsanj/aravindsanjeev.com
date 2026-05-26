@@ -14,7 +14,7 @@ import Breadcrumb from "../components/Breadcrumb.astro";
 type BlogEntry = CollectionEntry<"blog">;
 
 export async function getStaticPaths() {
-  const posts = await getCollection("blog");
+  const posts = (await getCollection("blog")).filter((post: BlogEntry) => !post.data.isDraft);
   return posts.map((post: BlogEntry) => ({
     params: { slug: post.slug },
     props: { post },

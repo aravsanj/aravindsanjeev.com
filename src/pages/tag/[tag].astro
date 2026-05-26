@@ -11,7 +11,7 @@ type BlogEntry = CollectionEntry<"blog">;
 type ProjectEntry = CollectionEntry<"projects">;
 
 export async function getStaticPaths() {
-  const posts = await getCollection("blog");
+  const posts = (await getCollection("blog")).filter((post: BlogEntry) => !post.data.isDraft);
   const projects = await getCollection("projects");
 
   const allContent = [

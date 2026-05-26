@@ -4,7 +4,9 @@ import BlogCard from "../../components/BlogCard.astro";
 import Breadcrumb from "../../components/Breadcrumb.astro";
 import { getCollection, type CollectionEntry } from "astro:content";
 
-const posts: CollectionEntry<"blog">[] = (await getCollection("blog")).sort(
+const posts: CollectionEntry<"blog">[] = (await getCollection("blog"))
+  .filter((post: CollectionEntry<"blog">) => !post.data.isDraft)
+  .sort(
   (a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) =>
     new Date(b.data.publishedAt).valueOf() -
     new Date(a.data.publishedAt).valueOf()
