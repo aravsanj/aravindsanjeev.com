@@ -170,6 +170,15 @@ pre {
   border-bottom-color: rgba(201, 150, 58, 0.7);
 }
 
+/* Lead paragraph — first <p> in article gets pronounced intro treatment */
+.article > p:first-of-type {
+  font-size: 1.25rem;
+  line-height: 1.75;
+  color: #EDE8DF;
+  font-weight: 400;
+  margin-bottom: 2rem;
+}
+
 /* Prose blockquote pull-quote style */
 .article blockquote {
   border-left: 3px solid #C9963A;

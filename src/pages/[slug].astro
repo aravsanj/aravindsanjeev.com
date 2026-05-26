@@ -76,17 +76,28 @@ const baseUrl = "https://aravindsanjeev.com";
     })}
   />
 
-  <div class="max-w-[680px]">
-
+  <!-- Hero: full-width title block -->
+  <div class="mb-10">
     <Breadcrumb crumbs={[{ label: "Writing", href: "/blog" }]} current="" />
 
+    <!-- Tags -->
+    {tags.length > 0 && (
+      <ul class="flex flex-wrap gap-2 mb-5" data-animate data-delay="1">
+        {tags.map((tag: string) => (
+          <li>
+            <Tag title={tag} href={`/tag/${tag.toLowerCase()}`} />
+          </li>
+        ))}
+      </ul>
+    )}
+
     <!-- Title -->
-    <h1 class="font-display text-4xl sm:text-5xl font-bold text-primary tracking-tight leading-[1.08] mb-6 text-balance" data-animate data-delay="1">
+    <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-primary tracking-tight leading-[1.06] mb-6 text-balance max-w-4xl" data-animate data-delay="2">
       {post.data.title}
     </h1>
 
     <!-- Meta row -->
-    <div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-secondary font-sans text-sm mb-4" data-animate data-delay="2">
+    <div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-secondary font-sans text-sm" data-animate data-delay="3">
       <span class="font-medium">{formatDate(post.data.publishedAt)}</span>
       <span class="text-secondary/30" aria-hidden="true">·</span>
       <span>{readTime} min read</span>
@@ -97,32 +108,22 @@ const baseUrl = "https://aravindsanjeev.com";
         </>
       )}
     </div>
+  </div>
 
-    <!-- Tags -->
-    {tags.length > 0 && (
-      <ul class="flex flex-wrap gap-2 mb-8" data-animate data-delay="3">
-        {tags.map((tag: string) => (
-          <li>
-            <Tag title={tag} href={`/tag/${tag.toLowerCase()}`} />
-          </li>
-        ))}
-      </ul>
-    )}
+  <!-- Cover image: full container width, left-aligned with title -->
+  {post.data.image && (
+    <div class="mb-14 overflow-hidden rounded-2xl">
+      <Image
+        src={post.data.image}
+        alt={post.data.title}
+        class="w-full h-auto object-cover"
+        loading="eager"
+      />
+    </div>
+  )}
 
-    <!-- Divider -->
-    <div class="h-px bg-border/60 mb-12"></div>
-
-    <!-- Cover image (only if set) -->
-    {post.data.image && (
-      <div class="mb-12 rounded-xl overflow-hidden border border-border/60">
-        <Image
-          src={post.data.image}
-          alt={post.data.title}
-          class="w-full h-auto object-cover"
-          loading="eager"
-        />
-      </div>
-    )}
+  <!-- Content: left-aligned, constrained for readability -->
+  <div class="max-w-[680px]">
 
     <!-- Article body -->
     <article class="article prose prose-invert prose-lg max-w-none prose-headings:font-display prose-headings:font-bold prose-headings:tracking-tight prose-p:text-secondary prose-p:leading-[1.85] prose-a:no-underline prose-strong:text-primary prose-blockquote:not-italic">
