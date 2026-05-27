@@ -1,9 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Hero from "../components/Hero.astro";
-import Projects from "../components/Projects.astro";
-import Experience from "../components/Experience.astro";
-import Writings from "../components/Writings.astro";
+import BentoSection from "../components/BentoSection.astro";
 import { getCollection, type CollectionEntry } from "astro:content";
 
 const posts = (await getCollection("blog"))
@@ -17,7 +15,5 @@ const posts = (await getCollection("blog"))
 
 <Layout>
   <Hero />
-  <Projects />
-  <Writings posts={posts} />
-  <Experience />
+  <BentoSection posts={posts} />
 </Layout>

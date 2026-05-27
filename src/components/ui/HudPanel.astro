@@ -1,0 +1,48 @@
+---
+// HUD bento tile / card frame.
+// Renders a bordered surface panel with all four acid corner brackets,
+// an optional mono label in the top-left, and optional glow + hover lift.
+interface Props {
+  label?: string; // mono label e.g. "SYS_01 // PROFILE"
+  variant?: "acid" | "hot";
+  glow?: boolean;
+  hover?: boolean; // enable card-lift + scanline sweep
+  as?: string; // wrapper tag
+  href?: string;
+  class?: string;
+}
+
+const {
+  label,
+  variant = "acid",
+  glow = false,
+  hover = false,
+  as = "div",
+  href,
+  class: className = "",
+} = Astro.props;
+
+const Tag = href ? "a" : as;
+
+const frameClass = variant === "hot" ? "hud-frame hud-frame--hot" : "hud-frame";
+const cornersClass = variant === "hot" ? "hud-corners hud-corners--hot" : "hud-corners";
+const glowClass = glow ? (variant === "hot" ? "hot-glow" : "acid-glow") : "";
+const hoverClass = hover ? "card-lift card-sweep" : "";
+const labelColor = variant === "hot" ? "text-hot/80" : "text-accent/80";
+---
+
+<Tag
+  href={href}
+  class={`${frameClass} ${cornersClass} ${glowClass} ${hoverClass} group relative block bg-surface/70 border border-border backdrop-blur-sm ${className}`}
+>
+  {
+    label && (
+      <span
+        class={`pointer-events-none absolute top-2.5 left-3 z-[3] font-mono text-[10px] tracking-[0.18em] uppercase ${labelColor}`}
+      >
+        {label}
+      </span>
+    )
+  }
+  <slot />
+</Tag>

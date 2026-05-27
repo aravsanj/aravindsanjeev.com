@@ -12,9 +12,9 @@ const { post } = Astro.props;
 const tags = post.data.tags || [];
 ---
 
-<article class="group relative flex flex-col gap-0 card-lift rounded-2xl -m-4 p-4 border border-transparent hover:border-accent/15 hover:bg-surface/40 transition-colors duration-300">
+<article class="hud-frame hud-corners card-lift card-sweep group relative flex flex-col bg-surface/60 border border-border p-4">
   <!-- Thumbnail -->
-  <div class="aspect-[16/9] w-full rounded-xl bg-surface border border-border/60 overflow-hidden relative mb-5 group-hover:border-accent/20 transition-colors duration-300">
+  <div class="aspect-[16/9] w-full bg-surface border border-border/60 overflow-hidden relative mb-5 group-hover:border-accent/30 transition-colors duration-300">
     {
       post.data.image ? (
         <Picture
@@ -23,28 +23,29 @@ const tags = post.data.tags || [];
           widths={[320, 640, post.data.image.width]}
           sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 320px"
           formats={["avif", "webp"]}
-          class="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-700 ease-out"
+          class="w-full h-full object-cover saturate-[0.9] group-hover:scale-[1.04] group-hover:saturate-100 transition-all duration-700 ease-out"
         />
       ) : (
         <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-surface to-surface-2">
-          <span class="font-display text-4xl text-accent/25 font-bold select-none">
+          <span class="font-display text-4xl text-accent/30 font-bold select-none uppercase">
             {post.data.title.charAt(0)}
           </span>
         </div>
       )
     }
-    <div class="absolute inset-0 bg-gradient-to-t from-background/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+    <div class="absolute inset-0 pointer-events-none opacity-30" style="background: repeating-linear-gradient(to bottom, transparent 0 2px, rgba(0,0,0,0.2) 3px 3px);"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
   </div>
 
   <!-- Meta -->
   <div class="flex items-center gap-3 mb-3">
-    <time class="font-sans text-xs text-secondary/50 font-medium tabular-nums tracking-wide">
+    <time class="font-mono text-[11px] text-secondary/60 tabular-nums tracking-wide uppercase">
       {formatDate(post.data.publishedAt)}
     </time>
     {
       tags.length > 0 && (
         <>
-          <span class="w-1 h-1 rounded-full bg-secondary/25" aria-hidden="true"></span>
+          <span class="w-1 h-1 rounded-full bg-accent/40" aria-hidden="true"></span>
           <ul class="flex flex-wrap gap-1.5 relative z-10">
             {tags.slice(0, 2).map((tag: string) => (
               <li>
@@ -58,8 +59,8 @@ const tags = post.data.tags || [];
   </div>
 
   <!-- Title -->
-  <h3 class="font-display text-xl sm:text-2xl font-bold text-primary group-hover:text-accent transition-colors duration-300 leading-snug mb-2 line-clamp-2">
-    <a href={`/${post.slug}`} class="after:absolute after:inset-0">
+  <h3 class="font-display text-lg sm:text-xl font-bold uppercase tracking-wide text-primary group-hover:text-accent transition-colors duration-300 leading-snug mb-2 line-clamp-2">
+    <a href={`/${post.slug}`} class="after:absolute after:inset-0 after:content-[''] after:z-[1]">
       {post.data.title}
     </a>
   </h3>
@@ -70,8 +71,8 @@ const tags = post.data.tags || [];
   </p>
 
   <!-- Read more indicator -->
-  <div class="mt-4 flex items-center gap-1.5 text-accent font-sans text-[11px] font-bold uppercase tracking-[0.15em] opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-0 group-hover:translate-x-1">
-    Read article
+  <div class="mt-4 flex items-center gap-1.5 text-accent font-mono text-[10px] uppercase tracking-[0.18em] opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-0 group-hover:translate-x-1">
+    &gt; read_article
     <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
       <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
     </svg>

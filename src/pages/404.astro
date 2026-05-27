@@ -1,27 +1,31 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import GlitchText from "../components/ui/GlitchText.astro";
 ---
 
-<Layout title="404 | Page Not Found" mainClass="max-w-2xl mx-auto py-24 px-6">
-  <div class="text-center space-y-8">
-    <div class="space-y-4">
-      <h1 class="text-8xl font-black text-accent/20 select-none">404</h1>
-      <h2 class="text-3xl font-bold tracking-tight text-primary sm:text-4xl">Page Not Found</h2>
-      <p class="text-lg text-secondary">
-        Sorry, the page you looking for doesn't exist or has been moved.
+<Layout title="404 | Signal Lost" mainClass="max-w-2xl mx-auto py-24 px-6">
+  <div class="hud-frame hud-corners bg-surface/50 border border-hot/30 p-10 sm:p-14 text-center space-y-8">
+    <div class="space-y-5">
+      <p class="font-mono text-xs uppercase tracking-[0.2em] text-hot animate-pulse-dot">// fatal_error</p>
+      <h1 class="font-display text-7xl sm:text-8xl font-black text-hot/30 select-none leading-none">
+        <GlitchText as="span" text="404" class="text-hot/40" />
+      </h1>
+      <h2 class="font-display text-2xl sm:text-3xl font-bold uppercase tracking-tight text-primary">Signal Lost</h2>
+      <p class="font-mono text-sm text-secondary leading-relaxed">
+        &gt; the requested node does not exist or has been purged from the grid.
       </p>
     </div>
 
-    <div class="pt-4">
-      <p class="text-sm text-secondary mb-6">
-        Redirecting to home in <span id="countdown" class="font-mono font-bold text-accent">5</span> seconds...
+    <div class="pt-2">
+      <p class="font-mono text-xs text-secondary mb-6 uppercase tracking-wide">
+        rerouting to base in <span id="countdown" class="font-bold text-accent">5</span>s...
       </p>
-      
+
       <a
         href="/"
-        class="inline-flex items-center justify-center px-6 py-3 rounded-full bg-accent text-gray-950 font-bold hover:scale-105 transition-all shadow-lg shadow-accent/20"
+        class="inline-flex items-center justify-center px-6 py-3 bg-accent text-background font-mono text-sm uppercase tracking-[0.12em] hover:bg-accent-bright transition-all acid-glow"
       >
-        Go Home Now
+        [ return_home ]
       </a>
     </div>
   </div>
@@ -29,11 +33,11 @@ import Layout from "../layouts/Layout.astro";
   <script is:inline>
     let seconds = 5;
     const countdownEl = document.getElementById('countdown');
-    
+
     const interval = setInterval(() => {
       seconds--;
       if (countdownEl) countdownEl.textContent = seconds;
-      
+
       if (seconds <= 0) {
         clearInterval(interval);
         window.location.href = "/";

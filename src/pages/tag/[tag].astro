@@ -94,16 +94,19 @@ const { posts, projects, experiences: matchedExperiences } = Astro.props;
 
 <Layout title={`Content tagged with ${tag}`} mainClass="py-24 max-w-full">
   <Breadcrumb crumbs={[{ label: "Tags", href: "/tag" }]} current={`#${tag}`} />
-  <h1 class="text-5xl font-bold text-primary mb-16 text-center" data-animate data-delay="1">
-    {`#${tag}`}
-  </h1>
+  <div class="text-center mb-16">
+    <div class="font-mono text-xs uppercase tracking-[0.2em] text-secondary/60 mb-3" data-animate>&gt; filter_by_tag</div>
+    <h1 class="font-display text-5xl sm:text-6xl font-bold uppercase tracking-tight text-primary" data-animate data-delay="1">
+      <span class="text-accent/50">#</span>{tag}
+    </h1>
+  </div>
 
   <div class="space-y-24">
     {
       projects && projects.length > 0 && (
         <section>
-          <h2 class="text-3xl font-bold text-primary mb-8 border-b border-white/5 pb-4" data-animate>
-            Projects
+          <h2 class="font-display text-2xl font-bold uppercase tracking-wide text-primary mb-8 border-b border-accent/20 pb-4" data-animate>
+            <span class="text-accent/60 font-mono text-base mr-2">//</span>Projects
           </h2>
           <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {projects.map((project: ProjectEntry, i: number) => (
@@ -125,8 +128,8 @@ const { posts, projects, experiences: matchedExperiences } = Astro.props;
     {
       posts && posts.length > 0 && (
         <section>
-          <h2 class="text-3xl font-bold text-primary mb-8 border-b border-white/5 pb-4" data-animate>
-            Articles
+          <h2 class="font-display text-2xl font-bold uppercase tracking-wide text-primary mb-8 border-b border-accent/20 pb-4" data-animate>
+            <span class="text-accent/60 font-mono text-base mr-2">//</span>Articles
           </h2>
           <PostsByTag posts={posts} />
         </section>
@@ -136,18 +139,18 @@ const { posts, projects, experiences: matchedExperiences } = Astro.props;
     {
       matchedExperiences && matchedExperiences.length > 0 && (
         <section>
-          <h2 class="text-3xl font-bold text-primary mb-8 border-b border-white/5 pb-4" data-animate>
-            Experience
+          <h2 class="font-display text-2xl font-bold uppercase tracking-wide text-primary mb-8 border-b border-accent/20 pb-4" data-animate>
+            <span class="text-accent/60 font-mono text-base mr-2">//</span>Experience
           </h2>
           <div class="grid md:grid-cols-2 gap-8">
             {matchedExperiences.map((item, i: number) => (
-              <div class="group relative flex flex-col gap-6 p-6 rounded-2xl bg-surface border border-white/5 hover:border-accent/30 transition-all duration-300" data-animate data-delay={String((i % 2) + 1)}>
+              <div class="hud-frame hud-corners card-lift card-sweep group relative flex flex-col gap-6 p-6 bg-surface/60 border border-border hover:border-accent/30 transition-all duration-300" data-animate data-delay={String((i % 2) + 1)}>
                 <div class="flex flex-col flex-1">
                   <header class="mb-4">
-                    <span class="text-sm font-bold uppercase tracking-widest text-accent block mb-2">
+                    <span class="font-mono text-[10px] uppercase tracking-[0.15em] text-accent bg-accent/8 border border-accent/25 px-2.5 py-1 inline-block mb-3">
                       {item.duration}
                     </span>
-                    <h3 class="text-2xl font-bold text-primary group-hover:text-accent transition-colors">
+                    <h3 class="font-display text-xl font-bold uppercase tracking-wide text-primary group-hover:text-accent transition-colors">
                       <a
                         href={item.companyUrl}
                         target="_blank"

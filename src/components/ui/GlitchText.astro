@@ -1,0 +1,12 @@
+---
+// Glitch heading wrapper. The text is duplicated into ::before/::after
+// pseudo-layers (acid/magenta RGB-split) via the data-text attribute.
+interface Props {
+  text: string;
+  as?: string;
+  class?: string;
+}
+const { text, as = "span", class: className = "" } = Astro.props;
+const Tag = as;
+---
+<Tag class={`glitch ${className}`} data-text={text}>{text}</Tag>

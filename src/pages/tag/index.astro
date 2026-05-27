@@ -43,18 +43,23 @@ const metadata = {
 <Layout title={metadata.title} description={metadata.description} mainClass="py-16 max-w-full">
     <Breadcrumb crumbs={[]} current="Tags" />
     <header class="mb-16">
-      <h1 class="font-display text-5xl sm:text-6xl font-bold text-primary leading-[0.95] tracking-tight" data-animate data-delay="1">All Tags</h1>
+      <div class="section-label" data-animate>
+        <span class="section-label-num">//</span>
+        <span class="section-label-text">tag_registry</span>
+        <div class="section-label-rule"></div>
+      </div>
+      <h1 class="font-display text-5xl sm:text-6xl font-bold uppercase text-primary leading-[0.95] tracking-tight" data-animate data-delay="1">Tags</h1>
     </header>
         <div class="flex flex-wrap gap-3">
             {
                 uniqueTags.map(([tag, count], i) => (
                     <a href={`/tag/${tag.toLowerCase()}`} class="group" data-animate data-delay={String((i % 4) + 1)}>
-                        <div class="flex items-center gap-2 px-5 py-3 rounded-lg bg-surface border border-border/60 hover:border-accent/40 hover:bg-accent/5 transition-all duration-250">
-                            <span class="font-sans text-base font-bold text-primary group-hover:text-accent transition-colors tracking-wide">
-                                #{tag}
+                        <div class="flex items-center gap-2 px-4 py-2.5 bg-surface border border-border hover:border-accent/50 hover:bg-accent/5 transition-all duration-250">
+                            <span class="font-mono text-sm text-primary group-hover:text-accent transition-colors tracking-wide">
+                                <span class="text-accent/50">#</span>{tag}
                             </span>
-                            <span class="font-sans text-xs text-secondary/60">
-                                ({count})
+                            <span class="font-mono text-xs text-secondary/60">
+                                [{count}]
                             </span>
                         </div>
                     </a>

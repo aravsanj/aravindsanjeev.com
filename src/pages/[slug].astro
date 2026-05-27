@@ -92,19 +92,20 @@ const baseUrl = "https://aravindsanjeev.com";
     )}
 
     <!-- Title -->
-    <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-primary tracking-tight leading-[1.06] mb-6 text-balance max-w-4xl" data-animate data-delay="2">
+    <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-primary tracking-tight leading-[1.08] mb-6 text-balance max-w-4xl" data-animate data-delay="2">
       {post.data.title}
     </h1>
 
     <!-- Meta row -->
-    <div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-secondary font-sans text-sm" data-animate data-delay="3">
-      <span class="font-medium">{formatDate(post.data.publishedAt)}</span>
-      <span class="text-secondary/30" aria-hidden="true">·</span>
+    <div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-secondary font-mono text-xs uppercase tracking-wide" data-animate data-delay="3">
+      <span class="text-accent/70">&gt;</span>
+      <span>{formatDate(post.data.publishedAt)}</span>
+      <span class="text-secondary/30" aria-hidden="true">//</span>
       <span>{readTime} min read</span>
       {post.data.lastUpdated && (
         <>
-          <span class="text-secondary/30" aria-hidden="true">·</span>
-          <span class="text-secondary/60">Updated {formatDate(post.data.lastUpdated)}</span>
+          <span class="text-secondary/30" aria-hidden="true">//</span>
+          <span class="text-secondary/60">updated {formatDate(post.data.lastUpdated)}</span>
         </>
       )}
     </div>
@@ -112,13 +113,14 @@ const baseUrl = "https://aravindsanjeev.com";
 
   <!-- Cover image: full container width, left-aligned with title -->
   {post.data.image && (
-    <div class="mb-14 overflow-hidden rounded-2xl">
+    <div class="hud-frame hud-corners mb-14 overflow-hidden border border-border relative" data-animate>
       <Image
         src={post.data.image}
         alt={post.data.title}
         class="w-full h-auto object-cover"
         loading="eager"
       />
+      <div class="absolute inset-0 pointer-events-none opacity-25" style="background: repeating-linear-gradient(to bottom, transparent 0 2px, rgba(0,0,0,0.2) 3px 3px);"></div>
     </div>
   )}
 
@@ -131,12 +133,12 @@ const baseUrl = "https://aravindsanjeev.com";
     </article>
 
     <!-- Divider -->
-    <div class="h-px bg-border/60 mt-16 mb-10"></div>
+    <div class="h-px bg-gradient-to-r from-accent/40 via-border to-transparent mt-16 mb-10"></div>
 
     <!-- Share row -->
     <div class="flex items-center justify-between gap-4 mb-16" data-animate>
-      <span class="font-sans text-xs font-bold uppercase tracking-[0.18em] text-secondary/50">
-        Share this article
+      <span class="font-mono text-[11px] uppercase tracking-[0.18em] text-accent/70">
+        &gt; share_this_log
       </span>
       <div class="flex items-center gap-2">
         <SocialShareButtons size={32} post={post} />
@@ -144,27 +146,28 @@ const baseUrl = "https://aravindsanjeev.com";
     </div>
 
     <!-- Author card -->
-    <div class="flex items-start gap-5 pb-16 border-b border-border/60" data-animate data-delay="1">
+    <div class="hud-frame hud-corners flex items-start gap-5 p-5 bg-surface/50 border border-border mb-4" data-animate data-delay="1">
       <Image
         src={profileImage}
         alt="Aravind Sanjeev"
-        class="w-14 h-14 rounded-full object-cover border border-border flex-shrink-0"
+        class="w-14 h-14 object-cover border border-accent/40 flex-shrink-0"
         draggable={false}
       />
       <div>
-        <h3 class="font-display text-lg font-bold text-primary mb-1">
+        <h3 class="font-display text-lg font-bold uppercase tracking-wide text-primary mb-1">
           Aravind Sanjeev
         </h3>
         <p class="font-body text-sm text-secondary mb-3 leading-relaxed">
           Software engineer sharing thoughts on web development, AI, and the craft of building software.
         </p>
-        <Social
-          fillColor="#7D8088"
-          email="hi@aravindsanjeev.com"
-          twitter="aravsanj"
-          instagram="aravsanj"
-          linkedIn="aravsanj"
-        />
+        <div class="text-secondary">
+          <Social
+            email="hi@aravindsanjeev.com"
+            twitter="aravsanj"
+            instagram="aravsanj"
+            linkedIn="aravsanj"
+          />
+        </div>
       </div>
     </div>
 

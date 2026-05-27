@@ -4,20 +4,22 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        background: "#07070A",
-        surface: "#0E1015",
-        "surface-2": "#16181F",
-        primary: "#EDE8DF",
-        secondary: "#7D8088",
-        accent: "#C9963A",
-        "accent-bright": "#E0AE4E",
-        border: "#1E2430",
+        background: "#08090A",
+        surface: "#0F1410",
+        "surface-2": "#161C13",
+        primary: "#E6FFD8",
+        secondary: "#8A9A78",
+        accent: "#B6FF1A",
+        "accent-bright": "#D4FF5C",
+        hot: "#FF2D7E",
+        "hot-bright": "#FF5C9C",
+        border: "#243018",
       },
       fontFamily: {
-        sans: ["Syne", "Plus Jakarta Sans", "sans-serif"],
-        body: ["Plus Jakarta Sans", "Inter", "sans-serif"],
-        display: ["Fraunces", "Georgia", "serif"],
-        mono: ["JetBrains Mono", "Fira Code", "Courier New", "monospace"],
+        sans: ["Oxanium", "Chakra Petch", "sans-serif"],
+        body: ["Inter", "system-ui", "sans-serif"],
+        display: ["Chakra Petch", "Oxanium", "sans-serif"],
+        mono: ["Share Tech Mono", "JetBrains Mono", "Courier New", "monospace"],
       },
       typography: {
         DEFAULT: {
@@ -31,44 +33,64 @@ module.exports = {
         },
       },
       animation: {
-        spotlight: "spotlight 2s ease .75s 1 forwards",
         float: "float 6s ease-in-out infinite",
-        "orb-1": "orb1 8s ease-in-out infinite",
-        "orb-2": "orb2 10s ease-in-out infinite",
-        "shimmer-bar": "shimmerBar 2s linear infinite",
-        "fade-in": "fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) both",
         "pulse-dot": "pulseDot 2s ease-in-out infinite",
+        "shimmer-bar": "shimmerBar 2s linear infinite",
+        flicker: "flicker 6s steps(1) infinite",
+        "scanline-sweep": "scanlineSweep 7s linear infinite",
+        glitch: "glitch 2.5s steps(2) infinite",
+        "grid-pan": "gridPan 28s linear infinite",
+        "boot-blink": "bootBlink 1s steps(1) infinite",
+        "glow-pulse": "glowPulse 3.5s ease-in-out infinite",
+        "fade-in": "fadeIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) both",
       },
       keyframes: {
-        spotlight: {
-          "0%": { opacity: 0, transform: "translate(-72%, -62%) scale(0.5)" },
-          "100%": { opacity: 1, transform: "translate(-50%,-40%) scale(1)" },
-        },
         float: {
           "0%, 100%": { transform: "translateY(0px)" },
-          "50%": { transform: "translateY(-12px)" },
+          "50%": { transform: "translateY(-10px)" },
         },
-        orb1: {
-          "0%, 100%": { transform: "translate(0, 0) scale(1)", opacity: "0.3" },
-          "33%": { transform: "translate(40px, -30px) scale(1.15)", opacity: "0.45" },
-          "66%": { transform: "translate(-20px, 20px) scale(0.9)", opacity: "0.15" },
-        },
-        orb2: {
-          "0%, 100%": { transform: "translate(0, 0) scale(1)", opacity: "0.15" },
-          "33%": { transform: "translate(-30px, 40px) scale(0.85)", opacity: "0.3" },
-          "66%": { transform: "translate(25px, -15px) scale(1.1)", opacity: "0.1" },
+        pulseDot: {
+          "0%, 100%": { opacity: 1, transform: "scale(1)" },
+          "50%": { opacity: 0.35, transform: "scale(0.7)" },
         },
         shimmerBar: {
           "0%": { backgroundPosition: "200% 0" },
           "100%": { backgroundPosition: "-200% 0" },
         },
-        fadeIn: {
-          from: { opacity: 0, transform: "translateY(24px)" },
-          to: { opacity: 1, transform: "translateY(0)" },
+        flicker: {
+          "0%, 93%, 100%": { opacity: "1" },
+          "94%": { opacity: "0.82" },
+          "95%": { opacity: "1" },
+          "96%": { opacity: "0.6" },
+          "97%": { opacity: "1" },
+          "98%": { opacity: "0.9" },
         },
-        pulseDot: {
-          "0%, 100%": { opacity: 1, transform: "scale(1)" },
-          "50%": { opacity: 0.4, transform: "scale(0.75)" },
+        scanlineSweep: {
+          "0%": { transform: "translateY(-100%)" },
+          "100%": { transform: "translateY(100%)" },
+        },
+        glitch: {
+          "0%, 92%, 100%": { transform: "translate(0)", opacity: "1" },
+          "93%": { transform: "translate(-2px, 1px)" },
+          "94%": { transform: "translate(2px, -1px)" },
+          "95%": { transform: "translate(-1px, -1px)" },
+          "96%": { transform: "translate(1px, 1px)" },
+        },
+        gridPan: {
+          "0%": { backgroundPosition: "0 0" },
+          "100%": { backgroundPosition: "0 800px" },
+        },
+        bootBlink: {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0" },
+        },
+        glowPulse: {
+          "0%, 100%": { opacity: "0.55" },
+          "50%": { opacity: "1" },
+        },
+        fadeIn: {
+          from: { opacity: 0, transform: "translateY(20px)" },
+          to: { opacity: 1, transform: "translateY(0)" },
         },
       },
     },

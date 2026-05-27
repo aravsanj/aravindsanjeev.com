@@ -18,7 +18,7 @@ const chartId = `chart-${Math.random().toString(36).substring(2, 9)}`;
 ---
 
 <div
-    class="chart-container relative w-full h-auto min-h-[300px] p-4 bg-gray-50 dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-800 my-6"
+    class="chart-container hud-frame hud-corners relative w-full h-auto min-h-[300px] p-4 bg-surface/60 border border-border my-6"
 >
     <canvas
         id={chartId}
@@ -49,47 +49,17 @@ const chartId = `chart-${Math.random().toString(36).substring(2, 9)}`;
                         maintainAspectRatio: false,
                         plugins: {
                             legend: {
-                                labels: {
-                                    color: document.documentElement.classList.contains(
-                                        "dark",
-                                    )
-                                        ? "#e5e7eb"
-                                        : "#374151",
-                                },
+                                labels: { color: "#E6FFD8" },
                             },
                         },
                         scales: {
                             y: {
-                                grid: {
-                                    color: document.documentElement.classList.contains(
-                                        "dark",
-                                    )
-                                        ? "#374151"
-                                        : "#e5e7eb",
-                                },
-                                ticks: {
-                                    color: document.documentElement.classList.contains(
-                                        "dark",
-                                    )
-                                        ? "#9ca3af"
-                                        : "#4b5563",
-                                },
+                                grid: { color: "#243018" },
+                                ticks: { color: "#8A9A78" },
                             },
                             x: {
-                                grid: {
-                                    color: document.documentElement.classList.contains(
-                                        "dark",
-                                    )
-                                        ? "#374151"
-                                        : "#e5e7eb",
-                                },
-                                ticks: {
-                                    color: document.documentElement.classList.contains(
-                                        "dark",
-                                    )
-                                        ? "#9ca3af"
-                                        : "#4b5563",
-                                },
+                                grid: { color: "#243018" },
+                                ticks: { color: "#8A9A78" },
                             },
                         },
                     };

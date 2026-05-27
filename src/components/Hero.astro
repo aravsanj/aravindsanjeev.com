@@ -1,147 +1,239 @@
 ---
-import { Image } from "astro:assets";
-import profileImage from "../assets/profile_transparent.webp";
+import HudPanel from "./ui/HudPanel.astro";
+import GlitchText from "./ui/GlitchText.astro";
+import BootLine from "./ui/BootLine.astro";
+import Social from "./Social.astro";
+
+const startYear = 2020;
+const yearsExp = new Date().getFullYear() - startYear;
 ---
 
-<section class="relative min-h-[calc(100vh-64px)] flex flex-col justify-center overflow-hidden py-20 lg:py-0">
-
-  <!-- Background: amber spotlight top-right, subtle grid -->
-  <div class="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
-    <div
-      class="absolute -top-40 right-0 w-[700px] h-[700px] rounded-full opacity-[0.07]"
-      style="background: radial-gradient(circle, #C9963A 0%, transparent 65%);"
-    ></div>
-    <div
-      class="absolute bottom-0 -left-20 w-[450px] h-[450px] rounded-full opacity-[0.04]"
-      style="background: radial-gradient(circle, #4A6FA5 0%, transparent 65%);"
-    ></div>
-    <!-- Fine dot grid -->
-    <div
-      class="absolute inset-0 opacity-[0.025]"
-      style="background-image: radial-gradient(circle, rgba(237,232,223,0.8) 1px, transparent 1px); background-size: 48px 48px;"
-    ></div>
-    <!-- Thin horizontal rule at bottom of hero -->
-    <div class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent/20 to-transparent"></div>
+<section class="pt-6 pb-4">
+  <!-- Top terminal ribbon -->
+  <div data-animate class="flex flex-wrap items-center gap-x-4 gap-y-1 font-mono text-[10px] uppercase tracking-[0.18em] text-secondary/70 mb-4">
+    <span class="text-accent">// home.dashboard</span>
+    <span class="text-secondary/40">—</span>
+    <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-accent animate-pulse-dot"></span>session_active</span>
   </div>
 
-  <div class="relative grid grid-cols-1 lg:grid-cols-5 gap-16 lg:gap-12 items-center max-w-6xl mx-auto w-full">
+  <div class="grid grid-cols-2 lg:grid-cols-6 gap-3 auto-rows-min">
 
-    <!-- Text content -->
-    <div class="lg:col-span-3 order-2 lg:order-1 text-center lg:text-left">
-
-      <!-- Status badge -->
-      <div data-animate data-delay="1" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-accent/25 text-accent text-[11px] font-sans font-semibold tracking-[0.15em] uppercase bg-accent/5">
-        <span class="w-1.5 h-1.5 rounded-full bg-accent animate-pulse-dot"></span>
-        Available for work
+    <!-- IDENTITY -->
+    <HudPanel
+      label="SYS_01 // OPERATOR"
+      class="col-span-2 lg:col-span-4 p-6 sm:p-8 pt-10 flex flex-col justify-center min-h-[340px]"
+    >
+      <div data-animate data-delay="1" class="font-mono text-xs text-accent/80 space-y-1 mb-6">
+        <BootLine prompt="$" text="whoami" class="text-xs" />
+        <div class="text-secondary/70 pl-4">// creative frontend engineer · ai fluency</div>
       </div>
 
-      <!-- Name -->
-      <h1 data-animate data-delay="2" class="font-display text-[clamp(4rem,10vw,6.5rem)] font-black text-primary tracking-tight leading-[0.92] mt-6 pb-1">
+      <h1 data-animate data-delay="2" class="font-display font-bold uppercase tracking-tight leading-[0.9] text-[clamp(2.8rem,7vw,5rem)] text-primary">
         Aravind<br />
-        <span class="gradient-text">Sanjeev</span>
+        <GlitchText as="span" text="Sanjeev" class="text-acid acid-text-glow" />
       </h1>
 
-      <!-- Role -->
-      <p data-animate data-delay="3" class="text-base sm:text-lg text-secondary font-sans font-medium mt-5  tracking-wide">
-        Creative Frontend Engineer
+      <p data-animate data-delay="3" class="font-mono text-sm text-secondary mt-5 max-w-md leading-relaxed">
+        I live at the intersection of <span class="text-primary">"how does this work?"</span>
+        and <span class="text-primary">"how can we make it better?"</span> — engineering,
+        architecture, AI integration, system design &amp; UI/UX.
       </p>
 
-      <!-- Thin separator -->
-      <div data-animate data-delay="3" class="flex justify-center lg:justify-start mt-5">
-        <div class="w-12 h-px bg-accent/40"></div>
-      </div>
-
-      <!-- Skill badges -->
-      <div data-animate data-delay="4" class="flex flex-wrap justify-center lg:justify-start gap-2 mt-5">
-        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-2 border border-border text-xs font-sans font-semibold text-secondary tracking-wide">
-          <span class="w-1.5 h-1.5 rounded-full bg-accent/60"></span>Web
-        </span>
-        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-2 border border-border text-xs font-sans font-semibold text-secondary tracking-wide">
-          <span class="w-1.5 h-1.5 rounded-full bg-accent/60"></span>Mobile
-        </span>
-        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-2 border border-border text-xs font-sans font-semibold text-secondary tracking-wide">
-          <span class="w-1.5 h-1.5 rounded-full bg-accent/60"></span>AI
-        </span>
-        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-2 border border-border text-xs font-sans font-semibold text-secondary tracking-wide">
-          <span class="w-1.5 h-1.5 rounded-full bg-accent/60"></span>10+ projects delivered
-        </span>
-      </div>
-
-      <!-- Bio -->
-      <p data-animate data-delay="5" class="text-base text-secondary/75 leading-relaxed mt-5 max-w-lg mx-auto lg:mx-0 font-body">
-        I live at the intersection of
-        <em class="text-primary/90 not-italic font-semibold">"how does this work?"</em>
-        and
-        <em class="text-primary/90 not-italic font-semibold">"how can we make it better?"</em>
-        — spanning Engineering, Architecture, AI Integration, System Design, and UI/UX.
-      </p>
-
-      <!-- CTA buttons -->
-      <div data-animate data-delay="6" class="flex flex-wrap justify-center lg:justify-start gap-3 mt-8">
-        <a
-          href="/projects"
-          class="px-5 py-2.5 rounded-lg bg-surface-2 text-primary border border-border hover:border-accent/35 hover:bg-accent/5 transition-all duration-300 font-sans font-semibold text-sm tracking-wide"
-        >
-          View Work
+      <div data-animate data-delay="4" class="flex flex-wrap gap-3 mt-7">
+        <a href="/projects" class="px-4 py-2 font-mono text-xs uppercase tracking-[0.12em] text-primary border border-border hover:border-accent/50 hover:text-accent transition-all duration-200">
+          [ view_work ]
         </a>
-        <a
-          href="/contact"
-          class="px-5 py-2.5 rounded-lg bg-accent text-background hover:bg-accent-bright transition-all duration-300 font-sans font-bold text-sm tracking-wide shadow-lg shadow-accent/15"
-        >
-          Hire Me
+        <a href="/contact" class="px-4 py-2 font-mono text-xs uppercase tracking-[0.12em] bg-accent text-background hover:bg-accent-bright transition-all duration-200 acid-glow">
+          [ hire_me ]
         </a>
-        <a
-          href="/blog"
-          class="px-5 py-2.5 rounded-lg bg-surface-2 text-primary border border-border hover:border-accent/35 hover:bg-accent/5 transition-all duration-300 font-sans font-semibold text-sm tracking-wide"
-        >
-          Read My Writing
+        <a href="/blog" class="px-4 py-2 font-mono text-xs uppercase tracking-[0.12em] text-primary border border-border hover:border-hot/50 hover:text-hot transition-all duration-200">
+          [ read_logs ]
         </a>
       </div>
+    </HudPanel>
 
-      <!-- Email -->
-      <div data-animate data-delay="7" class="mt-6 flex justify-center lg:justify-start">
-        <a
-          href="mailto:hi@aravindsanjeev.com"
-          class="group flex items-center gap-2.5 text-xs text-secondary hover:text-accent transition-colors duration-300 font-sans tracking-wider"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:scale-110">
-            <rect width="20" height="16" x="2" y="4" rx="2"/>
-            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
-          </svg>
-          hi@aravindsanjeev.com
-        </a>
-      </div>
-    </div>
-
-    <!-- Profile image with crop-mark frame -->
-    <div data-animate data-delay="2" class="lg:col-span-2 order-1 lg:order-2 flex justify-center">
-      <div class="relative p-5">
-        <!-- Corner crop marks: all 4 as child elements (immune to overflow clipping) -->
-        <span class="absolute top-0 left-0 w-5 h-5 pointer-events-none z-10" style="border-top: 1.5px solid rgba(201,150,58,0.7); border-left: 1.5px solid rgba(201,150,58,0.7);"></span>
-        <span class="absolute top-0 right-0 w-5 h-5 pointer-events-none z-10" style="border-top: 1.5px solid rgba(201,150,58,0.7); border-right: 1.5px solid rgba(201,150,58,0.7);"></span>
-        <span class="absolute bottom-0 left-0 w-5 h-5 pointer-events-none z-10" style="border-bottom: 1.5px solid rgba(201,150,58,0.7); border-left: 1.5px solid rgba(201,150,58,0.7);"></span>
-        <span class="absolute bottom-0 right-0 w-5 h-5 pointer-events-none z-10" style="border-bottom: 1.5px solid rgba(201,150,58,0.7); border-right: 1.5px solid rgba(201,150,58,0.7);"></span>
-        <!-- Amber glow beneath image -->
-        <div
-          class="absolute inset-x-6 bottom-0 h-3/4 blur-[60px] opacity-20 rounded-full"
-          style="background: #C9963A;"
-          aria-hidden="true"
-        ></div>
-        <Image
-          fetchpriority="high"
-          loading="eager"
-          src={profileImage}
-          alt="Aravind Sanjeev"
-          class="relative w-60 sm:w-72 lg:w-full lg:max-w-[340px] aspect-square object-contain animate-float"
-          style="filter: drop-shadow(0 0 32px rgba(201,150,58,0.18));"
-        />
-        <!-- Signature label -->
-        <div class="absolute bottom-2 right-4 pointer-events-none" style="font-family: 'Dancing Script', cursive; font-size: 1.15rem; color: rgba(201,150,58,0.6); line-height: 1; transform: rotate(-2deg);">
-          Aravind Sanjeev
+    <!-- VISUAL FEED (main_art) -->
+    <HudPanel
+      label="SYS_00 // VISUAL_FEED"
+      class="col-span-2 lg:col-span-2 lg:row-span-2 overflow-hidden min-h-[260px] lg:min-h-0"
+    >
+      <div class="relative h-full w-full" id="tv-glitch-container">
+        <!-- JS populates band layers here -->
+        <!-- scanline + tint overlays -->
+        <div class="absolute inset-0 pointer-events-none mix-blend-overlay" style="background: linear-gradient(180deg, rgba(182,255,26,0.06), transparent 40%, rgba(255,45,126,0.07)); z-index:10;"></div>
+        <div class="absolute inset-0 pointer-events-none opacity-50" style="background: repeating-linear-gradient(to bottom, transparent 0 2px, rgba(0,0,0,0.18) 3px 3px); z-index:11;"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-background/30 pointer-events-none" style="z-index:12;"></div>
+        <!-- caption -->
+        <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.15em]">
+          <span class="text-accent acid-text-glow">&gt; operator_AS</span>
+          <span class="flex items-center gap-1.5 text-hot"><span class="w-1.5 h-1.5 rounded-full bg-hot animate-pulse-dot"></span>rec</span>
         </div>
       </div>
-    </div>
+    </HudPanel>
+
+    <!-- METRICS -->
+    <HudPanel
+      label="SYS_02 // METRICS"
+      variant="hot"
+      class="col-span-1 lg:col-span-2 p-5 pt-9 flex flex-col justify-center"
+      hover
+    >
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <div class="font-display text-3xl font-bold text-accent acid-text-glow">10<span class="text-hot">+</span></div>
+          <div class="font-mono text-[9px] uppercase tracking-[0.15em] text-secondary mt-1">projects</div>
+        </div>
+        <div>
+          <div class="font-display text-3xl font-bold text-accent acid-text-glow">{yearsExp}<span class="text-hot">Y</span></div>
+          <div class="font-mono text-[9px] uppercase tracking-[0.15em] text-secondary mt-1">experience</div>
+        </div>
+        <div>
+          <div class="font-display text-3xl font-bold text-accent acid-text-glow">3</div>
+          <div class="font-mono text-[9px] uppercase tracking-[0.15em] text-secondary mt-1">domains</div>
+        </div>
+        <div>
+          <div class="font-display text-3xl font-bold text-accent acid-text-glow">&#8734;</div>
+          <div class="font-mono text-[9px] uppercase tracking-[0.15em] text-secondary mt-1">coffee</div>
+        </div>
+      </div>
+    </HudPanel>
+
+    <!-- UPLINK / STATUS -->
+    <HudPanel
+      label="SYS_03 // UPLINK"
+      class="col-span-1 lg:col-span-2 p-5 pt-9 flex flex-col justify-center gap-3"
+      hover
+    >
+      <div class="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.14em] text-accent">
+        <span class="w-2 h-2 rounded-full bg-accent animate-pulse-dot acid-glow"></span>
+        available_for_work
+      </div>
+      <a href="mailto:hi@aravindsanjeev.com" class="font-mono text-xs text-secondary hover:text-accent transition-colors break-all">
+        &gt; hi@aravindsanjeev.com
+      </a>
+      <div class="text-hot pt-1">
+        <Social
+          email="hi@aravindsanjeev.com"
+          linkedIn="aravsanj"
+          instagram="aravsanj"
+          twitter="aravsanj"
+        />
+      </div>
+    </HudPanel>
 
   </div>
-
 </section>
+
+<style>
+  #tv-glitch-container .tv-band {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: top center;
+    background-repeat: no-repeat;
+  }
+</style>
+
+<script>
+(function () {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const IMG_A = '/assets/main_art.png';
+  const IMG_B = '/assets/main_art_2.png';
+  const BAND_COUNT = 12;
+  const GLITCH_INTERVAL = 2000;
+  const GLITCH_DURATION = 500;
+  const FRAME_MS = 35;
+
+  const container = document.getElementById('tv-glitch-container');
+  if (!container) return;
+
+  // Pre-create band layers
+  const bands = Array.from({ length: BAND_COUNT }, () => {
+    const el = document.createElement('div');
+    el.className = 'tv-band';
+    container.prepend(el);
+    return el;
+  });
+
+  function rand(min, max) { return min + Math.random() * (max - min); }
+
+  function showNormal() {
+    bands.forEach((b, i) => {
+      if (i === 0) {
+        b.style.cssText = `position:absolute;inset:0;background-size:cover;background-position:top center;background-image:url(${IMG_A});opacity:0.95;`;
+      } else {
+        b.style.opacity = '0';
+      }
+    });
+  }
+
+  function glitchFrame(useAlt) {
+    // Build random horizontal slices
+    const slices = [0];
+    let y = 0;
+    while (y < 98) {
+      y += rand(2, 22);
+      slices.push(Math.min(y, 100));
+    }
+    if (slices[slices.length - 1] < 100) slices.push(100);
+
+    const usedBands = Math.min(slices.length - 1, BAND_COUNT);
+
+    bands.forEach((b, i) => {
+      if (i >= usedBands) { b.style.opacity = '0'; return; }
+
+      const y0 = slices[i];
+      const y1 = slices[i + 1];
+      const dx = rand(-14, 14);
+      // Most bands show current image; some tear to show the other
+      const showB = useAlt ? Math.random() > 0.35 : Math.random() > 0.75;
+      const img = showB ? IMG_B : IMG_A;
+
+      // Occasional color glitch on a band
+      let filter = 'none';
+      const r = Math.random();
+      if (r > 0.82) filter = `hue-rotate(${Math.floor(rand(60, 300))}deg) saturate(${rand(1.5, 3)})`;
+      else if (r > 0.7) filter = `brightness(${rand(1.4, 2)}) saturate(0)`;
+
+      b.style.cssText = `
+        position:absolute;inset:0;
+        background-size:cover;background-position:top center;background-repeat:no-repeat;
+        background-image:url(${img});
+        clip-path:polygon(0 ${y0}%,100% ${y0}%,100% ${y1}%,0 ${y1}%);
+        transform:translateX(${dx}px);
+        filter:${filter};
+        opacity:0.95;
+      `;
+    });
+  }
+
+  function runGlitch() {
+    const start = performance.now();
+    let frameId;
+
+    function tick() {
+      const elapsed = performance.now() - start;
+      if (elapsed >= GLITCH_DURATION) { showNormal(); return; }
+
+      const progress = elapsed / GLITCH_DURATION;
+      // Middle portion shows image B dominant
+      const useAlt = progress > 0.25 && progress < 0.75;
+
+      // Brief white flash
+      if (Math.random() > 0.88) {
+        container.style.filter = 'brightness(2.5)';
+        setTimeout(() => { container.style.filter = ''; }, 25);
+      }
+
+      glitchFrame(useAlt);
+      frameId = setTimeout(tick, FRAME_MS);
+    }
+
+    tick();
+  }
+
+  showNormal();
+  setInterval(runGlitch, GLITCH_INTERVAL);
+})();
+</script>

@@ -1,0 +1,40 @@
+---
+// Terminal-style boot/typewriter line.
+// Renders full text (no-JS / reduced-motion friendly); a script types it out.
+interface Props {
+  prompt?: string; // e.g. "$" or ">"
+  text: string;
+  class?: string;
+}
+const { prompt = ">", text, class: className = "" } = Astro.props;
+---
+<span class={`boot-line inline-flex items-baseline gap-2 font-mono ${className}`}>
+  <span class="text-accent/70 select-none">{prompt}</span>
+  <span class="boot-text boot-caret" data-boot-text={text}>{text}</span>
+</span>
+
+<script>
+  function initBootLines() {
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const els = document.querySelectorAll<HTMLElement>(".boot-text[data-boot-text]");
+    els.forEach((el) => {
+      const full = el.dataset.bootText || "";
+      if (reduce || el.dataset.bootDone === "1") {
+        el.textContent = full;
+        return;
+      }
+      el.dataset.bootDone = "1";
+      el.textContent = "";
+      let i = 0;
+      const tick = () => {
+        if (i <= full.length) {
+          el.textContent = full.slice(0, i);
+          i++;
+          setTimeout(tick, 28 + Math.random() * 40);
+        }
+      };
+      setTimeout(tick, 250);
+    });
+  }
+  document.addEventListener("astro:page-load", initBootLines);
+</script>

@@ -12,15 +12,15 @@ import { experiences, type ExperienceItem } from "../data/experience";
         <div class="section-label-rule"></div>
         <span class="section-label-text">Career</span>
       </div>
-      <h2 class="font-display text-4xl sm:text-5xl font-bold text-primary leading-tight">
+      <h2 class="font-display text-4xl sm:text-5xl font-bold uppercase tracking-tight text-primary leading-tight">
         Experience
       </h2>
     </div>
     <a
       href="/experience"
-      class="hidden sm:flex items-center gap-2 font-sans text-sm font-semibold text-secondary hover:text-accent transition-colors group mb-1 tracking-wide"
+      class="hidden sm:flex items-center gap-2 font-mono text-xs uppercase tracking-[0.12em] text-secondary hover:text-accent transition-colors group mb-1"
     >
-      All experience
+      [ full_log ]
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="14"
@@ -58,14 +58,14 @@ import { experiences, type ExperienceItem } from "../data/experience";
 
             <!-- Content card -->
             <div class="flex-1 relative group/card">
-              <div class="p-6 rounded-xl bg-surface border border-border/60 hover:border-accent/20 transition-all duration-400 card-lift">
+              <div class="hud-frame hud-corners p-6 bg-surface border border-border hover:border-accent/30 transition-all duration-400 card-lift card-sweep">
                 <!-- Duration badge -->
-                <span class="inline-block font-sans text-[10px] font-bold uppercase tracking-[0.15em] text-accent bg-accent/8 border border-accent/15 px-2.5 py-1 rounded mb-4">
+                <span class="inline-block font-mono text-[10px] uppercase tracking-[0.15em] text-accent bg-accent/8 border border-accent/25 px-2.5 py-1 mb-4">
                   {item.duration}
                 </span>
 
                 <!-- Role & company -->
-                <h3 class="font-display text-xl font-bold text-primary group-hover/card:text-accent transition-colors duration-300 mb-1 relative">
+                <h3 class="font-display text-lg font-bold uppercase tracking-wide text-primary group-hover/card:text-accent transition-colors duration-300 mb-1 relative">
                   {item.companyUrl ? (
                     <a
                       href={item.companyUrl}
@@ -105,13 +105,13 @@ import { experiences, type ExperienceItem } from "../data/experience";
     </div>
 
     <!-- Fade + See more -->
-    <div class="relative -mt-40 pt-40" style="background: linear-gradient(to bottom, transparent 20%, rgba(7,7,10,0.85) 80%);">
+    <div class="relative -mt-40 pt-40" style="background: linear-gradient(to bottom, transparent 20%, rgba(8,9,10,0.9) 80%);">
       <div class="flex justify-center pb-2" data-animate>
         <a
           href="/experience"
-          class="inline-flex items-center gap-2 font-sans text-sm text-accent font-bold tracking-wide hover:gap-3 transition-all duration-300"
+          class="inline-flex items-center gap-2 font-mono text-xs uppercase text-accent tracking-[0.12em] hover:gap-3 transition-all duration-300"
         >
-          See more
+          [ see_more ]
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
           </svg>

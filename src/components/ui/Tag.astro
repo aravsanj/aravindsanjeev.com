@@ -5,7 +5,7 @@ const TagElement = href ? "a" : "span";
 
 <TagElement
   href={href}
-  class="flex items-center rounded-md bg-accent/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-accent border border-accent/20 hover:bg-accent/20 transition-colors duration-200 no-underline"
+  class="inline-flex items-center gap-1 bg-accent/8 px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.12em] text-accent border border-accent/25 hover:bg-accent/18 hover:border-accent/50 transition-colors duration-200 no-underline"
 >
-  {title}
+  <span class="text-accent/50">#</span>{title}
 </TagElement>

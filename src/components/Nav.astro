@@ -24,25 +24,27 @@ function isActive(href: string) {
       <!-- Logo -->
       <a
         href="/"
-        class="hover:opacity-80 transition-opacity duration-300"
+        class="group flex items-center gap-2 hover:opacity-90 transition-opacity duration-300"
         aria-label="Home"
-        style="font-family: 'Dancing Script', cursive; font-size: 1.35rem; color: rgba(201,150,58,0.85); line-height: 1;"
       >
-        Aravind Sanjeev
+        <span class="font-mono text-accent text-sm acid-text-glow">&#91;</span>
+        <span class="glitch font-display text-base font-bold tracking-[0.12em] uppercase text-primary" data-text="A.SANJEEV">A.SANJEEV</span>
+        <span class="font-mono text-accent text-sm acid-text-glow">&#93;</span>
       </a>
 
       <!-- Desktop Links -->
       <div class="hidden md:flex items-center gap-1">
         {
-          navLinks.map((link) => (
+          navLinks.map((link, i) => (
             <a
               href={link.href}
-              class={`px-4 py-2 rounded-lg font-sans text-sm font-semibold tracking-wide transition-colors duration-200 ${
+              class={`px-3 py-2 font-mono text-xs uppercase tracking-[0.12em] transition-colors duration-200 ${
                 isActive(link.href)
-                  ? "text-primary bg-white/5"
-                  : "text-secondary hover:text-primary hover:bg-white/5"
+                  ? "text-accent"
+                  : "text-secondary hover:text-primary"
               }`}
             >
+              <span class="text-accent/40 mr-1">{String(i + 1).padStart(2, "0")}</span>
               {link.label}
             </a>
           ))
@@ -50,9 +52,9 @@ function isActive(href: string) {
         <div class="w-px h-4 bg-border mx-2"></div>
         <a
           href="/contact"
-          class="px-4 py-2 rounded-lg bg-accent/10 text-accent border border-accent/25 hover:bg-accent hover:text-background hover:border-accent transition-all duration-200 font-sans text-sm font-bold tracking-wide"
+          class="px-3 py-1.5 font-mono text-xs uppercase tracking-[0.14em] text-accent border border-accent/40 bg-accent/5 hover:bg-accent hover:text-background hover:border-accent transition-all duration-200 acid-glow"
         >
-          Hire Me
+          [ HIRE_ME ]
         </a>
       </div>
 
@@ -64,15 +66,15 @@ function isActive(href: string) {
       >
         <span
           id="hamburger-line-1"
-          class="block w-5 h-[1.5px] bg-primary transition-all duration-300 group-hover:bg-accent origin-center"
+          class="block w-5 h-[1.5px] bg-accent transition-all duration-300 origin-center"
         ></span>
         <span
           id="hamburger-line-2"
-          class="block w-5 h-[1.5px] bg-primary transition-all duration-300 group-hover:bg-accent"
+          class="block w-5 h-[1.5px] bg-accent transition-all duration-300"
         ></span>
         <span
           id="hamburger-line-3"
-          class="block w-5 h-[1.5px] bg-primary transition-all duration-300 group-hover:bg-accent origin-center"
+          class="block w-5 h-[1.5px] bg-accent transition-all duration-300 origin-center"
         ></span>
       </button>
     </div>
@@ -81,28 +83,29 @@ function isActive(href: string) {
   <!-- Mobile menu -->
   <div
     id="mobile-menu"
-    class="hidden md:hidden border-t border-border/60 bg-background/97 backdrop-blur-xl"
+    class="hidden md:hidden border-t border-accent/20 bg-background/95 backdrop-blur-xl"
   >
     <div class="px-6 py-4 flex flex-col gap-1">
       {
-        navLinks.map((link) => (
+        navLinks.map((link, i) => (
           <a
             href={link.href}
-            class={`px-4 py-3 rounded-lg font-sans text-sm font-semibold tracking-wide transition-colors ${
+            class={`px-4 py-3 font-mono text-sm uppercase tracking-[0.12em] transition-colors ${
               isActive(link.href)
-                ? "text-primary bg-white/5"
-                : "text-secondary hover:text-primary hover:bg-white/5"
+                ? "text-accent"
+                : "text-secondary hover:text-primary"
             }`}
           >
+            <span class="text-accent/40 mr-2">{String(i + 1).padStart(2, "0")}</span>
             {link.label}
           </a>
         ))
       }
       <a
         href="/contact"
-        class="mt-2 px-4 py-3 rounded-lg bg-accent/10 text-accent border border-accent/25 font-sans text-sm font-bold text-center tracking-wide"
+        class="mt-2 px-4 py-3 font-mono text-sm uppercase tracking-[0.14em] text-accent border border-accent/40 bg-accent/5 text-center"
       >
-        Hire Me
+        [ HIRE_ME ]
       </a>
     </div>
   </div>
@@ -117,19 +120,14 @@ function isActive(href: string) {
     const line2 = document.getElementById("hamburger-line-2");
     const line3 = document.getElementById("hamburger-line-3");
 
-    let lastScrollY = window.scrollY;
     let menuOpen = false;
 
     const handleScroll = () => {
-      const currentY = window.scrollY;
-
-      if (currentY > 60) {
+      if (window.scrollY > 60) {
         nav?.classList.add("scrolled");
       } else {
         nav?.classList.remove("scrolled");
       }
-
-      lastScrollY = currentY;
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });

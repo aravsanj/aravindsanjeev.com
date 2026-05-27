@@ -40,20 +40,25 @@ const metadata = {
 
   <!-- Page header -->
   <header class="mb-20">
+    <div class="section-label" data-animate>
+      <span class="section-label-num">//</span>
+      <span class="section-label-text">log_archive</span>
+      <div class="section-label-rule"></div>
+    </div>
     <h1
-      class="font-display text-5xl sm:text-6xl lg:text-7xl font-bold text-primary leading-[0.95] tracking-tight mb-6"
+      class="font-display text-5xl sm:text-6xl lg:text-7xl font-bold uppercase text-primary leading-[0.95] tracking-tight mb-6"
       data-animate
       data-delay="1"
     >
-      My Writings
+      Writings
     </h1>
     <p
-      class="text-secondary font-body text-lg max-w-xl leading-relaxed"
+      class="font-mono text-secondary text-sm sm:text-base max-w-xl leading-relaxed"
       data-animate
       data-delay="2"
     >
       Thoughts on engineering, AI, architecture, and the craft of building software.
-      {posts.length} articles published.
+      <span class="text-accent">[{posts.length}]</span> articles published.
     </p>
   </header>
 
@@ -68,10 +73,10 @@ const metadata = {
             data-animate
             data-delay={String((index % 3) + 1)}
           >
-            <h2 class="font-display text-3xl font-bold text-primary/20 tracking-tight flex-shrink-0">
-              {year}
+            <h2 class="font-mono text-2xl font-bold text-accent/40 tracking-tight flex-shrink-0">
+              [{year}]
             </h2>
-            <div class="h-px flex-1 bg-gradient-to-r from-white/8 to-transparent" />
+            <div class="h-px flex-1 bg-gradient-to-r from-accent/25 to-transparent" />
           </div>
 
           <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-14">

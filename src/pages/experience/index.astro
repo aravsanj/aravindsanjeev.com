@@ -8,8 +8,13 @@ import { experiences, type ExperienceItem } from "../../data/experience";
 <Layout title="Experience | Aravind Sanjeev" mainClass="py-16">
   <Breadcrumb crumbs={[]} current="Experience" />
   <header class="mb-20">
-    <h1 class="font-display text-5xl sm:text-6xl lg:text-7xl font-bold text-primary leading-[0.95] tracking-tight" data-animate data-delay="1">
-      All Experience
+    <div class="section-label" data-animate>
+      <span class="section-label-num">//</span>
+      <span class="section-label-text">career_log</span>
+      <div class="section-label-rule"></div>
+    </div>
+    <h1 class="font-display text-5xl sm:text-6xl lg:text-7xl font-bold uppercase text-primary leading-[0.95] tracking-tight" data-animate data-delay="1">
+      Experience
     </h1>
   </header>
 
@@ -29,12 +34,12 @@ import { experiences, type ExperienceItem } from "../../data/experience";
             </div>
 
             <div class="flex-1 relative group/card">
-              <div class="p-6 rounded-xl bg-surface border border-border/60 hover:border-accent/20 transition-all duration-400 card-lift">
-                <span class="inline-block font-sans text-[10px] font-bold uppercase tracking-[0.15em] text-accent bg-accent/8 border border-accent/15 px-2.5 py-1 rounded mb-4">
+              <div class="hud-frame hud-corners p-6 bg-surface border border-border hover:border-accent/30 transition-all duration-400 card-lift card-sweep">
+                <span class="inline-block font-mono text-[10px] uppercase tracking-[0.15em] text-accent bg-accent/8 border border-accent/25 px-2.5 py-1 mb-4">
                   {item.duration}
                 </span>
 
-                <h3 class="font-display text-xl font-bold text-primary group-hover/card:text-accent transition-colors duration-300 mb-1 relative">
+                <h3 class="font-display text-lg font-bold uppercase tracking-wide text-primary group-hover/card:text-accent transition-colors duration-300 mb-1 relative">
                   {item.companyUrl ? (
                     <a
                       href={item.companyUrl}
