@@ -1,12 +1,10 @@
-<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-  <!-- Transparent background by default -->
-
-  <!-- Amber rounded square -->
-  <rect x="0" y="0" width="512" height="512" rx="96" fill="#F59E0B"/>
-
-  <!-- Geometric A -->
-  <path d="M120 380 L256 100 L392 380 L330 380 L256 210 L182 380 Z" fill="#FFFFFF"/>
-
-  <!-- Inner bar -->
-  <path d="M240 300 L300 380 L212 380 Z" fill="#FFFFFF"/>
+<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M0.515015 7.24845H3.14835C3.14835 4.26625 5.6691 1.74549 8.65129 1.74549C11.6335 1.74549 14.1542 4.26625 14.1542 7.24845C14.1542 9.32841 13.1897 11.1673 11.6543 12.2973" stroke="#B6FF1A" stroke-width="1.2"/>
+  <path d="M2.58203 1.41797C1.58165 2.62353 1.03418 4.08634 1.03418 5.6702" stroke="#B6FF1A" stroke-width="1.2"/>
+  <path d="M15.2852 14.582C14.2848 13.3764 13.7373 11.9136 13.7373 10.3297C13.7373 8.24976 14.7018 6.41081 16.2372 5.28082" stroke="#B6FF1A" stroke-width="1.2"/>
+  <path d="M0.627441 14.1118C1.30897 14.8319 2.15348 15.4152 3.14836 15.8075" stroke="#B6FF1A" stroke-width="1.2"/>
+  <path d="M15.3726 1.88831C14.6911 1.16819 13.8466 0.584854 12.8517 0.192517" stroke="#B6FF1A" stroke-width="1.2"/>
+  <circle cx="8.65129" cy="7.24833" r="1.74549" stroke="#B6FF1A" stroke-width="1.2"/>
+  <circle cx="8.65129" cy="7.24833" r="0.523648" fill="#B6FF1A"/>
+  <circle cx="13.0251" cy="9.26215" r="0.523648" fill="#B6FF1A"/>
 </svg>

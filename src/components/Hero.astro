@@ -135,7 +135,7 @@ const yearsExp = new Date().getFullYear() - startYear;
 </style>
 
 <script>
-(function () {
+function initTvGlitch() {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
   const IMG_A = '/assets/main_art.png';
@@ -148,7 +148,9 @@ const yearsExp = new Date().getFullYear() - startYear;
   const container = document.getElementById('tv-glitch-container');
   if (!container) return;
 
-  // Pre-create band layers
+  // Clear any previously injected bands (e.g. on back-navigation)
+  container.querySelectorAll('.tv-band').forEach(el => el.remove());
+
   const bands = Array.from({ length: BAND_COUNT }, () => {
     const el = document.createElement('div');
     el.className = 'tv-band';
@@ -169,7 +171,6 @@ const yearsExp = new Date().getFullYear() - startYear;
   }
 
   function glitchFrame(useAlt) {
-    // Build random horizontal slices
     const slices = [0];
     let y = 0;
     while (y < 98) {
@@ -186,11 +187,9 @@ const yearsExp = new Date().getFullYear() - startYear;
       const y0 = slices[i];
       const y1 = slices[i + 1];
       const dx = rand(-14, 14);
-      // Most bands show current image; some tear to show the other
       const showB = useAlt ? Math.random() > 0.35 : Math.random() > 0.75;
       const img = showB ? IMG_B : IMG_A;
 
-      // Occasional color glitch on a band
       let filter = 'none';
       const r = Math.random();
       if (r > 0.82) filter = `hue-rotate(${Math.floor(rand(60, 300))}deg) saturate(${rand(1.5, 3)})`;
@@ -210,24 +209,21 @@ const yearsExp = new Date().getFullYear() - startYear;
 
   function runGlitch() {
     const start = performance.now();
-    let frameId;
 
     function tick() {
       const elapsed = performance.now() - start;
       if (elapsed >= GLITCH_DURATION) { showNormal(); return; }
 
       const progress = elapsed / GLITCH_DURATION;
-      // Middle portion shows image B dominant
       const useAlt = progress > 0.25 && progress < 0.75;
 
-      // Brief white flash
       if (Math.random() > 0.88) {
         container.style.filter = 'brightness(2.5)';
         setTimeout(() => { container.style.filter = ''; }, 25);
       }
 
       glitchFrame(useAlt);
-      frameId = setTimeout(tick, FRAME_MS);
+      setTimeout(tick, FRAME_MS);
     }
 
     tick();
@@ -235,5 +231,7 @@ const yearsExp = new Date().getFullYear() - startYear;
 
   showNormal();
   setInterval(runGlitch, GLITCH_INTERVAL);
-})();
+}
+
+document.addEventListener('astro:page-load', initTvGlitch);
 </script>
