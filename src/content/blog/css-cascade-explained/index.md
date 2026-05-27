@@ -1,10 +1,10 @@
 ---
 title: "CSS Cascade Explained For Beginners"
+coverText: "CASCADE ALGORITHM DETECTED / SPECIFICITY WAR IMMINENT"
 summary: "The cascade is an algorithm used for solving conflicts when multiple CSS rules apply to the same HTML element."
 publishedAt: "2022-01-06"
 lastUpdated: "2026-01-03"
 tags: ["CSS"]
-image: ./hero.webp
 ---
 
 Have you ever wondered why it is called the _Cascading_ Style Sheets? Well, because CSS applies its rules like a cascade.
@@ -13,7 +13,6 @@ Have you ever wondered why it is called the _Cascading_ Style Sheets? Well, beca
 
 Just like how the water below reaches the bottom first, the rules below are the ones that get applied. Of course, it is not that simple. The rules are inherited all the way along just like how the water is accumulated at different stages. Depending on other factors, a rule written above can totally override the one below.
 
- 
 Because of this, our browsers often finds itself resloving conflicting CSS rules. For that, it uses an algorithm called _the cascade_.
 
 In other words, the cascade is the algorithm for solving conflicts where multiple CSS rules apply to the same HTML element.

@@ -27,7 +27,7 @@ const { Content } = await post.render();
 const metadata = {
   title: post.data.title,
   description: post.data.summary,
-  image: post.data.image?.src,
+  image: `https://aravindsanjeev.com/og/${post.slug}.png`,
 };
 
 let tags: string[] = [];
@@ -65,9 +65,7 @@ const baseUrl = "https://aravindsanjeev.com";
       datePublished: post.data.publishedAt,
       dateModified: post.data.lastUpdated || post.data.publishedAt,
       description: post.data.summary,
-      image: post.data.image
-        ? `${baseUrl}${post.data.image.src}`
-        : `/og?title=${encodeURIComponent(post.data.title)}`,
+      image: `${baseUrl}/og/${post.slug}.png`,
       url: `${baseUrl}/${post.slug}`,
       author: {
         "@type": "Person",
@@ -111,18 +109,25 @@ const baseUrl = "https://aravindsanjeev.com";
     </div>
   </div>
 
-  <!-- Cover image: full container width, left-aligned with title -->
-  {post.data.image && (
-    <div class="hud-frame hud-corners mb-14 overflow-hidden border border-border relative" data-animate>
+  <!-- Cover image -->
+  <div class="hud-frame hud-corners mb-14 overflow-hidden border border-border relative" data-animate>
+    {post.data.image ? (
       <Image
         src={post.data.image}
         alt={post.data.title}
         class="w-full h-auto object-cover"
         loading="eager"
       />
-      <div class="absolute inset-0 pointer-events-none opacity-25" style="background: repeating-linear-gradient(to bottom, transparent 0 2px, rgba(0,0,0,0.2) 3px 3px);"></div>
-    </div>
-  )}
+    ) : (
+      <img
+        src={`/og/${post.slug}.png`}
+        alt={post.data.title}
+        class="w-full h-auto object-cover"
+        loading="eager"
+      />
+    )}
+    <div class="absolute inset-0 pointer-events-none opacity-25" style="background: repeating-linear-gradient(to bottom, transparent 0 2px, rgba(0,0,0,0.2) 3px 3px);"></div>
+  </div>
 
   <!-- Content: left-aligned, constrained for readability -->
   <div class="max-w-[680px]">

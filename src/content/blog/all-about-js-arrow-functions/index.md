@@ -3,8 +3,8 @@ title: "All About Arrow Functions"
 summary: "Arrow functions are introduced in ES6. It has easier syntax and unlike regular functions, it actually has lexical scoping which can be taken advantage off in certain situations"
 publishedAt: "2021-12-29"
 lastUpdated: "2026-01-03"
+coverText: "LEXICAL SCOPE BREACH / THIS CONTEXT ABANDONED"
 tags: ["JavaScript"]
-image: ./hero.webp
 ---
 
 Arrow functions are an alternative to regular functions in JavaScript. They have short and simple syntax. But they weren't designed just to have a shorter and simpler way to write functions. In this post, we will deep dive in to the logic and reasoning for introducting arrow functions in JavaScript. We'll also walk through examples on the way. Buckle up!
