@@ -15,19 +15,19 @@ The browser renders all elements as rectangles. Dubbed the CSS box model, the si
 
 <Mermaid
   content={`graph TD
-    subgraph margin [Margin Box]
-        subgraph border [Border Box]
-            subgraph padding [Padding Box]
-                subgraph content [Content Box]
+    subgraph marginBox [Margin Box]
+        subgraph borderBox [Border Box]
+            subgraph paddingBox [Padding Box]
+                subgraph contentBox [Content Box]
                     ActualContent[Content]
                 end
             end
         end
     end
-    class margin window
-    class border object
-    class padding prop
-    class content window
+    style marginBox fill:#1e3a5f,stroke:#2563eb,color:#fff
+    style borderBox fill:#064e3b,stroke:#059669,color:#fff
+    style paddingBox fill:#1f2937,stroke:#374151,color:#f3f4f6
+    style contentBox fill:#1e3a5f,stroke:#2563eb,color:#fff
 `}
 />
 
