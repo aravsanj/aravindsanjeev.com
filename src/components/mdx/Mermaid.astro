@@ -7,7 +7,7 @@ const { content } = Astro.props;
 const mermaidId = `mermaid-${Math.random().toString(36).substring(2, 9)}`;
 ---
 
-<div class="mermaid-container w-full my-6 flex justify-center">
+<div class="mermaid-container w-full my-6 flex justify-start">
     <div
         class="mermaid opacity-0 transition-opacity duration-300 w-full"
         id={mermaidId}
@@ -93,7 +93,7 @@ const mermaidId = `mermaid-${Math.random().toString(36).substring(2, 9)}`;
         max-width: 100%;
         height: auto;
         padding: 0 !important;
-        margin: 0 auto;
+        margin: 0;
     }
 
     /* Edge/Line Styles */
