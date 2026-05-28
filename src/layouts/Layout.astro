@@ -122,11 +122,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
                 const d = el.dataset.delay ? parseInt(el.dataset.delay) * 80 : 0;
                 el.style.transitionDelay = d + "ms";
                 el.classList.add("in-view");
-              } else {
-                el.style.transitionDelay = "0ms";
-                const exitingAbove = entry.boundingClientRect.top < 0;
-                el.style.setProperty("--anim-from", exitingAbove ? "-28px" : "28px");
-                el.classList.remove("in-view");
+                observer.unobserve(el);
               }
             });
           },
