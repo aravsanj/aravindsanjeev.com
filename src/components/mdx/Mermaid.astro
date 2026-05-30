@@ -20,19 +20,11 @@ const mermaidId = `mermaid-${Math.random().toString(36).substring(2, 9)}`;
     import mermaid from "mermaid";
 
     function initMermaid() {
-        // Only initialize if there are mermaid elements
-        const mermaidElements = document.querySelectorAll(".mermaid");
+        const mermaidElements = document.querySelectorAll<HTMLElement>(".mermaid");
         if (mermaidElements.length === 0) return;
 
-        console.log(
-            "Initializing Mermaid with content:",
-            mermaidElements[0].textContent,
-        );
-
-        const isDarkMode = document.documentElement.classList.contains("dark");
-
         mermaid.initialize({
-            startOnLoad: true,
+            startOnLoad: false,
             theme: "dark",
             securityLevel: "loose",
             fontFamily: "inherit",
@@ -44,15 +36,22 @@ const mermaidId = `mermaid-${Math.random().toString(36).substring(2, 9)}`;
             },
         });
 
-        // Make elements visible after mermaid renders
         mermaidElements.forEach((el) => {
-            if (el instanceof HTMLElement) {
-                el.classList.remove("opacity-0");
+            // Save original source on first encounter
+            if (!el.dataset.src) {
+                el.dataset.src = el.textContent ?? "";
             }
+            // Restore source so mermaid always renders from text, not a stale SVG
+            el.removeAttribute("data-processed");
+            el.innerHTML = el.dataset.src;
+            el.classList.add("opacity-0");
         });
 
-        // Run re-render
-        mermaid.run();
+        mermaid.run({
+            nodes: Array.from(mermaidElements),
+        }).then(() => {
+            mermaidElements.forEach((el) => el.classList.remove("opacity-0"));
+        });
     }
 
     // Init on load
@@ -63,18 +62,9 @@ const mermaidId = `mermaid-${Math.random().toString(36).substring(2, 9)}`;
 
     // Watch for theme changes
     const observer = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
-            if (mutation.attributeName === "class") {
-                // Clear initialized state or re-render
-                const elements = document.querySelectorAll(".mermaid");
-                elements.forEach((el) => {
-                    // Mermaid often replaces content, so this is tricky.
-                    // The safest way is a page reload or sophisticated re-render.
-                    // For now, let's re-trigger init.
-                    initMermaid();
-                });
-            }
-        });
+        if (mutations.some((m) => m.attributeName === "class")) {
+            initMermaid();
+        }
     });
 
     observer.observe(document.documentElement, { attributes: true });
