@@ -4,7 +4,7 @@ description: "The Golden Pen Award aims to celebrate the most influential litera
 imageUrl: "../../assets/golden_pen.webp"
 url: "https://www.goldenpenaward.com/ar"
 tags: ["Next.js", "React", "Typescript", "TailwindCSS", "Strapi"]
-publishedAt: "2024-01-01"
+publishedAt: "2025-01-01"
 priority: 40
 ---
 

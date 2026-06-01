@@ -13,7 +13,7 @@ tags:
     "GraphQL",
     "Figma",
   ]
-publishedAt: "2021-01-01"
+publishedAt: "2022-01-01"
 priority: 10
 ---
 

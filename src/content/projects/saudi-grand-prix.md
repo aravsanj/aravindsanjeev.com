@@ -4,7 +4,7 @@ description: "The Saudi Arabian Grand Prix is a Formula One motor racing event w
 imageUrl: "../../assets/saudi_grand_prix.webp"
 url: "https://saudiarabiangp.com/en"
 tags: ["Next.js", "React", "Typescript", "TailwindCSS", "Contentful", "GraphQL"]
-publishedAt: "2023-03-01"
+publishedAt: "2024-03-01"
 priority: 30
 ---
 

@@ -4,7 +4,7 @@ description: "The digital home of 'The Bible of Boxing,' providing world-class b
 imageUrl: "../../assets/ring.webp"
 url: "https://ringmagazine.com"
 tags: ["Next.js", "React", "TailwindCSS", "Strapi"]
-publishedAt: "2024-01-01"
+publishedAt: "2025-01-01"
 priority: 50
 ---
 

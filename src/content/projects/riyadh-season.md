@@ -4,7 +4,7 @@ description: "The official portal for Riyadh Season 2025, one of the world's lar
 imageUrl: "../../assets/riyadh_season.webp"
 url: "https://riyadhseason.com/"
 tags: ["React", "React Router", "TailwindCSS", "Contentful", "Gsap"]
-publishedAt: "2024-10-01"
+publishedAt: "2025-10-01"
 priority: 80
 ---
 

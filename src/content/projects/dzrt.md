@@ -4,7 +4,7 @@ description: "A premium Saudi brand specializing in tobacco-free nicotine pouche
 imageUrl: "../../assets/dzrt.webp"
 url: "https://www.dzrt.com/en-sa"
 tags: ["Next.js", "React", "TailwindCSS", "TypeScript", "E-commerce", "Gsap"]
-publishedAt: "2023-01-01"
+publishedAt: "2025-01-01"
 priority: 60
 ---
 

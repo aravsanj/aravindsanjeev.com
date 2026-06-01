@@ -4,7 +4,7 @@ description: "Saudi Arabia's leading UX design and usability agency, specializin
 imageUrl: "../../assets/uxbert.webp"
 url: "https://uxbert.com"
 tags: ["TanStack Start", "React", "TailwindCSS", "GSAP"]
-publishedAt: "2024-06-01"
+publishedAt: "2026-06-01"
 priority: 90
 ---
 

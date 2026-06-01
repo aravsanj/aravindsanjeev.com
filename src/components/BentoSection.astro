@@ -1,6 +1,5 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
-import Project from "./Project.astro";
 import BlogCard from "./BlogCard.astro";
 import Tag from "./ui/Tag.astro";
 import { experiences } from "../data/experience";
@@ -28,14 +27,13 @@ const projects = allProjects
     const dateB = b.data.publishedAt ? new Date(b.data.publishedAt).valueOf() : 0;
     return dateB - dateA;
   })
-  .slice(0, 3);
+  .slice(0, 5);
 
-const topExp = experiences.slice(0, 2);
+const topExp = experiences.slice(0, 4);
 const latestVideo = videos[0];
 ---
 
 <section id="highlights" class="py-28 border-t border-border/40">
-  <!-- Section header -->
   <div class="flex items-end justify-between mb-10" data-animate>
     <div>
       <div class="section-label">
@@ -49,230 +47,174 @@ const latestVideo = videos[0];
     </div>
   </div>
 
-  <!-- Bento grid -->
   <div class="bento-grid">
 
-    <!-- ① Latest blog post — featured (2×2) -->
-    <div class="bento-write1" data-animate data-delay="1">
-      <article class="hud-frame hud-corners card-sweep group relative flex flex-col h-full bg-surface/60 border border-border overflow-hidden">
+    <!-- ① Featured post -->
+    <div class="bento-featured" data-animate data-delay="1">
+      <article class="hud-frame hud-corners card-sweep group relative flex flex-col h-full overflow-hidden border border-border bg-surface/60 transition-colors duration-300">
         <a href={`/${featuredPost.slug}`} class="absolute inset-0 z-20" aria-label={featuredPost.data.title} tabindex="-1"></a>
-        <div class="relative overflow-hidden bg-surface bento-featured-img">
-          {featuredPost.data.image ? (
+
+        {featuredPost.data.image ? (
+          <!-- Has image: show it -->
+          <div class="relative overflow-hidden shrink-0 bento-img-area">
             <Picture
               src={featuredPost.data.image}
               alt={featuredPost.data.title}
               widths={[640, 1280]}
               sizes="(max-width: 1024px) 100vw, 55vw"
               formats={["avif", "webp"]}
-              class="w-full h-full object-cover saturate-[0.9] group-hover:scale-[1.04] group-hover:saturate-100 transition-all duration-700 ease-out"
+              class="w-full h-full object-cover saturate-[0.85] group-hover:scale-[1.03] group-hover:saturate-100 transition-all duration-700 ease-out"
             />
-          ) : (
-            <div class="w-full h-full flex flex-col justify-between p-6 overflow-hidden relative">
-              {/* Dot grid */}
-              <div class="absolute inset-0 opacity-40" style="background-image: radial-gradient(circle, #243018 1px, transparent 1px); background-size: 24px 24px;"></div>
-              {/* Ghost watermark title */}
-              <div class="absolute inset-0 flex items-center justify-center overflow-hidden pointer-events-none select-none">
-                <span class="font-display font-bold uppercase text-accent/[0.04] leading-none text-center px-4" style="font-size: clamp(3rem, 10vw, 7rem); word-break: break-word;">
-                  {featuredPost.data.title}
-                </span>
-              </div>
-              {/* Top bar */}
-              <div class="flex items-center justify-between relative z-10">
-                <span class="font-mono text-[10px] text-secondary/50 uppercase tracking-widest">&gt; aravindsanjeev.com</span>
-                <span class="font-mono text-[9px] text-accent/60 uppercase tracking-widest border border-accent/20 px-2 py-0.5 bg-accent/5">LATEST</span>
-              </div>
-              {/* Center: coverText */}
-              <div class="flex-1 flex items-center relative z-10 py-4">
-                <p class="font-display text-2xl sm:text-3xl font-bold uppercase tracking-wide text-accent leading-tight group-hover:text-accent-bright transition-colors duration-300">
-                  {featuredPost.data.coverText || featuredPost.data.title}
-                </p>
-              </div>
-              {/* Bottom: status line + slug */}
-              <div class="flex flex-col gap-2 relative z-10">
-                <div class="flex items-center gap-3">
-                  <div class="h-px flex-1 bg-gradient-to-r from-accent/40 to-transparent"></div>
-                  <span class="font-mono text-[9px] text-accent/50 uppercase tracking-widest">SYS_OK</span>
-                </div>
-                <span class="font-mono text-[9px] text-secondary/30 uppercase tracking-widest">sys://blog/{featuredPost.slug}</span>
-              </div>
+            <div class="absolute inset-0 bg-gradient-to-t from-surface via-surface/30 to-transparent pointer-events-none"></div>
+          </div>
+        ) : (
+          <!-- No image: typographic panel -->
+          <div class="bento-type-panel relative flex flex-col justify-between p-7 shrink-0 overflow-hidden">
+            <div class="absolute inset-0 pointer-events-none select-none" aria-hidden="true"
+              style="background-image: linear-gradient(rgba(182,255,26,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(182,255,26,0.04) 1px, transparent 1px); background-size: 32px 32px;">
+            </div>
+            <div class="flex items-start justify-between relative z-10">
+              <span class="font-mono text-[9px] uppercase tracking-[0.18em] text-accent/60 border border-accent/20 bg-accent/5 px-2 py-1">Writing</span>
+              <time class="font-mono text-[9px] text-secondary/40 uppercase tracking-wider">{formatDate(featuredPost.data.publishedAt)}</time>
+            </div>
+            <div class="relative z-10 mt-6">
+              <p class="font-display text-3xl sm:text-4xl font-bold uppercase tracking-tight text-primary leading-[1.05] group-hover:text-accent transition-colors duration-400">
+                {featuredPost.data.coverText || featuredPost.data.title}
+              </p>
+            </div>
+            <div class="relative z-10 mt-4 h-px bg-gradient-to-r from-accent/40 to-transparent"></div>
+          </div>
+        )}
+
+        <div class="p-6 flex flex-col flex-1">
+          {featuredPost.data.image && (
+            <div class="flex items-center gap-3 mb-3">
+              <span class="font-mono text-[9px] uppercase tracking-[0.15em] text-accent bg-accent/8 border border-accent/20 px-2 py-0.5">Writing</span>
+              <time class="font-mono text-[10px] text-secondary/50 tabular-nums uppercase tracking-wide">{formatDate(featuredPost.data.publishedAt)}</time>
             </div>
           )}
-          <div class="absolute inset-0 pointer-events-none opacity-30" style="background: repeating-linear-gradient(to bottom, transparent 0 2px, rgba(0,0,0,0.2) 3px 3px);"></div>
-          <div class="absolute inset-0 bg-gradient-to-t from-surface/80 via-surface/10 to-transparent pointer-events-none"></div>
-          <div class="absolute top-0 left-0 right-0 h-px bg-accent scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left acid-glow pointer-events-none"></div>
-        </div>
-        <div class="p-5 flex flex-col shrink-0">
-          <div class="flex items-center gap-3 mb-3">
-            <span class="font-mono text-[9px] uppercase tracking-[0.15em] text-accent bg-accent/8 border border-accent/20 px-2 py-0.5">Latest</span>
-            <time class="font-mono text-[10px] text-secondary/60 tabular-nums uppercase tracking-wide">
-              {formatDate(featuredPost.data.publishedAt)}
-            </time>
-          </div>
-          <h3 class="font-display text-xl font-bold uppercase tracking-wide text-primary group-hover:text-accent transition-colors duration-300 leading-snug mb-2 relative z-[2]">
-            <a href={`/${featuredPost.slug}`}>
-              {featuredPost.data.title}
-            </a>
+          <h3 class="font-display text-xl font-bold uppercase tracking-wide text-primary group-hover:text-accent transition-colors duration-300 leading-snug mb-3 relative z-[2]">
+            <a href={`/${featuredPost.slug}`}>{featuredPost.data.title}</a>
           </h3>
-          <p class="text-secondary font-body text-sm leading-relaxed line-clamp-2">
-            {featuredPost.data.summary}
-          </p>
-          <div class="mt-3 flex items-center gap-1.5 text-accent font-mono text-[10px] uppercase tracking-[0.18em] opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300">
+          <p class="text-secondary/70 text-sm leading-relaxed line-clamp-3 flex-1">{featuredPost.data.summary}</p>
+          <div class="mt-5 flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] text-accent opacity-0 translate-x-[-6px] group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">
             &gt; read_article
-            <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
-            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </div>
         </div>
       </article>
     </div>
 
-    <!-- ② Featured project (col 3, row 1) -->
-    <div class="bento-proj1" data-animate data-delay="2">
-      <Project
-        title={projects[0].data.title}
-        description={projects[0].data.description}
-        imageUrl={projects[0].data.imageUrl}
-        url={`/projects/${projects[0].slug}`}
-        tags={projects[0].data.tags}
-      />
+    <!-- ② Projects mini-list -->
+    <div class="bento-projects" data-animate data-delay="2">
+      <div class="hud-frame hud-corners h-full flex flex-col border border-border bg-surface/60">
+        <div class="flex items-center justify-between px-5 py-3.5 border-b border-border/50">
+          <span class="font-mono text-[10px] uppercase tracking-[0.18em] text-accent/70">Projects</span>
+          <a href="/projects" class="font-mono text-[9px] uppercase tracking-[0.12em] text-secondary/40 hover:text-accent transition-colors duration-200">view all →</a>
+        </div>
+        {projects.map((project: ProjectEntry, i: number) => {
+          const year = project.data.publishedAt ? new Date(project.data.publishedAt).getFullYear() : "–";
+          return (
+            <a
+              href={project.data.url ?? "/projects"}
+              target={project.data.url ? "_blank" : undefined}
+              rel={project.data.url ? "noopener noreferrer" : undefined}
+              class="flex items-center gap-4 px-5 py-3.5 border-b border-border/30 last:border-0 hover:bg-accent/5 transition-colors duration-150 group/row"
+            >
+              <span class="font-mono text-[10px] text-secondary/30 w-7 shrink-0 tabular-nums">{year}</span>
+              <span class="font-display text-sm font-semibold uppercase tracking-wide text-primary/85 group-hover/row:text-accent transition-colors duration-150 flex-1 leading-snug truncate">{project.data.title}</span>
+              {project.data.tags && project.data.tags[0] && (
+                <span class="font-mono text-[9px] text-secondary/30 hidden sm:block shrink-0 max-w-[80px] truncate">{project.data.tags[0]}</span>
+              )}
+              <svg class="shrink-0 text-accent/0 group-hover/row:text-accent/70 transition-colors duration-150" width="10" height="10" viewBox="0 0 12 12" fill="none">
+                <path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          );
+        })}
+      </div>
     </div>
 
-    <!-- ③ Latest video (col 3, row 2) -->
+    <!-- ③ Latest video -->
     {latestVideo && (
       <div class="bento-video" data-animate data-delay="3">
         <a
           href={`https://www.youtube.com/watch?v=${latestVideo.id}`}
           target="_blank"
           rel="noreferrer"
-          class="hud-frame hud-corners card-lift group relative flex flex-col h-full bg-surface border border-border overflow-hidden"
+          class="hud-frame hud-corners card-sweep group relative flex flex-col h-full border border-border bg-surface/60 overflow-hidden transition-colors duration-300"
           aria-label={`Watch: ${latestVideo.title}`}
         >
-          <div class="relative overflow-hidden bg-surface-2" style="aspect-ratio: 16/9;">
+          <div class="relative overflow-hidden bg-surface-2 shrink-0" style="aspect-ratio: 16/9;">
             <img
               src={`https://img.youtube.com/vi/${latestVideo.id}/maxresdefault.jpg`}
               alt={latestVideo.title}
               loading="lazy"
-              class="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-700 ease-out"
+              class="w-full h-full object-cover saturate-75 group-hover:scale-[1.04] group-hover:saturate-100 transition-all duration-700 ease-out"
               onerror="this.onerror=null;this.src=this.src.replace('maxresdefault','hqdefault')"
             />
-            <div class="absolute inset-0 pointer-events-none opacity-30" style="background: repeating-linear-gradient(to bottom, transparent 0 2px, rgba(0,0,0,0.2) 3px 3px);"></div>
-            <div class="absolute inset-0 bg-gradient-to-t from-surface/80 via-transparent to-transparent"></div>
-            <!-- Play button -->
+            <div class="absolute inset-0 bg-gradient-to-t from-surface/60 via-transparent to-transparent"></div>
             <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              <div class="w-12 h-12 bg-accent flex items-center justify-center acid-glow">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="text-background ml-0.5">
-                  <path d="M8 5v14l11-7z"/>
-                </svg>
+              <div class="w-10 h-10 bg-accent flex items-center justify-center" style="box-shadow: 0 0 24px rgba(182,255,26,0.45);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="text-background ml-0.5"><path d="M8 5v14l11-7z"/></svg>
               </div>
-            </div>
-            <!-- YouTube badge -->
-            <div class="absolute top-2 left-2 flex items-center gap-1 px-2 py-0.5 bg-black/60 backdrop-blur-sm">
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="#ff0000">
-                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-              </svg>
-              <span class="text-white text-[9px] font-mono uppercase tracking-wide">Video</span>
             </div>
             {latestVideo.duration && (
-              <div class="absolute bottom-2 right-2 px-1.5 py-0.5 bg-black/80 text-white text-[10px] font-mono">
-                {latestVideo.duration}
-              </div>
+              <div class="absolute bottom-2 right-2 px-1.5 py-0.5 bg-black/70 text-white text-[10px] font-mono">{latestVideo.duration}</div>
             )}
           </div>
           <div class="p-4 flex flex-col flex-1">
-            <h3 class="font-display text-sm font-bold uppercase tracking-wide text-primary group-hover:text-accent transition-colors duration-300 leading-snug mb-1 line-clamp-2">
-              {latestVideo.title}
-            </h3>
-            {latestVideo.description && (
-              <p class="text-secondary font-body text-xs leading-relaxed line-clamp-2 flex-1">{latestVideo.description}</p>
-            )}
-            <div class="mt-2 font-mono text-[9px] text-secondary/50 uppercase tracking-wider">
-              {formatDate(latestVideo.publishedAt)}
-            </div>
+            <span class="font-mono text-[9px] uppercase tracking-[0.15em] text-accent/60 mb-2">Latest video</span>
+            <h3 class="font-display text-sm font-bold uppercase tracking-wide text-primary group-hover:text-accent transition-colors duration-300 leading-snug flex-1 line-clamp-2">{latestVideo.title}</h3>
+            <div class="mt-2 font-mono text-[9px] text-secondary/35 uppercase tracking-wider">{formatDate(latestVideo.publishedAt)}</div>
           </div>
         </a>
       </div>
     )}
 
-    <!-- ④ Project 2 -->
-    <div class="bento-proj2" data-animate data-delay="4">
-      <Project
-        title={projects[1].data.title}
-        description={projects[1].data.description}
-        imageUrl={projects[1].data.imageUrl}
-        url={`/projects/${projects[1].slug}`}
-        tags={projects[1].data.tags}
-      />
-    </div>
-
-    <!-- ⑤ Project 3 -->
-    <div class="bento-proj3" data-animate data-delay="5">
-      <Project
-        title={projects[2].data.title}
-        description={projects[2].data.description}
-        imageUrl={projects[2].data.imageUrl}
-        url={`/projects/${projects[2].slug}`}
-        tags={projects[2].data.tags}
-      />
-    </div>
-
-    <!-- ⑥ Blog post 2 -->
-    <div class="bento-write2" data-animate data-delay="6">
-      <BlogCard post={latestPosts[1]} />
-    </div>
-
-    <!-- ⑦ Experience (wide) -->
-    <div class="bento-exp" data-animate data-delay="7">
-      <div class="hud-frame hud-corners h-full flex flex-col bg-surface border border-border p-5 relative overflow-hidden">
-        <div class="flex items-center justify-between mb-4">
-          <div class="flex items-center gap-3">
-            <span class="font-mono text-[10px] uppercase tracking-[0.18em] text-accent/60">Career</span>
-            <div class="h-px w-8 bg-accent/20"></div>
-          </div>
-          <a href="/experience" class="font-mono text-[10px] uppercase tracking-[0.15em] text-secondary hover:text-accent transition-colors duration-200">
-            [ full_log ]
+    <!-- ④ Experience -->
+    <div class="bento-exp" data-animate data-delay="4">
+      <div class="hud-frame hud-corners h-full flex flex-col border border-border bg-surface/60">
+        <div class="flex items-center justify-between px-5 py-3.5 border-b border-border/50">
+          <span class="font-mono text-[10px] uppercase tracking-[0.18em] text-accent/70">Experience</span>
+          <a href="/experience" class="font-mono text-[9px] uppercase tracking-[0.12em] text-secondary/40 hover:text-accent transition-colors duration-200">full log →</a>
+        </div>
+        {topExp.map((item) => (
+          <a
+            href={item.companyUrl ?? "/experience"}
+            target={item.companyUrl ? "_blank" : undefined}
+            rel={item.companyUrl ? "noopener noreferrer" : undefined}
+            class="flex items-center gap-4 px-5 py-3.5 border-b border-border/30 last:border-0 hover:bg-accent/5 transition-colors duration-150 group/row"
+          >
+            <span class="font-mono text-[10px] text-secondary/30 w-16 shrink-0 tabular-nums leading-tight">{item.duration}</span>
+            <span class="flex-1 min-w-0">
+              <span class="block font-display text-sm font-semibold uppercase tracking-wide text-primary/85 group-hover/row:text-accent transition-colors duration-150 leading-snug truncate">{item.title}</span>
+              <span class="block font-mono text-[9px] text-secondary/35 uppercase tracking-wide truncate mt-0.5">{item.company}</span>
+            </span>
+            {item.technologies[0] && (
+              <span class="font-mono text-[9px] text-secondary/30 hidden sm:block shrink-0 max-w-[80px] truncate">{item.technologies[0]}</span>
+            )}
+            <svg class="shrink-0 text-accent/0 group-hover/row:text-accent/70 transition-colors duration-150" width="10" height="10" viewBox="0 0 12 12" fill="none">
+              <path d="M2.5 9.5L9.5 2.5M9.5 2.5H4.5M9.5 2.5V7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
           </a>
-        </div>
-        <div class="flex flex-col sm:flex-row gap-3 flex-1">
-          {topExp.map((item) => (
-            <div class="flex-1 relative group/exp">
-              <div class="h-full border border-border/60 hover:border-accent/25 bg-background/40 p-4 transition-all duration-300">
-                <span class="inline-block font-mono text-[9px] uppercase tracking-[0.15em] text-accent bg-accent/8 border border-accent/20 px-2 py-0.5 mb-3">
-                  {item.duration}
-                </span>
-                <h3 class="font-display text-sm font-bold uppercase tracking-wide text-primary group-hover/exp:text-accent transition-colors duration-300 leading-snug mb-0.5 relative">
-                  {item.companyUrl ? (
-                    <a href={item.companyUrl} target="_blank" rel="noreferrer noopener" class="after:absolute after:inset-0 after:content-['']">
-                      {item.title}
-                    </a>
-                  ) : (
-                    <span>{item.title}</span>
-                  )}
-                </h3>
-                <p class="font-mono text-[10px] uppercase tracking-wide text-accent/60 mb-3">{item.company}</p>
-                <ul class="flex flex-wrap gap-1.5 relative z-10">
-                  {item.technologies.slice(0, 4).map((tech: string) => (
-                    <li><Tag title={tech} href={`/tag/${tech.toLowerCase()}`} /></li>
-                  ))}
-                  {item.technologies.length > 4 && (
-                    <li><span class="font-mono text-[9px] text-secondary/50 uppercase tracking-wider self-center">+{item.technologies.length - 4}</span></li>
-                  )}
-                </ul>
-              </div>
-            </div>
-          ))}
-        </div>
+        ))}
       </div>
     </div>
 
-    <!-- ⑧ Blog post 3 -->
-    <div class="bento-write3" data-animate data-delay="8">
+    <!-- ⑤ Blog post 2 -->
+    <div class="bento-write2" data-animate data-delay="5">
+      <BlogCard post={latestPosts[1]} />
+    </div>
+
+    <!-- ⑥ Blog post 3 -->
+    <div class="bento-write3" data-animate data-delay="6">
       <BlogCard post={latestPosts[2]} />
     </div>
 
   </div>
 
-  <!-- Bottom nav -->
-  <div class="flex items-center gap-8 mt-8 pt-6 border-t border-border/30" data-animate>
+  <div class="flex flex-wrap items-center gap-6 mt-8 pt-6 border-t border-border/30" data-animate>
     <a href="/projects" class="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.12em] text-secondary hover:text-accent transition-colors group">
       [ all_projects ]
       <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:translate-x-1 transition-transform duration-300"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
@@ -295,42 +237,51 @@ const latestVideo = videos[0];
 <style>
   .bento-grid {
     display: grid;
-    gap: 0.75rem;
+    gap: 0.5rem;
     grid-template-columns: 1fr;
   }
 
-  .bento-featured-img {
-    height: 220px;
+  /* No-image typographic panel height */
+  .bento-type-panel {
+    height: 200px;
+    background: linear-gradient(135deg, rgba(182,255,26,0.03) 0%, transparent 60%);
+  }
+
+  /* Image area height */
+  .bento-img-area {
+    height: 200px;
   }
 
   @media (min-width: 768px) {
     .bento-grid {
       grid-template-columns: repeat(2, 1fr);
     }
-    .bento-write1 { grid-column: span 2; }
-    .bento-exp    { grid-column: span 2; }
-    .bento-featured-img { height: 280px; }
+    .bento-featured { grid-column: span 2; }
+    .bento-exp      { grid-column: span 2; }
+
+    .bento-type-panel { height: 240px; }
+    .bento-img-area   { height: 240px; }
   }
 
   @media (min-width: 1024px) {
     .bento-grid {
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(6, 1fr);
+      grid-template-rows: auto auto auto;
       grid-template-areas:
-        "write1 write1 proj1"
-        "write1 write1 video"
-        "proj2  proj3  write2"
-        "exp    exp    write3";
+        "feat feat feat feat proj proj"
+        "feat feat feat feat video video"
+        "exp  exp  w2   w2   w3   w3";
     }
-    .bento-write1 { grid-area: write1; }
-    .bento-proj1  { grid-area: proj1; }
-    .bento-video  { grid-area: video; }
-    .bento-proj2  { grid-area: proj2; }
-    .bento-proj3  { grid-area: proj3; }
-    .bento-write2 { grid-area: write2; }
-    .bento-exp    { grid-area: exp; }
-    .bento-write3 { grid-area: write3; }
 
-    .bento-featured-img { flex: 1; height: auto; min-height: 240px; }
-    .bento-write1 article { height: 100%; }
+    .bento-featured { grid-area: feat; }
+    .bento-projects { grid-area: proj; }
+    .bento-video    { grid-area: video; }
+    .bento-exp      { grid-area: exp; }
+    .bento-write2   { grid-area: w2; }
+    .bento-write3   { grid-area: w3; }
+
+    .bento-featured article { height: 100%; }
+    .bento-type-panel { height: 0; flex: 1; min-height: 180px; }
+    .bento-img-area   { height: 0; flex: 1; min-height: 200px; }
   }
 </style>
