@@ -41,3 +41,7 @@ dist
 .astro/
 
 /.playwright-mcp
+
+*.review.html
+*.review.json
+*.review.suggestions.json
