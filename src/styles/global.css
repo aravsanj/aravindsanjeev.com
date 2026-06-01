@@ -334,6 +334,7 @@ pre {
 /* ─── Prose / Article ─── */
 .prose .anchor {
   @apply absolute invisible no-underline;
+  text-decoration: none !important;
   margin-left: -1em;
   padding-right: 0.5em;
   width: 80%;
@@ -343,6 +344,10 @@ pre {
 .anchor:hover { @apply visible; }
 .prose a {
   @apply underline transition-all decoration-neutral-500 underline-offset-2 decoration-[0.1em];
+}
+.prose .anchor, .prose .anchor:hover {
+  @apply no-underline;
+  text-decoration: none !important;
 }
 .prose .anchor:after {
   @apply text-neutral-500;
@@ -354,13 +359,13 @@ pre {
 .article {
   font-family: "Inter", system-ui, sans-serif;
 }
-.article a {
+.article a:not(.anchor) {
   color: #b6ff1a;
   text-decoration: none;
   border-bottom: 1px solid rgba(182, 255, 26, 0.35);
   transition: border-color 0.2s ease, color 0.2s ease, text-shadow 0.2s ease;
 }
-.article a:hover {
+.article a:not(.anchor):hover {
   color: #d4ff5c;
   border-bottom-color: rgba(182, 255, 26, 0.9);
   text-shadow: 0 0 10px rgba(182, 255, 26, 0.4);

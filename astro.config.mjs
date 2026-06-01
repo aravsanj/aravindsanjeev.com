@@ -6,6 +6,7 @@ import mdx from "@astrojs/mdx";
 import partytown from "@astrojs/partytown";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import remarkGfm from "remark-gfm";
 import icon from "astro-icon";
 
 export default defineConfig({
@@ -32,7 +33,8 @@ export default defineConfig({
     inlineStylesheets: "always",
   },
   markdown: {
-    rehypePlugins: [rehypeSlug, rehypeAutolinkHeadings],
+    remarkPlugins: [remarkGfm],
+    rehypePlugins: [rehypeSlug, [rehypeAutolinkHeadings, { properties: { className: ["anchor"] } }]],
     shikiConfig: {
       theme: "dracula",
     },

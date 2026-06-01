@@ -1,0 +1,86 @@
+
+
+---
+interface Props {
+  align?: "left" | "right" | "center";
+  eyebrow?: string;
+}
+
+const { align = "left", eyebrow = "Pull quote" } = Astro.props;
+
+const textAlign = {
+  left: "text-left",
+  right: "text-right",
+  center: "text-center",
+}[align];
+
+const justify = {
+  left: "justify-start",
+  right: "justify-end",
+  center: "justify-center",
+}[align];
+
+const quotePosition =
+  align === "right"
+    ? "right-4"
+    : align === "center"
+      ? "left-1/2 -translate-x-1/2"
+      : "left-4";
+
+const borderSide =
+  align === "right"
+    ? "border-r-2 pr-6"
+    : align === "center"
+      ? "border-y-2 py-8"
+      : "border-l-2 pl-6";
+---
+
+<figure
+  class={`
+    not-prose relative my-12 overflow-hidden rounded-2xl
+    bg-primary/[0.03] px-6 py-8 md:px-10 md:py-10
+    ring-1 ring-primary/10
+    ${textAlign}
+  `}
+>
+  <!-- Giant background quote mark -->
+  <span
+    aria-hidden="true"
+    class={`
+      pointer-events-none absolute -top-8 ${quotePosition}
+      select-none font-serif text-[12rem] leading-none
+      text-primary/[0.06]
+    `}
+  >
+    “
+  </span>
+
+  <!-- Eyebrow -->
+  <div class={`relative z-10 mb-5 flex items-center gap-3 ${justify}`}>
+    <span class="h-px w-10 bg-primary/25"></span>
+    <span
+      class="
+        font-mono text-[0.65rem] uppercase tracking-[0.24em]
+        text-primary/60
+      "
+    >
+      {eyebrow}
+    </span>
+    {align === "center" && <span class="h-px w-10 bg-primary/25"></span>}
+  </div>
+
+  <blockquote
+    class={`
+      relative z-10 mx-0 max-w-3xl
+      ${align === "center" ? "mx-auto" : align === "right" ? "ml-auto" : ""}
+      ${borderSide}
+      border-primary/30
+      bg-transparent
+      font-body text-2xl italic leading-snug
+      text-primary/80 md:text-3xl
+    `}
+    style="border-left: none; background: none; padding: 0; margin: 0;"
+  >
+    <span class="text-primary/40">“</span><slot /><span class="text-primary/40">”</span>
+  </blockquote>
+</figure>

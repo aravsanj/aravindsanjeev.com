@@ -4,6 +4,7 @@ import Table from "./mdx/Table.astro";
 import Callout from "./mdx/Callout.astro";
 import Kbd from "./mdx/Kbd.astro";
 import Mermaid from "./mdx/Mermaid.astro";
+import PullQuote from "./mdx/PullQuote.astro";
 
 export const components = {
   a: Link,
@@ -12,4 +13,5 @@ export const components = {
   Callout,
   Kbd,
   Mermaid,
+  PullQuote,
 };
