@@ -30,7 +30,7 @@ function el(
 
 export const GET: APIRoute = async ({ props }) => {
   const { post } = props;
-  const { title, coverText, summary, tags } = post.data;
+  const { title, coverTitle, coverText, summary, tags } = post.data;
 
   const fontData = readFileSync(
     resolve(
@@ -38,9 +38,11 @@ export const GET: APIRoute = async ({ props }) => {
     ),
   );
 
+  const ogTitle = coverTitle || title;
   const displayText = coverText || summary || "";
   const tag = tags?.[0]?.toUpperCase() || "";
-  const titleFontSize = title.length > 60 ? 50 : title.length > 40 ? 60 : 72;
+  const titleFontSize =
+    ogTitle.length > 60 ? 50 : ogTitle.length > 40 ? 60 : 72;
 
   const svg = await satori(
     el(
@@ -121,7 +123,7 @@ export const GET: APIRoute = async ({ props }) => {
             maxWidth: "1040px",
             alignItems: "flex-start",
           },
-          title,
+          ogTitle,
         ),
         // Bottom bar
         el(
