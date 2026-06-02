@@ -31,11 +31,13 @@ export async function getStaticPaths() {
                 ? JSON.parse(item.data.tags)
                 : item.data.tags || [];
           } catch (e) {}
-          return tags.map((t: string) => t.toLowerCase());
+          return tags.map((t: string) => t.toLowerCase().replace(/\s+/g, '-'));
         },
       ),
     ),
   ];
+
+  const toSlug = (t: string) => t.toLowerCase().replace(/\s+/g, '-');
 
   return uniqueTags.map((tag) => {
     const filteredPosts = posts.filter((post: BlogEntry) => {
@@ -46,7 +48,7 @@ export async function getStaticPaths() {
             ? JSON.parse(post.data.tags)
             : post.data.tags || [];
       } catch (e) {}
-      return tags.some((t: string) => t.toLowerCase() === tag);
+      return tags.some((t: string) => toSlug(t) === tag);
     });
 
     const filteredProjects = projects
@@ -58,7 +60,7 @@ export async function getStaticPaths() {
               ? JSON.parse(project.data.tags)
               : project.data.tags || [];
         } catch (e) {}
-        return tags.some((t: string) => t.toLowerCase() === tag);
+        return tags.some((t: string) => toSlug(t) === tag);
       })
       .sort((a: ProjectEntry, b: ProjectEntry) => {
         const priorityA = a.data.priority ?? 0;
@@ -74,7 +76,7 @@ export async function getStaticPaths() {
       });
 
     const filteredExperiences = experiences.filter((exp) => {
-      return exp.technologies.some((t: string) => t.toLowerCase() === tag);
+      return exp.technologies.some((t: string) => toSlug(t) === tag);
     });
 
     return {
