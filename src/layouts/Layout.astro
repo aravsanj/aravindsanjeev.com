@@ -29,12 +29,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   <head>
     <meta charset="UTF-8" />
     <GoogleAnalytics measurementId="G-BELR0CJR8V" />
-    <!-- Main-thread gtag shim so astro:page-load handlers can call window.gtag() -->
-    <script is:inline>
-      window.dataLayer = window.dataLayer || [];
-      window.gtag = function() { window.dataLayer.push(arguments); };
-    </script>
-    <meta name="description" content={description} />
+<meta name="description" content={description} />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/png" href="/assets/favicon.png" />
     <link rel="sitemap" href="/sitemap-index.xml" />
