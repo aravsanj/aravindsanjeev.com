@@ -5,6 +5,7 @@ import Footer from "../components/Footer.astro";
 import CTABanner from "../components/CTABanner.astro";
 import Fx from "../components/ui/Fx.astro";
 import { ViewTransitions } from "astro:transitions";
+import GoogleAnalytics from "../components/GoogleAnalytics.astro";
 
 interface Props {
   title?: string;
@@ -27,6 +28,12 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <GoogleAnalytics measurementId="G-BELR0CJR8V" />
+    <!-- Main-thread gtag shim so astro:page-load handlers can call window.gtag() -->
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = function() { window.dataLayer.push(arguments); };
+    </script>
     <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/png" href="/assets/favicon.png" />
@@ -99,15 +106,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       <CTABanner />
       <Footer />
     </div>
-
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BELR0CJR8V"></script>
-    <script is:inline>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-BELR0CJR8V');
-    </script>
 
     <!-- Scroll-triggered animation observer -->
     <script>

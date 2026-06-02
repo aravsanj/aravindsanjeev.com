@@ -24,11 +24,7 @@ export default defineConfig({
       }
     }),
     mdx(),
-    partytown({
-      config: {
-        forward: ["dataLayer.push"],
-      },
-    }),
+    partytown({ config: { forward: ['dataLayer.push'] } }),
     icon(),
   ],
   build: {
