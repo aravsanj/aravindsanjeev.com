@@ -17,8 +17,10 @@ export default defineConfig({
     }),
     sitemap({
       filter: (page) => {
-        const url = new URL(page);
-        return !(url.pathname.startsWith('/blog/') && url.pathname !== '/blog/');
+        const { pathname } = new URL(page);
+        if (pathname.startsWith('/og/')) return false;
+        if (pathname.startsWith('/blog/') && pathname !== '/blog/') return false;
+        return true;
       }
     }),
     mdx(),

@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://aravindsanjeev.com/sitemap-index.xml
+LLMs: https://aravindsanjeev.com/llms.txt
