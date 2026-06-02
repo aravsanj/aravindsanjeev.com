@@ -6,9 +6,11 @@ const { measurementId } = Astro.props as Props
   type="text/partytown"
   src={`https://www.googletagmanager.com/gtag/js?id=${measurementId}`}
 ></script>
-<script type="text/partytown" set:html={`
+<script type="text/partytown" define:vars={{ measurementId }}>
   window.dataLayer = window.dataLayer || [];
-  function gtag() { dataLayer.push(arguments); }
+  window.gtag = function gtag() {
+    dataLayer.push(arguments);
+  };
   gtag('js', new Date());
-  gtag('config', '${measurementId}');
-`}></script>
+  gtag('config', measurementId);
+</script>
