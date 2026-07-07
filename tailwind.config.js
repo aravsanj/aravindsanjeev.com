@@ -1,19 +1,21 @@
 /** @type {import('tailwindcss').Config} */
+const withOpacity = (variable) => `rgb(var(${variable}) / <alpha-value>)`;
+
 module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx,mdx,astro}"],
   theme: {
     extend: {
       colors: {
-        background: "#08090A",
-        surface: "#0F1410",
-        "surface-2": "#161C13",
-        primary: "#E6FFD8",
-        secondary: "#8A9A78",
-        accent: "#B6FF1A",
-        "accent-bright": "#D4FF5C",
-        hot: "#FF2D7E",
-        "hot-bright": "#FF5C9C",
-        border: "#243018",
+        background: withOpacity("--color-background"),
+        surface: withOpacity("--color-surface"),
+        "surface-2": withOpacity("--color-surface-2"),
+        primary: withOpacity("--color-primary"),
+        secondary: withOpacity("--color-secondary"),
+        accent: withOpacity("--color-accent"),
+        "accent-bright": withOpacity("--color-accent-bright"),
+        hot: withOpacity("--color-hot"),
+        "hot-bright": withOpacity("--color-hot-bright"),
+        border: withOpacity("--color-border"),
       },
       fontFamily: {
         sans: ["Oxanium", "Chakra Petch", "sans-serif"],

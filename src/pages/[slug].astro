@@ -119,12 +119,28 @@ const baseUrl = "https://aravindsanjeev.com";
         loading="eager"
       />
     ) : (
-      <img
-        src={`/og/${post.slug}.png`}
-        alt={post.data.title}
-        class="w-full h-auto object-cover"
-        loading="eager"
-      />
+      <div class="blog-cover-card relative min-h-[320px] sm:min-h-[420px] p-6 sm:p-10 md:p-14 flex flex-col justify-between overflow-hidden">
+        <div class="relative z-10 flex items-center justify-between gap-4 font-mono text-[10px] sm:text-xs uppercase tracking-[0.16em] text-secondary">
+          <span>&gt; aravindsanjeev.com</span>
+          {tags[0] && <span class="border border-accent/40 bg-accent/10 px-3 py-1 text-accent">{tags[0]}</span>}
+        </div>
+
+        <div class="relative z-10 max-w-5xl py-12">
+          {(post.data.coverText || post.data.summary) && (
+            <p class="mb-5 font-mono text-xs sm:text-sm uppercase tracking-[0.16em] text-accent">
+              {post.data.coverText || post.data.summary}
+            </p>
+          )}
+          <h2 class="font-display text-[clamp(2.5rem,8vw,6.5rem)] font-bold uppercase leading-[0.92] tracking-tight text-primary">
+            {post.data.coverTitle || post.data.title}
+          </h2>
+        </div>
+
+        <div class="relative z-10 flex items-center justify-between gap-4 border-t border-border pt-5 font-mono text-xs uppercase tracking-[0.14em]">
+          <span class="text-primary">● Aravind Sanjeev</span>
+          <span class="hidden sm:inline-flex border border-border bg-surface/70 px-3 py-1 text-secondary">AI Stack Engineer</span>
+        </div>
+      </div>
     )}
     <div class="absolute inset-0 pointer-events-none opacity-25" style="background: repeating-linear-gradient(to bottom, transparent 0 2px, rgba(0,0,0,0.2) 3px 3px);"></div>
   </div>
@@ -177,4 +193,35 @@ const baseUrl = "https://aravindsanjeev.com";
     </div>
 
   </div>
+
+  <style>
+    .blog-cover-card {
+      background:
+        radial-gradient(ellipse 46% 52% at 10% 0%, rgb(var(--color-accent) / 0.18), transparent 68%),
+        radial-gradient(ellipse 42% 48% at 92% 18%, rgb(var(--color-hot) / 0.16), transparent 70%),
+        linear-gradient(135deg, rgb(var(--color-surface)) 0%, rgb(var(--color-background)) 54%, rgb(var(--color-surface-2) / 0.65) 100%);
+    }
+
+    .blog-cover-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(rgb(var(--color-accent) / 0.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgb(var(--color-accent) / 0.045) 1px, transparent 1px);
+      background-size: 38px 38px;
+      mask-image: radial-gradient(ellipse 95% 80% at 50% 45%, black 25%, transparent 92%);
+      -webkit-mask-image: radial-gradient(ellipse 95% 80% at 50% 45%, black 25%, transparent 92%);
+    }
+
+    .blog-cover-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(115deg, transparent 0 42%, rgb(var(--color-accent) / 0.08) 46%, transparent 52% 100%);
+      transform: translateX(-18%);
+    }
+  </style>
 </Layout>

@@ -8,6 +8,12 @@ const navLinks = [
   { label: "Videos", href: "/videos" },
 ];
 
+const themeOptions = [
+  { label: "Nova", value: "light" },
+  { label: "Void", value: "dark" },
+  { label: "Toxic", value: "toxic" },
+];
+
 function isActive(href: string) {
   if (href === "/") return pathname === "/";
   return pathname.startsWith(href);
@@ -21,64 +27,94 @@ function isActive(href: string) {
 >
   <div class="mx-auto max-w-7xl px-6 md:px-12 lg:px-24">
     <div class="flex items-center justify-between h-16">
-      <!-- Logo -->
-      <a
-        href="/"
-        class="group flex items-center gap-2 hover:opacity-90 transition-opacity duration-300"
-        aria-label="Home"
-      >
-        <span class="font-mono text-accent text-sm acid-text-glow">&#91;</span>
-        <span class="glitch font-display text-base font-bold tracking-[0.12em] uppercase text-primary" data-text="A.SANJEEV">A.SANJEEV</span>
-        <span class="font-mono text-accent text-sm acid-text-glow">&#93;</span>
-      </a>
+      <div class="flex min-w-0 items-center gap-3">
+        <!-- Logo -->
+        <a
+          href="/"
+          class="group flex shrink-0 items-center gap-2 hover:opacity-90 transition-opacity duration-300"
+          aria-label="Home"
+        >
+          <span class="font-mono text-accent text-sm acid-text-glow">&#91;</span>
+          <span class="glitch font-display text-base font-bold tracking-[0.12em] uppercase text-primary" data-text="A.SANJEEV">A.SANJEEV</span>
+          <span class="font-mono text-accent text-sm acid-text-glow">&#93;</span>
+        </a>
 
-      <!-- Desktop Links -->
-      <div class="hidden md:flex items-center gap-1">
-        {
-          navLinks.map((link, i) => (
-            <a
-              href={link.href}
-              class={`px-3 py-2 font-mono text-xs uppercase tracking-[0.12em] transition-colors duration-200 ${
-                isActive(link.href)
-                  ? "text-accent"
-                  : "text-secondary hover:text-primary"
-              }`}
-            >
-              <span class="text-accent/40 mr-1">{String(i + 1).padStart(2, "0")}</span>
-              {link.label}
-            </a>
-          ))
-        }
-        <div class="w-px h-4 bg-border mx-2"></div>
+        <!-- Theme selector -->
+        <div class="flex items-center gap-1 rounded-full border border-border bg-surface/70 p-1 shadow-[0_12px_30px_-24px_rgba(var(--accent-rgb),0.65)]" role="group" aria-label="Theme selector">
+          {
+            themeOptions.map((theme) => (
+              <button
+                type="button"
+                data-theme-choice={theme.value}
+                class="rounded-full px-2 py-1.5 font-mono text-[9px] uppercase tracking-[0.1em] text-secondary transition-all hover:text-primary aria-pressed:bg-accent aria-pressed:text-background sm:px-3 md:text-[10px]"
+                aria-pressed="false"
+              >
+                <span class="hidden sm:inline">{theme.label}</span>
+                <span class="sm:hidden">{theme.label.slice(0, 1)}</span>
+              </button>
+            ))
+          }
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <!-- Collapsed desktop links -->
+        <details id="nav-links-dropdown" class="group relative hidden md:block">
+          <summary class="flex cursor-pointer list-none items-center gap-2 border border-border bg-surface/60 px-3 py-2 font-mono text-xs uppercase tracking-[0.12em] text-secondary transition-colors hover:border-accent/50 hover:text-primary [&::-webkit-details-marker]:hidden">
+            <span class="text-accent">Menu</span>
+            <span class="text-accent/60 transition-transform group-open:rotate-180">▾</span>
+          </summary>
+          <div class="absolute right-0 top-[calc(100%+0.75rem)] min-w-52 border border-border bg-background/95 p-2 shadow-[0_20px_60px_-24px_rgba(var(--accent-rgb),0.65)] backdrop-blur-xl">
+            {
+              navLinks.map((link, i) => (
+                <a
+                  href={link.href}
+                  class={`flex items-center px-3 py-2.5 font-mono text-xs uppercase tracking-[0.12em] transition-colors duration-200 ${
+                    isActive(link.href)
+                      ? "text-accent"
+                      : "text-secondary hover:text-primary"
+                  }`}
+                >
+                  <span class="text-accent/40 mr-2">{String(i + 1).padStart(2, "0")}</span>
+                  {link.label}
+                </a>
+              ))
+            }
+          </div>
+        </details>
+
+
+        <div class="hidden h-4 w-px bg-border md:block"></div>
         <a
           href="/contact"
-          class="px-3 py-1.5 font-mono text-xs uppercase tracking-[0.14em] text-accent border border-accent/40 bg-accent/5 hover:bg-accent hover:text-background hover:border-accent transition-all duration-200 acid-glow"
+          class="hidden px-3 py-1.5 font-mono text-xs uppercase tracking-[0.14em] text-accent border border-accent/40 bg-accent/5 hover:bg-accent hover:text-background hover:border-accent transition-all duration-200 acid-glow md:inline-flex"
         >
           [ HIRE_ME ]
         </a>
-      </div>
 
-      <!-- Mobile menu button -->
-      <button
-        id="mobile-menu-btn"
-        aria-label="Toggle menu"
-        class="md:hidden flex flex-col gap-1.5 p-2 group"
-      >
-        <span
-          id="hamburger-line-1"
-          class="block w-5 h-[1.5px] bg-accent transition-all duration-300 origin-center"
-        ></span>
-        <span
-          id="hamburger-line-2"
-          class="block w-5 h-[1.5px] bg-accent transition-all duration-300"
-        ></span>
-        <span
-          id="hamburger-line-3"
-          class="block w-5 h-[1.5px] bg-accent transition-all duration-300 origin-center"
-        ></span>
-      </button>
+        <!-- Mobile menu button -->
+        <button
+          id="mobile-menu-btn"
+          aria-label="Toggle menu"
+          class="md:hidden flex flex-col gap-1.5 p-2 group"
+        >
+          <span
+            id="hamburger-line-1"
+            class="block w-5 h-[1.5px] bg-accent transition-all duration-300 origin-center"
+          ></span>
+          <span
+            id="hamburger-line-2"
+            class="block w-5 h-[1.5px] bg-accent transition-all duration-300"
+          ></span>
+          <span
+            id="hamburger-line-3"
+            class="block w-5 h-[1.5px] bg-accent transition-all duration-300 origin-center"
+          ></span>
+        </button>
+      </div>
     </div>
   </div>
+
 
   <!-- Mobile menu -->
   <div
@@ -116,6 +152,7 @@ function isActive(href: string) {
     const nav = document.getElementById("main-nav");
     const mobileMenuBtn = document.getElementById("mobile-menu-btn");
     const mobileMenu = document.getElementById("mobile-menu");
+    const navLinksDropdown = document.getElementById("nav-links-dropdown") as HTMLDetailsElement | null;
     const line1 = document.getElementById("hamburger-line-1");
     const line2 = document.getElementById("hamburger-line-2");
     const line3 = document.getElementById("hamburger-line-3");
@@ -148,7 +185,58 @@ function isActive(href: string) {
     };
 
     mobileMenuBtn?.addEventListener("click", toggleMenu);
+
+    document.addEventListener("click", (event) => {
+      if (!navLinksDropdown?.open) return;
+      if (!navLinksDropdown.contains(event.target as Node)) {
+        navLinksDropdown.open = false;
+      }
+    });
   }
 
-  document.addEventListener("astro:page-load", initNav);
+  function initThemeSelector() {
+    const themes = ["light", "dark", "toxic"];
+    const defaultTheme = "dark";
+    const buttons = document.querySelectorAll<HTMLButtonElement>("[data-theme-choice]");
+    const getSavedTheme = () => {
+      try {
+        return localStorage.getItem("theme");
+      } catch {
+        return null;
+      }
+    };
+    const getActiveTheme = () => {
+      const savedTheme = getSavedTheme();
+      return themes.includes(savedTheme || "")
+        ? savedTheme
+        : document.documentElement.dataset.theme || defaultTheme;
+    };
+    const updateButtons = () => {
+      const activeTheme = getActiveTheme();
+      document.documentElement.dataset.theme = activeTheme || defaultTheme;
+      buttons.forEach((button) => {
+        button.setAttribute("aria-pressed", String(button.dataset.themeChoice === activeTheme));
+      });
+    };
+    const setTheme = (theme: string) => {
+      if (!themes.includes(theme)) return;
+      try {
+        localStorage.setItem("theme", theme);
+      } catch {}
+      document.documentElement.dataset.theme = theme;
+      updateButtons();
+    };
+
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => setTheme(button.dataset.themeChoice || ""));
+    });
+
+
+    updateButtons();
+  }
+
+  document.addEventListener("astro:page-load", () => {
+    initNav();
+    initThemeSelector();
+  });
 </script>

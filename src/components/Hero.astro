@@ -60,7 +60,7 @@ const yearsExp = new Date().getFullYear() - startYear;
       <div class="relative h-full w-full" id="tv-glitch-container">
         <!-- JS populates band layers here -->
         <!-- scanline + tint overlays -->
-        <div class="absolute inset-0 pointer-events-none mix-blend-overlay" style="background: linear-gradient(180deg, rgba(182,255,26,0.06), transparent 40%, rgba(255,45,126,0.07)); z-index:10;"></div>
+        <div class="absolute inset-0 pointer-events-none mix-blend-overlay" style="background: linear-gradient(180deg, rgb(var(--color-accent) / 0.06), transparent 40%, rgb(var(--color-hot) / 0.07)); z-index:10;"></div>
         <div class="absolute inset-0 pointer-events-none opacity-50" style="background: repeating-linear-gradient(to bottom, transparent 0 2px, rgba(0,0,0,0.18) 3px 3px); z-index:11;"></div>
         <div class="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-background/30 pointer-events-none" style="z-index:12;"></div>
         <!-- caption -->

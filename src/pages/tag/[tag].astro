@@ -265,13 +265,13 @@ const { posts, projects, experiences: matchedExperiences } = Astro.props;
 
   .archive-header {
     padding-bottom: 0.75rem;
-    border-bottom: 1px solid rgba(182, 255, 26, 0.25);
+    border-bottom: 1px solid rgb(var(--color-accent) / 0.25);
     margin-bottom: 0;
     font-family: "Share Tech Mono", monospace;
     font-size: 0.65rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: rgba(182, 255, 26, 0.45);
+    color: rgb(var(--color-accent) / 0.45);
   }
 
   .archive-list { position: relative; }
@@ -283,7 +283,7 @@ const { posts, projects, experiences: matchedExperiences } = Astro.props;
 
   .archive-row {
     padding: 1.25rem 0.25rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgb(var(--color-primary) / 0.08);
     transition: background 0.2s ease;
     position: relative;
     cursor: default;
@@ -298,7 +298,7 @@ const { posts, projects, experiences: matchedExperiences } = Astro.props;
     right: -1.5rem;
     top: 0;
     bottom: 0;
-    background: rgba(182, 255, 26, 0.03);
+    background: rgb(var(--color-accent) / 0.03);
     opacity: 0;
     transition: opacity 0.2s ease;
     pointer-events: none;
@@ -306,15 +306,15 @@ const { posts, projects, experiences: matchedExperiences } = Astro.props;
 
   .archive-row:hover::before { opacity: 1; }
 
-  .archive-row:hover .col-year { color: rgba(182, 255, 26, 0.8); }
+  .archive-row:hover .col-year { color: rgb(var(--color-accent) / 0.8); }
 
   .archive-row:hover .project-name,
-  .archive-row:hover .project-name-link { color: #b6ff1a; }
+  .archive-row:hover .project-name-link { color: rgb(var(--color-accent)); }
 
   .col-year {
     font-family: "Share Tech Mono", monospace;
     font-size: 0.8rem;
-    color: rgba(255, 255, 255, 0.3);
+    color: rgb(var(--color-secondary) / 0.75);
     letter-spacing: 0.05em;
     padding-top: 0.2rem;
     transition: color 0.2s ease;
@@ -330,7 +330,7 @@ const { posts, projects, experiences: matchedExperiences } = Astro.props;
     font-family: "Oxanium", sans-serif;
     font-size: 1rem;
     font-weight: 600;
-    color: rgba(255, 255, 255, 0.9);
+    color: rgb(var(--color-primary) / 0.9);
     transition: color 0.2s ease;
     line-height: 1.3;
   }
@@ -339,17 +339,17 @@ const { posts, projects, experiences: matchedExperiences } = Astro.props;
     font-family: "Oxanium", sans-serif;
     font-size: 1rem;
     font-weight: 600;
-    color: rgba(255, 255, 255, 0.9);
+    color: rgb(var(--color-primary) / 0.9);
     text-decoration: none;
     transition: color 0.2s ease;
     line-height: 1.3;
   }
 
-  .project-name-link:hover { color: #b6ff1a; }
+  .project-name-link:hover { color: rgb(var(--color-accent)); }
 
   .project-desc {
     font-size: 0.78rem;
-    color: rgba(255, 255, 255, 0.35);
+    color: rgb(var(--color-secondary) / 0.85);
     line-height: 1.5;
     font-family: "Inter", sans-serif;
     max-width: 36ch;
@@ -368,9 +368,9 @@ const { posts, projects, experiences: matchedExperiences } = Astro.props;
     font-size: 0.65rem;
     letter-spacing: 0.04em;
     padding: 0.2rem 0.5rem;
-    border: 1px solid rgba(182, 255, 26, 0.2);
-    color: rgba(182, 255, 26, 0.6);
-    background: rgba(182, 255, 26, 0.04);
+    border: 1px solid rgb(var(--color-accent) / 0.2);
+    color: rgb(var(--color-accent) / 0.6);
+    background: rgb(var(--color-accent) / 0.04);
     border-radius: 2px;
     white-space: nowrap;
     text-decoration: none;
@@ -378,15 +378,15 @@ const { posts, projects, experiences: matchedExperiences } = Astro.props;
   }
 
   .tech-tag:hover {
-    border-color: rgba(182, 255, 26, 0.6);
-    color: rgba(182, 255, 26, 1);
-    background: rgba(182, 255, 26, 0.12);
+    border-color: rgb(var(--color-accent) / 0.6);
+    color: rgb(var(--color-accent));
+    background: rgb(var(--color-accent) / 0.12);
   }
 
   .archive-row:hover .tech-tag {
-    border-color: rgba(182, 255, 26, 0.35);
-    color: rgba(182, 255, 26, 0.8);
-    background: rgba(182, 255, 26, 0.07);
+    border-color: rgb(var(--color-accent) / 0.35);
+    color: rgb(var(--color-accent) / 0.8);
+    background: rgb(var(--color-accent) / 0.07);
   }
 
   .col-link { padding-top: 0.2rem; }
@@ -397,7 +397,7 @@ const { posts, projects, experiences: matchedExperiences } = Astro.props;
     gap: 0.35rem;
     font-family: "Share Tech Mono", monospace;
     font-size: 0.72rem;
-    color: rgba(255, 255, 255, 0.35);
+    color: rgb(var(--color-secondary) / 0.85);
     text-decoration: none;
     letter-spacing: 0.02em;
     transition: color 0.2s ease;
@@ -407,7 +407,7 @@ const { posts, projects, experiences: matchedExperiences } = Astro.props;
     max-width: 100%;
   }
 
-  .ext-link:hover { color: #b6ff1a; }
+  .ext-link:hover { color: rgb(var(--color-accent)); }
 
   .link-domain {
     overflow: hidden;
@@ -418,6 +418,6 @@ const { posts, projects, experiences: matchedExperiences } = Astro.props;
   .no-data {
     font-family: "Share Tech Mono", monospace;
     font-size: 0.75rem;
-    color: rgba(255, 255, 255, 0.15);
+    color: rgb(var(--color-secondary) / 0.45);
   }
 </style>

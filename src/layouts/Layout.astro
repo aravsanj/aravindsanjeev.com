@@ -28,6 +28,37 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <script is:inline>
+      (() => {
+        const themes = ["light", "dark", "toxic"];
+        const defaultTheme = "dark";
+        const getSavedTheme = () => {
+          try {
+            return localStorage.getItem("theme");
+          } catch {
+            return null;
+          }
+        };
+        const resolveTheme = () => {
+          const savedTheme = getSavedTheme();
+          return themes.includes(savedTheme) ? savedTheme : defaultTheme;
+        };
+        const applyTheme = () => {
+          const theme = resolveTheme();
+          document.documentElement.dataset.theme = theme;
+          return theme;
+        };
+
+        applyTheme();
+        window.__applyTheme = applyTheme;
+
+        document.addEventListener("astro:before-swap", (event) => {
+          event.newDocument.documentElement.dataset.theme = resolveTheme();
+        });
+        document.addEventListener("astro:after-swap", applyTheme);
+        document.addEventListener("astro:page-load", applyTheme);
+      })();
+    </script>
     <GoogleAnalytics measurementId="G-BELR0CJR8V" />
 <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width" />
@@ -94,7 +125,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <Fx />
     <Nav />
 
-    <div class="mx-auto max-w-7xl px-6 md:px-12 lg:px-24 pt-16">
+    <div class="mx-auto max-w-7xl px-6 md:px-12 lg:px-24 pt-24">
       <main class={mainClass}>
         <slot />
       </main>

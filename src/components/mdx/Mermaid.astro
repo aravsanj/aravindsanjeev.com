@@ -5,6 +5,33 @@ interface Props {
 
 const { content } = Astro.props;
 const mermaidId = `mermaid-${Math.random().toString(36).substring(2, 9)}`;
+
+function normalizeMermaidContent(source: string) {
+    let output = "";
+    let inDoubleQuotedLabel = false;
+    let escaped = false;
+
+    for (const char of source.trim()) {
+        if (char === '"' && !escaped) {
+            inDoubleQuotedLabel = !inDoubleQuotedLabel;
+            output += char;
+            continue;
+        }
+
+        if (char === "\n" && inDoubleQuotedLabel) {
+            output += "<br/>";
+            continue;
+        }
+
+        output += char;
+        escaped = char === "\\" && !escaped;
+        if (char !== "\\") escaped = false;
+    }
+
+    return output;
+}
+
+const normalizedContent = normalizeMermaidContent(content);
 ---
 
 <div class="mermaid-container w-full my-6 flex justify-start">
@@ -12,7 +39,7 @@ const mermaidId = `mermaid-${Math.random().toString(36).substring(2, 9)}`;
         class="mermaid opacity-0 transition-opacity duration-300 w-full"
         id={mermaidId}
     >
-        {content.trim()}
+        {normalizedContent}
     </div>
 </div>
 
@@ -23,11 +50,60 @@ const mermaidId = `mermaid-${Math.random().toString(36).substring(2, 9)}`;
         const mermaidElements = document.querySelectorAll<HTMLElement>(".mermaid");
         if (mermaidElements.length === 0) return;
 
+        const styles = getComputedStyle(document.documentElement);
+        const rgb = (name: string, fallback: string) => {
+            const value = styles.getPropertyValue(name).trim();
+            return value ? `rgb(${value.replace(/\s+/g, ", ")})` : fallback;
+        };
+
+        const background = rgb("--color-background", "#08090a");
+        const surface = rgb("--color-surface", "#0f1410");
+        const primary = rgb("--color-primary", "#e6ffd8");
+        const secondary = rgb("--color-secondary", "#8a9a78");
+        const accent = rgb("--color-accent", "#b6ff1a");
+        const border = rgb("--color-border", "#243018");
+
         mermaid.initialize({
             startOnLoad: false,
-            theme: "dark",
+            theme: "base",
             securityLevel: "loose",
             fontFamily: "inherit",
+            themeVariables: {
+                darkMode: document.documentElement.dataset.theme !== "light",
+                background,
+                mainBkg: surface,
+                secondBkg: background,
+                tertiaryColor: surface,
+                primaryColor: surface,
+                primaryTextColor: primary,
+                primaryBorderColor: border,
+                secondaryColor: surface,
+                secondaryTextColor: primary,
+                secondaryBorderColor: border,
+                tertiaryTextColor: primary,
+                tertiaryBorderColor: border,
+                lineColor: accent,
+                textColor: primary,
+                nodeTextColor: primary,
+                edgeLabelBackground: background,
+                clusterBkg: surface,
+                clusterBorder: border,
+                titleColor: primary,
+                actorBkg: surface,
+                actorBorder: border,
+                actorTextColor: primary,
+                labelTextColor: primary,
+                labelBoxBkgColor: surface,
+                labelBoxBorderColor: border,
+                noteBkgColor: surface,
+                noteTextColor: primary,
+                noteBorderColor: border,
+                activationBkgColor: surface,
+                activationBorderColor: accent,
+                signalColor: primary,
+                signalTextColor: primary,
+                loopTextColor: secondary,
+            },
             flowchart: {
                 htmlLabels: true,
                 curve: "basis",
@@ -49,9 +125,14 @@ const mermaidId = `mermaid-${Math.random().toString(36).substring(2, 9)}`;
 
         mermaid.run({
             nodes: Array.from(mermaidElements),
-        }).then(() => {
-            mermaidElements.forEach((el) => el.classList.remove("opacity-0"));
-        });
+        })
+            .then(() => {
+                mermaidElements.forEach((el) => el.classList.remove("opacity-0"));
+            })
+            .catch((error) => {
+                console.error("Mermaid render failed", error);
+                mermaidElements.forEach((el) => el.classList.remove("opacity-0"));
+            });
     }
 
     // Init on load
@@ -62,20 +143,20 @@ const mermaidId = `mermaid-${Math.random().toString(36).substring(2, 9)}`;
 
     // Watch for theme changes
     const observer = new MutationObserver((mutations) => {
-        if (mutations.some((m) => m.attributeName === "class")) {
+        if (mutations.some((m) => m.attributeName === "data-theme" || m.attributeName === "class")) {
             initMermaid();
         }
     });
 
-    observer.observe(document.documentElement, { attributes: true });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme", "class"] });
 </script>
 
 <style is:global>
     :root {
-        --mermaid-prop-bg: #1f2937;
-        --mermaid-prop-border: #374151;
-        --mermaid-prop-text: #f3f4f6;
-        --mermaid-line-color: #e5e7eb; /* High contrast white/gray for lines */
+        --mermaid-prop-bg: rgb(var(--color-surface-2));
+        --mermaid-prop-border: rgb(var(--color-border));
+        --mermaid-prop-text: rgb(var(--color-primary));
+        --mermaid-line-color: rgb(var(--color-accent));
     }
 
     .mermaid svg {
@@ -84,6 +165,25 @@ const mermaidId = `mermaid-${Math.random().toString(36).substring(2, 9)}`;
         height: auto;
         padding: 0 !important;
         margin: 0;
+    }
+
+    .mermaid text,
+    .mermaid .nodeLabel,
+    .mermaid .edgeLabel,
+    .mermaid .label,
+    .mermaid .labelBkg,
+    .mermaid foreignObject,
+    .mermaid foreignObject div,
+    .mermaid foreignObject span,
+    .mermaid p {
+        color: rgb(var(--color-primary)) !important;
+        fill: rgb(var(--color-primary)) !important;
+    }
+
+    .mermaid .edgeLabel,
+    .mermaid .edgeLabel p,
+    .mermaid .edgeLabel rect {
+        background-color: rgb(var(--color-background) / 0.9) !important;
     }
 
     /* Edge/Line Styles */
@@ -104,11 +204,11 @@ const mermaidId = `mermaid-${Math.random().toString(36).substring(2, 9)}`;
     .mermaid .window > circle,
     .mermaid .window > path,
     .mermaid .window > polygon {
-        fill: #3b82f6 !important;
-        stroke: #2563eb !important;
+        fill: rgb(var(--color-accent) / 0.22) !important;
+        stroke: rgb(var(--color-accent)) !important;
     }
     .mermaid .window .nodeLabel {
-        color: #ffffff !important;
+        color: rgb(var(--color-primary)) !important;
         font-weight: bold !important;
     }
 
@@ -116,11 +216,11 @@ const mermaidId = `mermaid-${Math.random().toString(36).substring(2, 9)}`;
     .mermaid .object > circle,
     .mermaid .object > path,
     .mermaid .object > polygon {
-        fill: #10b981 !important;
-        stroke: #059669 !important;
+        fill: rgb(var(--color-surface-2)) !important;
+        stroke: rgb(var(--color-accent) / 0.75) !important;
     }
     .mermaid .object .nodeLabel {
-        color: #ffffff !important;
+        color: rgb(var(--color-primary)) !important;
     }
 
     .mermaid .prop > rect,
