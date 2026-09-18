@@ -6,222 +6,56 @@ import Layout from "../layouts/Layout.astro";
 import { components } from "../components/mdx-components";
 import { formatDate } from "../lib/utils";
 import SocialShareButtons from "../components/SocialShareButtons.astro";
-import Social from "../components/Social.astro";
-import Tag from "../components/ui/Tag.astro";
 import ReadingProgress from "../components/ReadingProgress.astro";
-import Breadcrumb from "../components/Breadcrumb.astro";
 
 type BlogEntry = CollectionEntry<"blog">;
 
 export async function getStaticPaths() {
   const posts = (await getCollection("blog")).filter((post: BlogEntry) => !post.data.isDraft);
-  return posts.map((post: BlogEntry) => ({
-    params: { slug: post.slug },
-    props: { post },
-  }));
+  return posts.map((post: BlogEntry) => ({ params: { slug: post.slug }, props: { post } }));
 }
 
 const { post }: { post: BlogEntry } = Astro.props;
 const { Content } = await post.render();
-
-const metadata = {
-  title: post.data.title,
-  description: post.data.summary,
-  image: `https://aravindsanjeev.com/og/${post.slug}.png`,
-};
-
-let tags: string[] = [];
-if (post.data.tags) {
-  try {
-    tags =
-      typeof post.data.tags === "string"
-        ? JSON.parse(post.data.tags)
-        : post.data.tags || [];
-  } catch {
-    tags = [];
-  }
-}
-
+const metadata = { title: post.data.title, description: post.data.summary, image: `https://aravindsanjeev.com/og/${post.slug}.png` };
+const tags = Array.isArray(post.data.tags) ? post.data.tags : [];
 const wordCount = post.body?.split(/\s+/).length ?? 0;
 const readTime = Math.max(1, Math.ceil(wordCount / 200));
-
 const baseUrl = "https://aravindsanjeev.com";
 ---
 
-<Layout
-  title={metadata.title}
-  description={metadata.description}
-  image={metadata.image}
-  mainClass="py-16 max-w-full"
->
+<Layout title={metadata.title} description={metadata.description} image={metadata.image}>
   <ReadingProgress />
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org", "@type": "BlogPosting", headline: post.data.title,
+    datePublished: post.data.publishedAt, dateModified: post.data.lastUpdated || post.data.publishedAt,
+    description: post.data.summary, image: `${baseUrl}/og/${post.slug}.png`, url: `${baseUrl}/${post.slug}`,
+    author: { "@type": "Person", name: "Aravind Sanjeev" },
+  })} />
 
-  <script
-    type="application/ld+json"
-    set:html={JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "BlogPosting",
-      headline: post.data.title,
-      datePublished: post.data.publishedAt,
-      dateModified: post.data.lastUpdated || post.data.publishedAt,
-      description: post.data.summary,
-      image: `${baseUrl}/og/${post.slug}.png`,
-      url: `${baseUrl}/${post.slug}`,
-      author: {
-        "@type": "Person",
-        name: "Aravind Sanjeev",
-      },
-    })}
-  />
-
-  <!-- Hero: full-width title block -->
-  <div class="mb-10">
-    <Breadcrumb crumbs={[{ label: "Writing", href: "/blog" }]} current="" />
-
-    <!-- Tags -->
-    {tags.length > 0 && (
-      <ul class="flex flex-wrap gap-2 mb-5" data-animate data-delay="1">
-        {tags.map((tag: string) => (
-          <li>
-            <Tag title={tag} href={`/tag/${tag.toLowerCase()}`} />
-          </li>
-        ))}
-      </ul>
-    )}
-
-    <!-- Title -->
-    <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-primary tracking-tight leading-[1.08] mb-6 text-balance max-w-4xl" data-animate data-delay="2">
-      {post.data.title}
-    </h1>
-
-    <!-- Meta row -->
-    <div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-secondary font-mono text-xs uppercase tracking-wide" data-animate data-delay="3">
-      <span class="text-accent/70">&gt;</span>
-      <span>{formatDate(post.data.publishedAt)}</span>
-      <span class="text-secondary/30" aria-hidden="true">//</span>
-      <span>{readTime} min read</span>
-      {post.data.lastUpdated && (
-        <>
-          <span class="text-secondary/30" aria-hidden="true">//</span>
-          <span class="text-secondary/60">updated {formatDate(post.data.lastUpdated)}</span>
-        </>
-      )}
+  <header class="mx-auto max-w-[42rem] pb-14 sm:pb-20">
+    {tags.length > 0 && <p class="font-sans text-xs font-medium tracking-wide text-secondary">{tags.join(" · ")}</p>}
+    <h1 class="mt-5 text-balance text-4xl font-semibold leading-[1.04] tracking-[-0.045em] text-primary sm:text-6xl">{post.data.title}</h1>
+    <p class="mt-6 max-w-2xl text-lg leading-relaxed text-secondary sm:text-xl">{post.data.summary}</p>
+    <div class="mt-7 flex gap-3 font-sans text-sm text-secondary">
+      <time>{formatDate(post.data.publishedAt)}</time><span aria-hidden="true">·</span><span>{readTime} min read</span>
+      {post.data.lastUpdated && <><span aria-hidden="true">·</span><span>Updated {formatDate(post.data.lastUpdated)}</span></>}
     </div>
-  </div>
+  </header>
 
-  <!-- Cover image -->
-  <div class="hud-frame hud-corners mb-14 overflow-hidden border border-border relative" data-animate>
-    {post.data.image ? (
-      <Image
-        src={post.data.image}
-        alt={post.data.title}
-        class="w-full h-auto object-cover"
-        loading="eager"
-      />
-    ) : (
-      <div class="blog-cover-card relative min-h-[320px] sm:min-h-[420px] p-6 sm:p-10 md:p-14 flex flex-col justify-between overflow-hidden">
-        <div class="relative z-10 flex items-center justify-between gap-4 font-mono text-[10px] sm:text-xs uppercase tracking-[0.16em] text-secondary">
-          <span>&gt; aravindsanjeev.com</span>
-          {tags[0] && <span class="border border-accent/40 bg-accent/10 px-3 py-1 text-accent">{tags[0]}</span>}
-        </div>
+  <article class="article prose mx-auto max-w-[42rem] prose-headings:mt-14 prose-headings:mb-5 prose-p:my-6 prose-li:my-2 prose-img:rounded-sm">
+    <Content components={components} />
+  </article>
 
-        <div class="relative z-10 max-w-5xl py-12">
-          {(post.data.coverText || post.data.summary) && (
-            <p class="mb-5 font-mono text-xs sm:text-sm uppercase tracking-[0.16em] text-accent">
-              {post.data.coverText || post.data.summary}
-            </p>
-          )}
-          <h2 class="font-display text-[clamp(2.5rem,8vw,6.5rem)] font-bold uppercase leading-[0.92] tracking-tight text-primary">
-            {post.data.coverTitle || post.data.title}
-          </h2>
-        </div>
-
-        <div class="relative z-10 flex items-center justify-between gap-4 border-t border-border pt-5 font-mono text-xs uppercase tracking-[0.14em]">
-          <span class="text-primary">● Aravind Sanjeev</span>
-          <span class="hidden sm:inline-flex border border-border bg-surface/70 px-3 py-1 text-secondary">AI Stack Engineer</span>
-        </div>
-      </div>
-    )}
-    <div class="absolute inset-0 pointer-events-none opacity-25" style="background: repeating-linear-gradient(to bottom, transparent 0 2px, rgba(0,0,0,0.2) 3px 3px);"></div>
-  </div>
-
-  <!-- Content: left-aligned, constrained for readability -->
-  <div class="max-w-[680px]">
-
-    <!-- Article body -->
-    <article class="article prose prose-invert prose-lg max-w-none prose-headings:font-display prose-headings:font-bold prose-headings:tracking-tight prose-p:text-secondary prose-p:leading-[1.85] prose-li:text-secondary prose-li:leading-[1.85] prose-a:no-underline prose-strong:text-primary prose-blockquote:not-italic">
-      <Content components={components} />
-    </article>
-
-    <!-- Divider -->
-    <div class="h-px bg-gradient-to-r from-accent/40 via-border to-transparent mt-16 mb-10"></div>
-
-    <!-- Share row -->
-    <div class="flex items-center justify-between gap-4 mb-16" data-animate>
-      <span class="font-mono text-[11px] uppercase tracking-[0.18em] text-accent/70">
-        &gt; share_this_log
-      </span>
-      <div class="flex items-center gap-2">
-        <SocialShareButtons size={32} post={post} />
-      </div>
+  <section class="mx-auto mt-16 max-w-[42rem] border-t border-border pt-8">
+    <div class="flex items-center justify-between gap-6">
+      <p class="font-sans text-sm text-secondary">If this was useful, share it.</p>
+      <SocialShareButtons size={28} post={post} />
     </div>
+  </section>
 
-    <!-- Author card -->
-    <div class="hud-frame hud-corners flex items-start gap-5 p-5 bg-surface/50 border border-border mb-4" data-animate data-delay="1">
-      <Image
-        src={profileImage}
-        alt="Aravind Sanjeev"
-        class="w-14 h-14 object-cover border border-accent/40 flex-shrink-0"
-        draggable={false}
-      />
-      <div>
-        <h3 class="font-display text-lg font-bold uppercase tracking-wide text-primary mb-1">
-          Aravind Sanjeev
-        </h3>
-        <p class="font-body text-sm text-secondary mb-3 leading-relaxed">
-          Software engineer sharing thoughts on web development, AI, and the craft of building software.
-        </p>
-        <div class="text-secondary">
-          <Social
-            email="hi@aravindsanjeev.com"
-            twitter="aravsanj"
-            instagram="aravsanj"
-            linkedIn="aravsanj"
-          />
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <style>
-    .blog-cover-card {
-      background:
-        radial-gradient(ellipse 46% 52% at 10% 0%, rgb(var(--color-accent) / 0.18), transparent 68%),
-        radial-gradient(ellipse 42% 48% at 92% 18%, rgb(var(--color-hot) / 0.16), transparent 70%),
-        linear-gradient(135deg, rgb(var(--color-surface)) 0%, rgb(var(--color-background)) 54%, rgb(var(--color-surface-2) / 0.65) 100%);
-    }
-
-    .blog-cover-card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      background:
-        linear-gradient(rgb(var(--color-accent) / 0.055) 1px, transparent 1px),
-        linear-gradient(90deg, rgb(var(--color-accent) / 0.045) 1px, transparent 1px);
-      background-size: 38px 38px;
-      mask-image: radial-gradient(ellipse 95% 80% at 50% 45%, black 25%, transparent 92%);
-      -webkit-mask-image: radial-gradient(ellipse 95% 80% at 50% 45%, black 25%, transparent 92%);
-    }
-
-    .blog-cover-card::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      background: linear-gradient(115deg, transparent 0 42%, rgb(var(--color-accent) / 0.08) 46%, transparent 52% 100%);
-      transform: translateX(-18%);
-    }
-  </style>
+  <aside class="mx-auto mt-12 flex max-w-[42rem] items-center gap-4 border-t border-border pt-8">
+    <Image src={profileImage} alt="Aravind Sanjeev" class="h-11 w-11 rounded-full object-cover" draggable={false} />
+    <div><p class="font-sans text-sm font-semibold text-primary">Written by Aravind Sanjeev</p><p class="mt-1 text-sm leading-relaxed text-secondary">Engineer and writer focused on building thoughtful software.</p></div>
+  </aside>
 </Layout>

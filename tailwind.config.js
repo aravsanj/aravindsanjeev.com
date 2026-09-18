@@ -18,10 +18,10 @@ module.exports = {
         border: withOpacity("--color-border"),
       },
       fontFamily: {
-        sans: ["Oxanium", "Chakra Petch", "sans-serif"],
-        body: ["Inter", "system-ui", "sans-serif"],
-        display: ["Chakra Petch", "Oxanium", "sans-serif"],
-        mono: ["Share Tech Mono", "JetBrains Mono", "Courier New", "monospace"],
+        sans: ["Inter Variable", "sans-serif"],
+        body: ["Inter Variable", "sans-serif"],
+        display: ["Inter Variable", "sans-serif"],
+        mono: ["ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
       },
       typography: {
         DEFAULT: {

@@ -3,70 +3,15 @@ const { size, post } = Astro.props;
 const baseUrl = "https://aravindsanjeev.com";
 const link = `${baseUrl}/${post.slug}`;
 const title = post.data.title;
-
-// Prepare tags
-let tags = [];
-if (post.data.tags) {
-  try {
-    tags =
-      typeof post.data.tags === "string"
-        ? JSON.parse(post.data.tags)
-        : post.data.tags;
-  } catch (e) {
-    tags = [];
-  }
-}
+const tags = Array.isArray(post.data.tags) ? post.data.tags : [];
 const hashtags = tags.join(",");
-
 import { Icon } from "astro-icon/components";
-
 const twitterUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(link)}&text=${encodeURIComponent(title)}&hashtags=${hashtags}`;
 const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(link)}`;
 const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(title + " | " + link)}`;
 ---
-
-<a
-  href={twitterUrl}
-  target="_blank"
-  rel="noopener noreferrer"
-  aria-label="Share on Twitter"
-  class="cursor-pointer bg-[#1da1f2] mb-2 text-white rounded-full flex items-center justify-center hover:opacity-80 transition-opacity"
-  style={{ width: `${size}px`, height: `${size}px` }}
->
-  <Icon
-    name="simple-icons:twitter"
-    width={size * 0.55}
-    height={size * 0.55}
-    class="text-white"
-  />
-</a>
-<a
-  href={linkedinUrl}
-  target="_blank"
-  rel="noopener noreferrer"
-  aria-label="Share on LinkedIn"
-  class="cursor-pointer bg-[#0a66c2] mb-2 text-white rounded-full flex items-center justify-center hover:opacity-80 transition-opacity"
-  style={{ width: `${size}px`, height: `${size}px` }}
->
-  <Icon
-    name="simple-icons:linkedin"
-    width={size * 0.55}
-    height={size * 0.55}
-    class="text-white"
-  />
-</a>
-<a
-  href={whatsappUrl}
-  target="_blank"
-  rel="noopener noreferrer"
-  aria-label="Share on WhatsApp"
-  class="cursor-pointer bg-[#25d366] text-white rounded-full flex items-center justify-center hover:opacity-80 transition-opacity"
-  style={{ width: `${size}px`, height: `${size}px` }}
->
-  <Icon
-    name="simple-icons:whatsapp"
-    width={size * 0.55}
-    height={size * 0.55}
-    class="text-white"
-  />
-</a>
+<div class="flex items-center gap-2">
+  <a href={twitterUrl} target="_blank" rel="noopener noreferrer" aria-label="Share on Twitter" class="flex items-center justify-center rounded-full bg-[#1da1f2] text-white transition-opacity hover:opacity-80" style={{ width: `${size}px`, height: `${size}px` }}><Icon name="simple-icons:twitter" width={size * 0.55} height={size * 0.55} /></a>
+  <a href={linkedinUrl} target="_blank" rel="noopener noreferrer" aria-label="Share on LinkedIn" class="flex items-center justify-center rounded-full bg-[#0a66c2] text-white transition-opacity hover:opacity-80" style={{ width: `${size}px`, height: `${size}px` }}><Icon name="simple-icons:linkedin" width={size * 0.55} height={size * 0.55} /></a>
+  <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" aria-label="Share on WhatsApp" class="flex items-center justify-center rounded-full bg-[#25d366] text-white transition-opacity hover:opacity-80" style={{ width: `${size}px`, height: `${size}px` }}><Icon name="simple-icons:whatsapp" width={size * 0.55} height={size * 0.55} /></a>
+</div>

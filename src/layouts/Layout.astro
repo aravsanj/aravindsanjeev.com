@@ -2,164 +2,56 @@
 import "../styles/global.css";
 import Nav from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
-import CTABanner from "../components/CTABanner.astro";
-import Fx from "../components/ui/Fx.astro";
 import { ViewTransitions } from "astro:transitions";
 import GoogleAnalytics from "../components/GoogleAnalytics.astro";
 
-interface Props {
-  title?: string;
-  description?: string;
-  image?: string;
-  mainClass?: string;
-}
-
-const {
-  title = "Aravind Sanjeev | Creative Frontend Engineer | AI Stack Engineer",
-  description = "Aravind Sanjeev's personal site — a collection of engineering blog posts, useful developer tools, and projects exploring the future of software and AI.",
-  image = "https://aravindsanjeev.com/assets/main_art.png",
-  mainClass = "max-w-full",
-} = Astro.props;
-
+interface Props { title?: string; description?: string; image?: string; mainClass?: string; }
+const { title = "Aravind Sanjeev — Frontend Engineer", description = "Aravind Sanjeev's writing and selected work.", image = "https://aravindsanjeev.com/assets/main_art.png", mainClass = "" } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
-
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <script is:inline>
       (() => {
-        const themes = ["light", "dark", "toxic"];
-        const defaultTheme = "dark";
-        const getSavedTheme = () => {
-          try {
-            return localStorage.getItem("theme");
-          } catch {
-            return null;
-          }
-        };
         const resolveTheme = () => {
-          const savedTheme = getSavedTheme();
-          return themes.includes(savedTheme) ? savedTheme : defaultTheme;
+          try {
+            const savedTheme = localStorage.getItem("theme");
+            if (savedTheme === "light" || savedTheme === "dark") return savedTheme;
+          } catch {}
+          return "dark";
         };
-        const applyTheme = () => {
-          const theme = resolveTheme();
-          document.documentElement.dataset.theme = theme;
-          return theme;
+        const applyTheme = (documentToUpdate = document) => {
+          documentToUpdate.documentElement.dataset.theme = resolveTheme();
         };
 
         applyTheme();
-        window.__applyTheme = applyTheme;
-
+        // Astro swaps in a new document during client-side navigation. Apply the
+        // saved theme to that incoming document before it becomes visible.
         document.addEventListener("astro:before-swap", (event) => {
-          event.newDocument.documentElement.dataset.theme = resolveTheme();
+          applyTheme(event.newDocument);
         });
-        document.addEventListener("astro:after-swap", applyTheme);
-        document.addEventListener("astro:page-load", applyTheme);
+        document.addEventListener("astro:after-swap", () => applyTheme());
+        document.addEventListener("astro:page-load", () => applyTheme());
       })();
     </script>
     <GoogleAnalytics measurementId="G-BELR0CJR8V" />
-<meta name="description" content={description} />
+    <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/png" href="/assets/favicon.png" />
-    <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="alternate" type="application/rss+xml" title="Aravind Sanjeev" href="/rss.xml" />
-
-    <!-- Fonts: Chakra Petch (display) + Oxanium (UI) + Share Tech Mono (labels) + JetBrains Mono (code) + Inter (body) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Oxanium:wght@400;500;600;700;800&family=Share+Tech+Mono&family=JetBrains+Mono:ital,wght@0,400;0,500;1,400&family=Inter:ital,opsz,wght@0,14..32,300..900;1,14..32,300..900&display=swap"
-      rel="stylesheet"
-    />
-
-    <meta name="generator" content={Astro.generator} />
-
-    <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={image} />
-
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:url" content={canonicalURL} />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={image} />
-
     <title>{title}</title>
-
-    <!-- Schema.org -->
-    <script type="application/ld+json" is:inline>
-      {
-        "@context": "https://schema.org",
-        "@type": "Person",
-        "name": "Aravind Sanjeev",
-        "url": "https://aravindsanjeev.com",
-        "image": "https://aravindsanjeev.com/profile.jpg",
-        "sameAs": [
-          "https://github.com/aravsanj",
-          "https://twitter.com/aravsanj",
-          "https://linkedin.com/in/aravsanj"
-        ],
-        "jobTitle": "Software Engineer",
-        "worksFor": {
-          "@type": "Organization",
-          "name": "Freelance / Independent"
-        },
-        "knowsAbout": ["React", "Next.js", "AI", "Web Development"],
-        "alumniOf": {
-          "@type": "EducationalOrganization",
-          "name": "APJ Abdul Kalam Technological University"
-        }
-      }
-    </script>
-
     <ViewTransitions />
   </head>
-
-  <body class="relative min-h-screen leading-relaxed antialiased">
-    <Fx />
+  <body class="min-h-screen">
     <Nav />
-
-    <div class="mx-auto max-w-7xl px-6 md:px-12 lg:px-24 pt-24">
-      <main class={mainClass}>
-        <slot />
-      </main>
-      <CTABanner />
-      <Footer />
-    </div>
-
-    <!-- Scroll-triggered animation observer -->
-    <script>
-      function initScrollAnimations() {
-        const elements = document.querySelectorAll("[data-animate]");
-        if (!elements.length) return;
-
-        const observer = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              const el = entry.target as HTMLElement;
-              if (entry.isIntersecting) {
-                const d = el.dataset.delay ? parseInt(el.dataset.delay) * 80 : 0;
-                el.style.transitionDelay = d + "ms";
-                el.classList.add("in-view");
-                observer.unobserve(el);
-              }
-            });
-          },
-          { threshold: 0.1 }
-        );
-
-        elements.forEach((el) => observer.observe(el));
-      }
-
-      document.addEventListener("astro:page-load", initScrollAnimations);
-
-    
-    </script>
+    <main class={`mx-auto w-full max-w-5xl px-6 pt-28 sm:px-10 sm:pt-36 ${mainClass}`}><slot /></main>
+    <div class="mx-auto w-full max-w-5xl px-6 sm:px-10"><Footer /></div>
   </body>
 </html>

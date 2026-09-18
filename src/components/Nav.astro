@@ -1,242 +1,50 @@
 ---
 const pathname = Astro.url.pathname;
-
 const navLinks = [
-  { label: "Projects", href: "/projects" },
-  { label: "Experience", href: "/experience" },
-  { label: "Writing", href: "/blog" },
-  { label: "Videos", href: "/videos" },
+  { label: "Portfolio", href: "/projects" },
+  { label: "Blog", href: "/blog" },
+  { label: "Contact", href: "/contact" },
 ];
-
-const themeOptions = [
-  { label: "Nova", value: "light" },
-  { label: "Void", value: "dark" },
-  { label: "Toxic", value: "toxic" },
-];
-
-function isActive(href: string) {
-  if (href === "/") return pathname === "/";
-  return pathname.startsWith(href);
-}
+const isActive = (href: string) => pathname.startsWith(href);
 ---
-
-<nav
-  id="main-nav"
-  class="fixed top-0 left-0 right-0 z-50"
-  aria-label="Main navigation"
->
-  <div class="mx-auto max-w-7xl px-6 md:px-12 lg:px-24">
-    <div class="flex items-center justify-between h-16">
-      <div class="flex min-w-0 items-center gap-3">
-        <!-- Logo -->
-        <a
-          href="/"
-          class="group flex shrink-0 items-center gap-2 hover:opacity-90 transition-opacity duration-300"
-          aria-label="Home"
-        >
-          <span class="font-mono text-accent text-sm acid-text-glow">&#91;</span>
-          <span class="glitch font-display text-base font-bold tracking-[0.12em] uppercase text-primary" data-text="A.SANJEEV">A.SANJEEV</span>
-          <span class="font-mono text-accent text-sm acid-text-glow">&#93;</span>
-        </a>
-
-        <!-- Theme selector -->
-        <div class="flex items-center gap-1 rounded-full border border-border bg-surface/70 p-1 shadow-[0_12px_30px_-24px_rgba(var(--accent-rgb),0.65)]" role="group" aria-label="Theme selector">
-          {
-            themeOptions.map((theme) => (
-              <button
-                type="button"
-                data-theme-choice={theme.value}
-                class="rounded-full px-2 py-1.5 font-mono text-[9px] uppercase tracking-[0.1em] text-secondary transition-all hover:text-primary aria-pressed:bg-accent aria-pressed:text-background sm:px-3 md:text-[10px]"
-                aria-pressed="false"
-              >
-                <span class="hidden sm:inline">{theme.label}</span>
-                <span class="sm:hidden">{theme.label.slice(0, 1)}</span>
-              </button>
-            ))
-          }
-        </div>
-      </div>
-
-      <div class="flex items-center gap-2">
-        <!-- Collapsed desktop links -->
-        <details id="nav-links-dropdown" class="group relative hidden md:block">
-          <summary class="flex cursor-pointer list-none items-center gap-2 border border-border bg-surface/60 px-3 py-2 font-mono text-xs uppercase tracking-[0.12em] text-secondary transition-colors hover:border-accent/50 hover:text-primary [&::-webkit-details-marker]:hidden">
-            <span class="text-accent">Menu</span>
-            <span class="text-accent/60 transition-transform group-open:rotate-180">▾</span>
-          </summary>
-          <div class="absolute right-0 top-[calc(100%+0.75rem)] min-w-52 border border-border bg-background/95 p-2 shadow-[0_20px_60px_-24px_rgba(var(--accent-rgb),0.65)] backdrop-blur-xl">
-            {
-              navLinks.map((link, i) => (
-                <a
-                  href={link.href}
-                  class={`flex items-center px-3 py-2.5 font-mono text-xs uppercase tracking-[0.12em] transition-colors duration-200 ${
-                    isActive(link.href)
-                      ? "text-accent"
-                      : "text-secondary hover:text-primary"
-                  }`}
-                >
-                  <span class="text-accent/40 mr-2">{String(i + 1).padStart(2, "0")}</span>
-                  {link.label}
-                </a>
-              ))
-            }
-          </div>
-        </details>
-
-
-        <div class="hidden h-4 w-px bg-border md:block"></div>
-        <a
-          href="/contact"
-          class="hidden px-3 py-1.5 font-mono text-xs uppercase tracking-[0.14em] text-accent border border-accent/40 bg-accent/5 hover:bg-accent hover:text-background hover:border-accent transition-all duration-200 acid-glow md:inline-flex"
-        >
-          [ HIRE_ME ]
-        </a>
-
-        <!-- Mobile menu button -->
-        <button
-          id="mobile-menu-btn"
-          aria-label="Toggle menu"
-          class="md:hidden flex flex-col gap-1.5 p-2 group"
-        >
-          <span
-            id="hamburger-line-1"
-            class="block w-5 h-[1.5px] bg-accent transition-all duration-300 origin-center"
-          ></span>
-          <span
-            id="hamburger-line-2"
-            class="block w-5 h-[1.5px] bg-accent transition-all duration-300"
-          ></span>
-          <span
-            id="hamburger-line-3"
-            class="block w-5 h-[1.5px] bg-accent transition-all duration-300 origin-center"
-          ></span>
-        </button>
-      </div>
-    </div>
-  </div>
-
-
-  <!-- Mobile menu -->
-  <div
-    id="mobile-menu"
-    class="hidden md:hidden border-t border-accent/20 bg-background/95 backdrop-blur-xl"
-  >
-    <div class="px-6 py-4 flex flex-col gap-1">
-      {
-        navLinks.map((link, i) => (
-          <a
-            href={link.href}
-            class={`px-4 py-3 font-mono text-sm uppercase tracking-[0.12em] transition-colors ${
-              isActive(link.href)
-                ? "text-accent"
-                : "text-secondary hover:text-primary"
-            }`}
-          >
-            <span class="text-accent/40 mr-2">{String(i + 1).padStart(2, "0")}</span>
-            {link.label}
-          </a>
-        ))
-      }
-      <a
-        href="/contact"
-        class="mt-2 px-4 py-3 font-mono text-sm uppercase tracking-[0.14em] text-accent border border-accent/40 bg-accent/5 text-center"
-      >
-        [ HIRE_ME ]
-      </a>
+<nav class="fixed inset-x-0 top-0 z-50 border-b border-border bg-background/95 backdrop-blur" aria-label="Main navigation">
+  <div class="mx-auto flex h-20 max-w-5xl items-center justify-between px-6 sm:px-10">
+    <a href="/" class="font-sans text-sm font-semibold tracking-tight text-primary">Aravind Sanjeev</a>
+    <div class="flex items-center gap-4 sm:gap-7">
+      {navLinks.map((link) => <a href={link.href} class:list={["font-sans text-sm transition-colors hover:text-accent", isActive(link.href) ? "text-primary" : "text-secondary"]}>{link.label}</a>)}
+      <button type="button" id="theme-toggle" role="switch" aria-checked="false" class="relative inline-flex h-7 w-12 shrink-0 items-center rounded-full border border-border bg-surface-2 p-0.5 transition-colors" aria-label="Switch to dark mode">
+        <span class="absolute left-2 text-[11px] leading-none" aria-hidden="true">☀</span>
+        <span class="absolute right-2 text-[11px] leading-none" aria-hidden="true">☾</span>
+        <span id="theme-toggle-thumb" class="relative h-5 w-5 translate-x-0 rounded-full bg-primary shadow-sm transition-transform"></span>
+      </button>
     </div>
   </div>
 </nav>
-
 <script>
-  function initNav() {
-    const nav = document.getElementById("main-nav");
-    const mobileMenuBtn = document.getElementById("mobile-menu-btn");
-    const mobileMenu = document.getElementById("mobile-menu");
-    const navLinksDropdown = document.getElementById("nav-links-dropdown") as HTMLDetailsElement | null;
-    const line1 = document.getElementById("hamburger-line-1");
-    const line2 = document.getElementById("hamburger-line-2");
-    const line3 = document.getElementById("hamburger-line-3");
+  function initThemeToggle() {
+    const themeToggle = document.getElementById("theme-toggle");
+    const themeThumb = document.getElementById("theme-toggle-thumb");
+    if (!themeToggle || !themeThumb || themeToggle.dataset.bound) return;
+    themeToggle.dataset.bound = "true";
 
-    let menuOpen = false;
-
-    const handleScroll = () => {
-      if (window.scrollY > 60) {
-        nav?.classList.add("scrolled");
-      } else {
-        nav?.classList.remove("scrolled");
-      }
+    const updateThemeToggle = () => {
+      const isDark = document.documentElement.dataset.theme === "dark";
+      themeToggle.setAttribute("aria-checked", String(isDark));
+      themeToggle.setAttribute("aria-label", isDark ? "Switch to light mode" : "Switch to dark mode");
+      themeThumb.classList.toggle("translate-x-5", isDark);
+      themeThumb.classList.toggle("translate-x-0", !isDark);
     };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-
-    const toggleMenu = () => {
-      menuOpen = !menuOpen;
-      mobileMenu?.classList.toggle("hidden", !menuOpen);
-
-      if (menuOpen) {
-        line1?.style.setProperty("transform", "translateY(7px) rotate(45deg)");
-        line2?.style.setProperty("opacity", "0");
-        line3?.style.setProperty("transform", "translateY(-7px) rotate(-45deg)");
-      } else {
-        line1?.style.setProperty("transform", "");
-        line2?.style.setProperty("opacity", "");
-        line3?.style.setProperty("transform", "");
-      }
-    };
-
-    mobileMenuBtn?.addEventListener("click", toggleMenu);
-
-    document.addEventListener("click", (event) => {
-      if (!navLinksDropdown?.open) return;
-      if (!navLinksDropdown.contains(event.target as Node)) {
-        navLinksDropdown.open = false;
-      }
-    });
-  }
-
-  function initThemeSelector() {
-    const themes = ["light", "dark", "toxic"];
-    const defaultTheme = "dark";
-    const buttons = document.querySelectorAll<HTMLButtonElement>("[data-theme-choice]");
-    const getSavedTheme = () => {
-      try {
-        return localStorage.getItem("theme");
-      } catch {
-        return null;
-      }
-    };
-    const getActiveTheme = () => {
-      const savedTheme = getSavedTheme();
-      return themes.includes(savedTheme || "")
-        ? savedTheme
-        : document.documentElement.dataset.theme || defaultTheme;
-    };
-    const updateButtons = () => {
-      const activeTheme = getActiveTheme();
-      document.documentElement.dataset.theme = activeTheme || defaultTheme;
-      buttons.forEach((button) => {
-        button.setAttribute("aria-pressed", String(button.dataset.themeChoice === activeTheme));
-      });
-    };
-    const setTheme = (theme: string) => {
-      if (!themes.includes(theme)) return;
-      try {
-        localStorage.setItem("theme", theme);
-      } catch {}
-      document.documentElement.dataset.theme = theme;
-      updateButtons();
-    };
-
-    buttons.forEach((button) => {
-      button.addEventListener("click", () => setTheme(button.dataset.themeChoice || ""));
+    themeToggle.addEventListener("click", () => {
+      const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+      document.documentElement.dataset.theme = next;
+      localStorage.setItem("theme", next);
+      updateThemeToggle();
     });
 
-
-    updateButtons();
+    updateThemeToggle();
   }
 
-  document.addEventListener("astro:page-load", () => {
-    initNav();
-    initThemeSelector();
-  });
+  initThemeToggle();
+  document.addEventListener("astro:page-load", initThemeToggle);
 </script>
