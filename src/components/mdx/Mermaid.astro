@@ -23,74 +23,108 @@ function normalizeMermaidContent(source: string) {
 <script>
   import mermaid from "mermaid";
 
-  function initMermaid() {
-    const nodes = Array.from(document.querySelectorAll<HTMLElement>(".mermaid"));
-    if (!nodes.length) return;
-    const isDark = document.documentElement.dataset.theme !== "light";
-    const colors = isDark
-      ? { background: "#1c1c1c", surface: "#242424", text: "#e1e1e1", muted: "#aeaeae", border: "#3e3e3e", accent: "#a78bfa", chart: "#c4b5fd" }
-      : { background: "#fafafa", surface: "#ffffff", text: "#1f1f1f", muted: "#636363", border: "#e1e1e1", accent: "#4f46e5", chart: "#4f46e5" };
+  type MermaidRenderer = { render: () => void };
+  const pageWindow = window as Window & typeof globalThis & { __mermaidRenderer?: MermaidRenderer };
 
-    mermaid.initialize({
-      startOnLoad: false,
-      theme: "base",
-      securityLevel: "loose",
-      fontFamily: "Inter Variable, sans-serif",
-      themeVariables: {
-        darkMode: isDark,
-        background: colors.background,
-        primaryColor: colors.surface,
-        primaryTextColor: colors.text,
-        primaryBorderColor: colors.border,
-        secondaryColor: colors.surface,
-        secondaryTextColor: colors.text,
-        secondaryBorderColor: colors.border,
-        tertiaryColor: colors.surface,
-        tertiaryTextColor: colors.text,
-        tertiaryBorderColor: colors.border,
-        lineColor: colors.accent,
-        textColor: colors.text,
-        nodeTextColor: colors.text,
-        edgeLabelBackground: colors.background,
-        clusterBkg: colors.surface,
-        clusterBorder: colors.border,
-        titleColor: colors.text,
-        xyChart: {
-          backgroundColor: colors.background,
-          titleColor: colors.text,
-          dataLabelColor: colors.text,
-          xAxisLabelColor: colors.text,
-          xAxisTitleColor: colors.text,
-          xAxisTickColor: colors.text,
-          xAxisLineColor: colors.text,
-          yAxisLabelColor: colors.text,
-          yAxisTitleColor: colors.text,
-          yAxisTickColor: colors.text,
-          yAxisLineColor: colors.text,
-          plotColorPalette: colors.chart,
-        },
-      },
-      flowchart: { htmlLabels: true, curve: "basis", padding: 8, useMaxWidth: true },
-    });
+  // View Transitions can run this component's script more than once. Keep one
+  // renderer and serialize its work so Mermaid never tries to parse a diagram
+  // while another render is replacing it with SVG.
+  if (!pageWindow.__mermaidRenderer) {
+    let isRendering = false;
+    let rerenderQueued = false;
 
-    nodes.forEach((node) => {
-      if (!node.dataset.source) node.dataset.source = node.textContent ?? "";
-      node.removeAttribute("data-processed");
-      node.innerHTML = node.dataset.source;
-      node.classList.add("opacity-0");
-    });
+    const render = async () => {
+      if (isRendering) {
+        rerenderQueued = true;
+        return;
+      }
 
-    mermaid.run({ nodes }).then(() => nodes.forEach((node) => node.classList.remove("opacity-0"))).catch((error) => {
-      console.error("Mermaid render failed", error);
-      nodes.forEach((node) => node.classList.remove("opacity-0"));
-    });
+      const isDark = document.documentElement.dataset.theme !== "light";
+      const theme = isDark ? "dark" : "light";
+      const nodes = Array.from(document.querySelectorAll<HTMLElement>(".mermaid"))
+        .filter((node) => node.dataset.mermaidTheme !== theme);
+      if (!nodes.length) return;
+
+      isRendering = true;
+      const colors = isDark
+        ? { background: "#1c1c1c", surface: "#242424", text: "#e1e1e1", border: "#3e3e3e", accent: "#a78bfa", chart: "#c4b5fd" }
+        : { background: "#fafafa", surface: "#ffffff", text: "#1f1f1f", border: "#e1e1e1", accent: "#4f46e5", chart: "#4f46e5" };
+
+      try {
+        mermaid.initialize({
+          startOnLoad: false,
+          theme: "base",
+          securityLevel: "loose",
+          fontFamily: "Inter Variable, sans-serif",
+          themeVariables: {
+            darkMode: isDark,
+            background: colors.background,
+            primaryColor: colors.surface,
+            primaryTextColor: colors.text,
+            primaryBorderColor: colors.border,
+            secondaryColor: colors.surface,
+            secondaryTextColor: colors.text,
+            secondaryBorderColor: colors.border,
+            tertiaryColor: colors.surface,
+            tertiaryTextColor: colors.text,
+            tertiaryBorderColor: colors.border,
+            lineColor: colors.accent,
+            textColor: colors.text,
+            nodeTextColor: colors.text,
+            edgeLabelBackground: colors.background,
+            clusterBkg: colors.surface,
+            clusterBorder: colors.border,
+            titleColor: colors.text,
+            xyChart: {
+              backgroundColor: colors.background,
+              titleColor: colors.text,
+              dataLabelColor: colors.text,
+              xAxisLabelColor: colors.text,
+              xAxisTitleColor: colors.text,
+              xAxisTickColor: colors.text,
+              xAxisLineColor: colors.text,
+              yAxisLabelColor: colors.text,
+              yAxisTitleColor: colors.text,
+              yAxisTickColor: colors.text,
+              yAxisLineColor: colors.text,
+              plotColorPalette: colors.chart,
+            },
+          },
+          flowchart: { htmlLabels: true, curve: "basis", padding: 8, useMaxWidth: true },
+        });
+
+        nodes.forEach((node) => {
+          if (!node.dataset.source) node.dataset.source = node.textContent ?? "";
+          node.removeAttribute("data-processed");
+          node.innerHTML = node.dataset.source;
+          node.classList.add("opacity-0");
+        });
+
+        await mermaid.run({ nodes });
+        nodes.forEach((node) => {
+          node.dataset.mermaidTheme = theme;
+          node.classList.remove("opacity-0");
+        });
+      } catch (error) {
+        console.error("Mermaid render failed", error);
+        nodes.forEach((node) => node.classList.remove("opacity-0"));
+      } finally {
+        isRendering = false;
+        if (rerenderQueued) {
+          rerenderQueued = false;
+          void render();
+        }
+      }
+    };
+
+    pageWindow.__mermaidRenderer = { render: () => void render() };
+    document.addEventListener("astro:page-load", pageWindow.__mermaidRenderer.render);
+    new MutationObserver((changes) => {
+      if (changes.some((change) => change.attributeName === "data-theme")) pageWindow.__mermaidRenderer?.render();
+    }).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
   }
 
-  initMermaid();
-  document.addEventListener("astro:page-load", initMermaid);
-  new MutationObserver((changes) => {
-    if (changes.some((change) => change.attributeName === "data-theme")) initMermaid();
-  }).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  pageWindow.__mermaidRenderer.render();
 </script>
 
 <style is:global>
